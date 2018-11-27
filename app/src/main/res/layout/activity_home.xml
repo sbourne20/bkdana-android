@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".modules.splashscreen.SplashScreen">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnLogin"
+        android:src="@drawable/btn_sign_up"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/vcenter"
+        android:background="@android:color/transparent"
+        android:layout_margin="8dp"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:id="@+id/vcenter"
+        android:layout_centerInParent="true"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRegister"
+        android:src="@drawable/btn_login"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/vcenter"
+        android:background="@android:color/transparent"
+        android:layout_margin="8dp"
+        />
+</RelativeLayout>

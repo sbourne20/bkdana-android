@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout android:layout_width="match_parent"
+    android:id="@+id/cardBanner"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_card_red"
+    android:padding="18dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:id="@+id/imgBanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_banner_1"
+            android:layout_margin="5dp"/>
+        <TextView
+            android:id="@+id/tvBannerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/imgBanner"
+            android:text="BKDana Kilat"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:layout_alignBottom="@id/imgBanner"
+            android:textColor="@android:color/white"
+            android:textSize="21sp" />
+        <TextView
+            android:id="@+id/tvBannerDetial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgBanner"
+            android:text="Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+</RelativeLayout>
+</LinearLayout>

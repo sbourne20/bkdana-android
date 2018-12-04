@@ -10,11 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Splash"
         tools:replace="android:theme">
-        <activity android:name=".modules.Login.LoginActivity"
+        <activity
+            android:name=".modules.Login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Splash"/>
+            android:theme="@style/Splash" />
         <activity
             android:name=".modules.splashscreen.SplashScreen"
             android:screenOrientation="portrait"
@@ -29,9 +30,24 @@
             android:name=".modules.splashscreen.WorktourActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Splash" />
-        <activity android:name=".modules.splashscreen.HomeActivity"
+        <activity
+            android:name=".modules.splashscreen.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Splash"></activity>
+            android:theme="@style/Splash" />
+        <activity
+            android:name=".modules.register.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash" />
+        <activity android:name=".modules.register.VerifyPhoneActivity" />
+        <activity
+            android:name=".modules.home.DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".modules.transaksi.TransaksiActivity" />
+        <activity android:name=".modules.transaksi.DetialTransaksiActivity" />
+        <activity android:name=".modules.peminjam.PeminjamActivity" />
+        <activity android:name=".modules.profile.EditProfileActivity" />
+        <activity android:name=".modules.koran.KoranActivity" />
+        <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity"></activity>
     </application>
 
 </manifest>

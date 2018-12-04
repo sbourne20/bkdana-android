@@ -1,10 +1,10 @@
 package rzgonz.bkd.services
 
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
+import rzgonz.bkd.models.LoginResponse
+import rzgonz.bkd.models.transaksi.TransaksiResponse
+import rzgonz.bkd.models.transaksi.detail.DetailTransaksiResponse
 
 
 /**
@@ -18,6 +18,16 @@ interface APIService {
 
     @GET("access/")
     fun getAccess(): Call<String>
+
+    @GET("transaksi_peminjam/list/")
+    fun getListTransaksi(): Call<TransaksiResponse>
+
+    @GET("transaksi_peminjam/detai/")
+    fun getDetialTransaksi(@Query("t")id:String): Call<DetailTransaksiResponse>
+
+    @FormUrlEncoded
+    @POST("auth/login/")
+    fun postLogin(@Field("username")userName:String,@Field("password")passWord:String): Call<LoginResponse>
 
 
 }

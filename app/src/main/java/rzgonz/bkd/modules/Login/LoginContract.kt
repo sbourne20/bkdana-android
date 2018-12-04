@@ -1,5 +1,6 @@
 package rzgonz.bkd.modules.Login
 
+import rzgonz.bkd.models.LoginResponse
 import rzgonz.core.kotlin.contract.DIBaseContract
 /**
  * Created by rzgonz on 7/10/17.
@@ -8,12 +9,12 @@ import rzgonz.core.kotlin.contract.DIBaseContract
 object LoginContract  {
 
     interface View : DIBaseContract.View {
-            fun returnLogin(status : Boolean,responde:String,message:String)
+            fun returnLogin(status : Boolean,responde:LoginResponse?,message:String)
     }
 
 
     interface Presenter : DIBaseContract.Presenter<View> {
 
-        fun checkLogin()
+        fun checkLogin(username:String,password:String)
     }
 }

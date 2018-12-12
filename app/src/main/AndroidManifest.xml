@@ -43,11 +43,11 @@
             android:name=".modules.home.DashboardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.transaksi.TransaksiActivity" />
-        <activity android:name=".modules.transaksi.DetialTransaksiActivity" />
         <activity android:name=".modules.peminjam.PeminjamActivity" />
         <activity android:name=".modules.profile.EditProfileActivity" />
         <activity android:name=".modules.koran.KoranActivity" />
         <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity"></activity>
+        <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity"></activity>
     </application>
 
 </manifest>

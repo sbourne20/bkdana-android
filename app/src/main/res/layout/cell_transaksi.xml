@@ -113,7 +113,9 @@
                     />
             </TableRow>
             <TableRow android:layout_margin="5dp"/>
-            <TableRow>
+            <TableRow
+                android:layout_margin="5dp"
+                >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,7 +125,7 @@
                 <Button
                     android:id="@+id/btnDetail"
                     android:textColor="@android:color/white"
-                    android:layout_height="18dp"
+                    android:layout_height="21dp"
                     android:layout_width="wrap_content"
                     android:text="Detial"
                     android:layout_weight="1"

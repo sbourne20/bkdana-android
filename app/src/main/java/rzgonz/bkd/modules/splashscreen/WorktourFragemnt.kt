@@ -48,6 +48,28 @@ class WorktourFragemnt : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        btnSkip.visibility =View.VISIBLE
+        when(arguments?.getString(ARG_PARAM1)){
+             "1" ->{
+                 imgIcon.setImageResource(R.drawable.icon_why_1)
+                 tvTitle.setText("Akses di multi perangkat")
+                 tvSubTitle.setText("BKDana hadir di multi platform, baik di Web, Android dan iOS, memudahkan transaksi dimanapun dan kapanpun.")
+                }
+            "2"->{
+                tvTitle.setText("Risiko Terukur & Transparan")
+                tvSubTitle.setText("BKDana hanya menyalurkan kredit ke pemijam yang tervirifikasi dan dilengkapi analisa credit scoring melalui jejak digital terpercaya.")
+              //  imgIcon.setImageResource(R.drawable.icon_why_2)
+
+            }
+            "3" ->{
+                btnSkip.visibility =View.VISIBLE
+                tvTitle.setText("Penggunaan Mudah & Aman")
+                tvSubTitle.setText("Platform BKDana sangat mudah digunakan dan diawasi oleh OJK")
+               // imgIcon.setImageResource(R.drawable.icon_why_3)
+            }
+        }
+
         btnSkip.setOnClickListener {
             startActivity(Intent(activity,HomeActivity::class.java))
         }

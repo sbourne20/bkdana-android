@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import rzgonz.bkd.R
+import rzgonz.bkd.modules.peminjam.detial.DetailPinjamanActivity
 import rzgonz.core.kotlin.adapter.BaseRVAdapter
 import rzgonz.core.kotlin.holder.BaseItemHolder
 import rzgonz.core.kotlin.model.RvPropertise
@@ -27,7 +28,7 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
 
     override fun onBindViewHolderItem(holder: BaseItemHolder?, position: Int, positionData: Int) {
         if (holder is Item){
-           // holder.sentData(getItem(positionData) as String)
+            holder.sentData(getItem(positionData) as String)
         }
 
     }
@@ -41,8 +42,18 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
 
     class Item(itemView: View) : BaseItemHolder(itemView) {
 
+
+        val tvName =itemView.findViewById<TextView>(R.id.tvName)
+
         init {
 
+
+        }
+
+        fun sentData(s: String) {
+            tvName.rootView.setOnClickListener {
+                tvName.context.startActivity(Intent(tvName.context,DetailPinjamanActivity::class.java))
+            }
         }
 
 

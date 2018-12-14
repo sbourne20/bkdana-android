@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.R
-import rzgonz.bkd.injector.DaggerUserComponent
+import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.modules.Login.LoginContract
 import rzgonz.bkd.modules.Login.LoginPresenter

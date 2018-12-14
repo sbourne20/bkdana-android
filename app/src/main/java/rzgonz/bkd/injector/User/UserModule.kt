@@ -1,4 +1,4 @@
-package rzgonz.bkd.injector
+package rzgonz.bkd.injector.User
 
 import dagger.Module
 

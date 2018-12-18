@@ -86,6 +86,10 @@ class TransaksiFragment : DIBaseFragment(),CustomeRV.RVListener,TransaksiContrac
         transaksiPresenter.getListTransaksi()
         rvView.getRv().itemAnimator = SlideInUpAnimator().apply {
             setInterpolator(OvershootInterpolator())
+            addDuration = 1000
+            removeDuration = 100
+            moveDuration = 1000
+            changeDuration = 100
         }
     }
 

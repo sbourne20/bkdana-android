@@ -47,6 +47,12 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View {
             tvNoTransaksi.setText(responde?.content?.transaksi?.transaksiId)
             tvNoTransaksiSub.setText(responde?.content?.transaksi?.masterLoanId)
             tvNamaPeminjam.setText(responde?.content?.transaksi?.namaPeminjam)
+            tvTenor.setText("${responde?.content?.transaksi?.loanTerm!!} Bulan")
+            tvJumDana.setText("${responde?.content.transaksi.totalLender}")
+            tvJumPijam.setText("${responde?.content.transaksi.totalLoanOutstanding} IDR")
+            tvTotal.setText("${responde?.content.transaksi.totalLoanRepayment} IDR")
+            tvStatus.setText("${responde?.content.transaksi.masterLoanStatus}")
+
         }
     }
 }

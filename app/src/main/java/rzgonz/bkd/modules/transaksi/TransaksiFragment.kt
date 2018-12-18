@@ -3,9 +3,12 @@ package rzgonz.bkd.modules.transaksi
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.animation.OvershootInterpolator
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.fragment_transaksi.*
 import rzgonz.bkd.Apps.APKModel
-
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.transaksi.DaggerTransaksiComponent
 import rzgonz.bkd.models.transaksi.TransaksiResponse
@@ -81,6 +84,9 @@ class TransaksiFragment : DIBaseFragment(),CustomeRV.RVListener,TransaksiContrac
     override fun initUI(savedInstanceState: Bundle?) {
         rvView.listener(this)
         transaksiPresenter.getListTransaksi()
+        rvView.getRv().itemAnimator = SlideInUpAnimator().apply {
+            setInterpolator(OvershootInterpolator())
+        }
     }
 
     override fun initAdapter(): BaseRVAdapter {
@@ -93,6 +99,7 @@ class TransaksiFragment : DIBaseFragment(),CustomeRV.RVListener,TransaksiContrac
 //            data.add("${rvView.getAdapter().colomCount + i}")
 //        }
 //        return rvView.getAdapter().setItems(data)
+
     }
 
     override fun initRV(): CustomeRV {

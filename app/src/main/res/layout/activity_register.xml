@@ -71,7 +71,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Email"
                 android.support.design:hintAnimationEnabled="true"
                 android.support.design:hintEnabled="true">
 
@@ -79,6 +78,7 @@
                     android:id="@+id/et_email_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Email"
                     android:inputType="textEmailAddress"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -115,6 +115,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"/>
+
+            </android.support.design.widget.TextInputLayout>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spRegisterType"
+                android:layout_weight="1"
+               android:layout_marginBottom="15dp"
+                android:background="@drawable/border_fill"
+                android:entries="@array/register_type"
+                android:prompt="@string/app_name"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/till_sumberDana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Sumber Dana"
+                android.support.design:hintAnimationEnabled="true"
+                android.support.design:hintEnabled="true">
+
+                <EditText
+                    android:id="@+id/etSuberDana"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
 
             </android.support.design.widget.TextInputLayout>
 

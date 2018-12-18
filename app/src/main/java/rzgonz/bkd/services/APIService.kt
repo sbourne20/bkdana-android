@@ -20,10 +20,10 @@ interface APIService {
     @GET("access/")
     fun getAccess(): Call<String>
 
-    @GET("transaksi_peminjam/list/")
+    @GET("transaksi_peminjam/list")
     fun getListTransaksi(): Call<TransaksiResponse>
 
-    @GET("transaksi_peminjam/detai/")
+    @GET("transaksi_peminjam/detail/")
     fun getDetialTransaksi(@Query("t")id:String): Call<DetailTransaksiResponse>
 
     @FormUrlEncoded
@@ -31,12 +31,8 @@ interface APIService {
     fun postLogin(@Field("username")userName:String,@Field("password")passWord:String): Call<LoginResponse>
 
     @FormUrlEncoded
-    @POST("register_peminjam/submit_reg_kilat/")
-    fun sendRegKilat(@Field("fullname")fullname:String,@Field("email")email:String,@Field("telp")telp:String,@Field("password")pasword:String,@Field("confirm_password")confirm_password:String): Call<BaseResponse<String>>
-
-    @FormUrlEncoded
-    @POST("register_peminjam/submit_reg_mikro/")
-    fun sendRegMikro(@Field("fullname")fullname:String,@Field("email")email:String,@Field("telp")telp:String,@Field("password")pasword:String,@Field("confirm_password")confirm_password:String): Call<BaseResponse<String>>
+    @POST("register_peminjam/submit_reg/")
+    fun sendRegPinjam(@Field("fullname")fullname:String,@Field("email")email:String,@Field("telp")telp:String,@Field("password")pasword:String,@Field("confirm_password")confirm_password:String,@Field("type")type:Int): Call<BaseResponse<String>>
 
     @FormUrlEncoded
     @POST("register_pendana/submit_register/")

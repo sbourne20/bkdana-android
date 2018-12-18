@@ -11,8 +11,5 @@ data class TransaksiResponse(
 	val listTransaksi: List<ListTransaksiItem?>? = null,
 
         @field:SerializedName("status")
-	val status: Int? = null,
-
-        @field:SerializedName("token")
-	val token: String? = null
+	val status: Int? = null
 )

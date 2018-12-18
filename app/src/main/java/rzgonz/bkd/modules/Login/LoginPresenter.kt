@@ -25,7 +25,7 @@ class LoginPresenter @Inject constructor(context: Context) : DIBasePresenter<Log
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if(response.isSuccessful){
-                    var header = HashMap<String,String>()
+                    val header = HashMap<String,String>()
                     header.set("Authorization",response.body()?.token!!)
                     APIHelper.Headers  = header
                     getView()?.returnLogin(true,response.body(),"success")

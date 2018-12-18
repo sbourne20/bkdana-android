@@ -34,28 +34,8 @@ class RegisterPresenter @Inject constructor(context: Context) : DIBasePresenter<
         })
     }
 
-    override fun sendRegisterMikro(fullname: String, telp: String, email: String, pass: String, repass: String) {
-        apiService.sendRegMikro(fullname,email,telp,pass,repass).enqueue(object : Callback<BaseResponse<String>>{
-            override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
-                getView()?.returnRegister(false,null,"Gagal register harap coba kembali")
-            }
-
-            override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
-                if(response.isSuccessful){
-                    if(!response.body()?.response.equals("fail")) {
-                        getView()?.returnRegister(true, response.body(), "success")
-                    }else{
-                        getView()?.returnRegister(false,null,response.body()?.message!!)
-                    }
-                }else{
-                    getView()?.returnRegister(false,null,response.body()?.message!!)
-                }
-            }
-        })
-    }
-
-    override fun sendRegisterKilat(fullname: String, telp: String, email: String, pass: String, repass: String) {
-        apiService.sendRegKilat(fullname,email,telp,pass,repass).enqueue(object : Callback<BaseResponse<String>>{
+    override fun sendRegisterPinjam(fullname: String, telp: String, email: String, pass: String, repass: String, type: Int) {
+        apiService.sendRegPinjam(fullname,email,telp,pass,repass,type).enqueue(object : Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
                 getView()?.returnRegister(false,null,"Gagal register harap coba kembali")
             }

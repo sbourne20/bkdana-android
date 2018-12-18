@@ -41,8 +41,8 @@
                     android:layout_height="wrap_content"
                     android:text="No. Transaksi Pendanaan"
                     android:textStyle="bold"
+                    android:layout_weight="1"
                     android:textColor="@color/nav_grey"
-                    android:layout_weight="2"
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="DD-12ou312u30"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
                 <TextView
                     android:id="@+id/tvNoTransaksiSub"
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nama Transaksi"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:textColor="@color/nav_grey"
                     />
                 <TextView
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:text="Pendanaan"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
                 <TextView
                     android:id="@+id/tvNamaPeminjam"
@@ -113,7 +113,7 @@
                     android:text="Tenor"
                     android:textColor="@color/nav_grey"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                     android:text="Jumlah Pendanaan"
                     android:textColor="@color/nav_grey"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:text="10,000,000 IDR"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
                 <TextView
                     android:id="@+id/tvJumPijam"
@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:text="10,150,000 - PPH % = 10,150,000 IDR (PPH % : 0 IDR)"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
                 <TextView
                     android:id="@+id/tvStatusPinjam"
@@ -218,7 +218,7 @@
                     android:text="Status"
                     android:textColor="@color/nav_grey"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     />
             </TableRow>
             <TableRow  android:layout_margin="2dp">
@@ -228,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:text="Approve"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_marginBottom="30dp"
                     />
             </TableRow>

@@ -17,7 +17,6 @@ object RegisterContract  {
     interface Presenter : DIBaseContract.Presenter<View> {
 
         fun sendRegister(fullname:String,telp:String,email:String,pass:String,repass:String,sumberdana:String)
-        fun sendRegisterMikro(fullname:String,telp:String,email:String,pass:String,repass:String)
-        fun sendRegisterKilat(fullname:String,telp:String,email:String,pass:String,repass:String)
+        fun sendRegisterPinjam(fullname:String,telp:String,email:String,pass:String,repass:String,type:Int)
     }
 }

@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/ic_card_red"
     android:padding="18dp"
-    android:layout_marginLeft="18dp"
-    android:layout_marginRight="18dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <ImageView

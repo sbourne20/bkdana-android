@@ -53,8 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="50dp"
-            android:layout_margin="9dp">
+            android:paddingBottom="50dp">
 
             <rzgonz.core.kotlin.view.CustomeViewPager
                 android:layout_width="match_parent"
@@ -62,7 +61,6 @@
                 android:id="@+id/cvpBanner"
                 />
             <android.support.v7.widget.CardView
-                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="9dp"/>
@@ -75,7 +73,8 @@
                 />
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="9dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,6 +139,7 @@
                 android:text="Transaksi Repayment"
                 android:textSize="21sp"
                 android:textStyle="bold"
+                android:layout_margin="9dp"
                 android:layout_marginTop="10dp"
                  />
             <TextView
@@ -147,12 +147,15 @@
                 android:layout_height="wrap_content"
                 android:text="Pendanaan : 12 Bulan"
                 android:textStyle="bold"
+                android:layout_margin="5dp"
                 android:textColor="@color/Red500"
                 android:layout_marginTop="10dp"
                 />
             <TableRow
                  android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -173,12 +176,15 @@
                 android:layout_height="wrap_content"
                 android:text="Pinjaman Kilat : 7 Hari"
                 android:textStyle="bold"
+                android:layout_margin="5dp"
                 android:textColor="@color/Red500"
                 android:layout_marginTop="10dp"
                 />
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

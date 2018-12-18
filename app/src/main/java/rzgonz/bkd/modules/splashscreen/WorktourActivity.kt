@@ -34,8 +34,9 @@ class WorktourActivity : DIBaseActivity(),CustomeViewPager.PagerListener,Worktou
         cvWorktour.listener = this
         cvWorktour.setAdapter(this)
         indicator.setViewPager(cvWorktour);
-        cvWorktour.setPageTransformer(true,  ZoomOutSlideTransformer())
-
+       // cvWorktour.setPageTransformer(true,  ZoomOutSlideTransformer())
+        cvWorktour.clipToPadding = false
+        cvWorktour.setPadding(90,0, 90, 0)
 // optional
 // .registerDataSetObserver(indicator.getDataSetObserver());
     }

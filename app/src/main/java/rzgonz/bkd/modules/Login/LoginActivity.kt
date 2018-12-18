@@ -37,8 +37,8 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
     }
 
     override fun initUI(savedInstanceState: Bundle?) {
-        et_email_login.setText("iriawan.maarif@gmail.com")
-        et_password_login.setText("master199")
+        et_email_login.setText("rzgonz@gmail.com")
+        et_password_login.setText("123456abcD")
         btnDaftar.setOnClickListener {
             startActivity(Intent(baseContext,RegisterActivity::class.java))
         }

@@ -46,8 +46,18 @@
         <activity android:name=".modules.peminjam.PeminjamActivity" />
         <activity android:name=".modules.profile.EditProfileActivity" />
         <activity android:name=".modules.koran.KoranActivity" />
-        <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity"></activity>
-        <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity"></activity>
+        <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity" />
+        <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity" />
+        <activity android:name=".modules.daftar.kilat.DaftarKilatActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".modules.daftar.mikro.DaftarMikroActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
+        <activity android:name=".modules.daftar.kilat.DaftarUploadKilatActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
+        <activity android:name=".modules.daftar.mikro.DaftarUploadMikroActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
+        <activity android:name=".modules.daftar.mikro.DaftarUsahaMirkoActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
     </application>
 
 </manifest>

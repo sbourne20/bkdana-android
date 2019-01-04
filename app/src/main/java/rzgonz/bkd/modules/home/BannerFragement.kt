@@ -1,6 +1,7 @@
 package rzgonz.bkd.modules.home
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,6 +11,8 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_banner_dashboard.*
 
 import rzgonz.bkd.R
+import rzgonz.bkd.modules.daftar.kilat.DaftarKilatActivity
+import rzgonz.bkd.modules.daftar.mikro.DaftarMikroActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,13 +54,18 @@ class BannerFragement : Fragment() {
             1 ->{ cardBanner.background = resources.getDrawable(R.drawable.ic_card_red)
                 imgBanner.setImageDrawable(resources.getDrawable(R.drawable.ic_banner_1))
                 tvBannerTitle.setText("BKDana Kilat")
-                tvBannerDetial.setText("Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!")}
-
-
+                tvBannerDetial.setText("Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!")
+                cardBanner.setOnClickListener {
+                    startActivity(Intent(this.context, DaftarKilatActivity::class.java))
+                }
+            }
             2 ->{cardBanner.background = resources.getDrawable(R.drawable.ic_card_aqua)
                 imgBanner.setImageDrawable(resources.getDrawable(R.drawable.icon_register_2))
                 tvBannerTitle.setText("BKDana Mikro")
                 tvBannerDetial.setText("Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!")
+                cardBanner.setOnClickListener {
+                    startActivity(Intent(this.context, DaftarMikroActivity::class.java))
+                }
             }
             else -> { // Note the block
                 print("x is neither 1 nor 2")

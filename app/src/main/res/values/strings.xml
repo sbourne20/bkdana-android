@@ -16,9 +16,18 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="beberapa_langkah_lagi_untuk_menjadi_peminjam_di_bkdana_silahkan_lengkapi_informasi_dan_data_data_anda_terlebih_dahulu">Beberapa langkah lagi untuk menjadi peminjam di BKDana. Silahkan lengkapi informasi dan data-data Anda terlebih dahulu.</string>
     <string-array name="register_type">
         <item>Pendana</item>
         <item>Pinjaman Kilat</item>
         <item>Pinjaman Mikro</item>
+    </string-array>
+
+    <string name="pilih">-- PILIH --</string>
+    <string name="saya_telah_membaca_dan_saya_setuju_dengan_kebijakan_privasi_syarat_ketentuan"><![CDATA[Saya telah membaca dan saya setuju dengan kebijakan Privasi & Syarat Ketentuan]]></string>
+    <string name="informasi_usaha_silahkan_masukan_data_diri_anda_sebenar_benarnya">Informasi Usaha\nSilahkan masukan data diri Anda sebenar - benarnya.</string>
+    <string-array name="array_gender">
+        <item>Pria</item>
+        <item>Wanita</item>
     </string-array>
 </resources>

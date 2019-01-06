@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:titleTextAppearance="@style/Toolbar.TitleText"
+    android:background="@android:color/transparent"
+    android:id="@+id/appBar"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/collapsing_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:contentScrim="@color/colorPrimary"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:layout_alignBottom="@+id/title"
+                android:src="@drawable/bg_header" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:layout_marginTop="?actionBarSize"
+                android:text="@string/beberapa_langkah_lagi_untuk_menjadi_peminjam_di_bkdana_silahkan_lengkapi_informasi_dan_data_data_anda_terlebih_dahulu"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_collapseMode="pin"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/Toolbar.TitleBug"
+            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"/>
+
+    </android.support.design.widget.CollapsingToolbarLayout>
+
+</android.support.design.widget.AppBarLayout>

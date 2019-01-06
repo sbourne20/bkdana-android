@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="rzgonz.bkd">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".Apps.APKModel"
         android:allowBackup="true"
@@ -48,16 +50,22 @@
         <activity android:name=".modules.koran.KoranActivity" />
         <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity" />
         <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity" />
-        <activity android:name=".modules.daftar.kilat.DaftarKilatActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".modules.daftar.mikro.DaftarMikroActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".modules.daftar.kilat.DaftarUploadKilatActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".modules.daftar.mikro.DaftarUploadMikroActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".modules.daftar.mikro.DaftarUsahaMirkoActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+        <activity
+            android:name=".modules.daftar.kilat.DaftarKilatActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".modules.daftar.mikro.DaftarMikroActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".modules.daftar.kilat.DaftarUploadKilatActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".modules.daftar.mikro.DaftarUploadMikroActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity
+            android:name=".modules.daftar.mikro.DaftarUsahaMirkoActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+        <activity android:name=".modules.daftar.kilat.DaftarDataDiriKilatActivity"></activity>
     </application>
 
 </manifest>

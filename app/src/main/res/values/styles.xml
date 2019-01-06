@@ -38,7 +38,7 @@
     </style>
 
     <style name="Toolbar.TitleBug" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">21sp</item>
     </style>
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">14sp</item>

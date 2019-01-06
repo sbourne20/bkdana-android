@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".modules.daftar.kilat.DaftarKilatActivity">
-<include layout="@layout/header_daftar"/>
+    <include layout="@layout/header_daftar"/>
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,8 +20,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Informasi Pribadi
-Silahkan masukan data diri Anda sebenar - benarnya."
+                android:text="@string/deskripsi_pribadi_silahkan_masukan_data_diri_anda_sebenar_benarnya"
                 android:textSize="18sp"
                 android:textColor="@color/grey"
                 android:layout_marginBottom="18dp"
@@ -36,12 +35,12 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Tempat Lahir"/>
+                    android:text="* Pendidikan"/>
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:background="@drawable/bg_edit_text"
-                    android:id="@+id/etTempatLahir"
+                    android:id="@+id/etPendidikan"
                     android:singleLine="true"
                     android:padding="5dp"
                     />
@@ -56,86 +55,12 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Jenis Kelamin"/>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:background="@drawable/bg_edit_text"
-                    android:id="@+id/spGender"
-                    android:entries="@array/array_gender"
-                    android:prompt="@string/pilih" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/spGender"
-                    android:layout_alignBottom="@id/spGender"
-                    android:background="@drawable/grey_rounded"
-                    android:paddingRight="9dp"
-                    android:paddingLeft="9dp"
-                   android:layout_centerVertical="true"
-                    app:srcCompat="@drawable/ic_arrow_down"/>
-                    </RelativeLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
-                    android:text="* Tanggal Lahir"/>
+                    android:text="* Nama Perusahaan"/>
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:background="@drawable/bg_edit_text"
-                    android:id="@+id/etTanggalLahir"
-                    android:inputType="date"
-                    android:padding="5dp"
-                    android:textAlignment="textStart"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
-                    android:text="* Alamat"/>
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/bg_edit_text"
-                    android:id="@+id/etAlamat"
-                    android:padding="5dp"
-                    android:textAlignment="textStart"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
-                    android:text="* Kota"/>
-                <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:background="@drawable/bg_edit_text"
-                    android:id="@+id/etKota"
+                    android:id="@+id/etPerusahaan"
                     android:singleLine="true"
                     android:padding="5dp"
                     />
@@ -150,7 +75,28 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Provinsi"/>
+                    android:text="* Telopon Tempat Bekerja"/>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:id="@+id/etPhoneKantor"
+                    android:inputType="phone"
+                    android:padding="5dp"
+                    android:textAlignment="textStart"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
+                    android:text="* Status Karyawan(contract/tetap)"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -159,7 +105,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                         android:layout_height="32dp"
                         android:background="@drawable/bg_edit_text"
                         android:id="@+id/spProvinsi"
-                        android:entries="@array/array_gender"
+                        android:entries="@array/array_kayawan"
                         android:prompt="@string/pilih"
                         />
                     <ImageView
@@ -186,7 +132,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Kode Pos"/>
+                    android:text="* Lama Bekerja"/>
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
@@ -195,6 +141,33 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:singleLine="true"
                     android:padding="5dp"
                     android:id="@+id/etKodePos"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:layout_marginTop="9dp"
+                android:text="* Saudara Yang Bisa Dihubungi"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
+                    android:text="- Nama Atasan Langsung"/>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/bg_edit_text"
+                    android:singleLine="true"
+                    android:padding="5dp"
+                    android:id="@+id/etNameAtasan"/>
 
             </LinearLayout>
             <LinearLayout
@@ -206,29 +179,16 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Pekerjaan"/>
-                <RelativeLayout
+                    android:text="- Referensi Teman / Saudara 1"/>
+                <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="32dp"
-                        android:background="@drawable/bg_edit_text"
-                        android:id="@+id/spPekerjaan"
-                        android:entries="@array/array_gender"
-                        android:prompt="@string/pilih" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignTop="@id/spPekerjaan"
-                        android:layout_alignBottom="@id/spPekerjaan"
-                        android:background="@drawable/grey_rounded"
-                        android:paddingRight="9dp"
-                        android:paddingLeft="9dp"
-                        android:layout_centerVertical="true"
-                        app:srcCompat="@drawable/ic_arrow_down"/>
-                </RelativeLayout>
+                    android:layout_height="32dp"
+                    android:inputType="numberDecimal"
+                    android:background="@drawable/bg_edit_text"
+                    android:singleLine="true"
+                    android:padding="5dp"
+                    android:id="@+id/etReferensi"/>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -239,7 +199,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Nomor NIK"/>
+                    android:text="- Referensi Teman / Saudara 2"/>
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
@@ -247,7 +207,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:background="@drawable/bg_edit_text"
                     android:singleLine="true"
                     android:padding="5dp"
-                    android:id="@+id/etNIK"/>
+                    android:id="@+id/etReferensiSub"/>
 
             </LinearLayout>
 

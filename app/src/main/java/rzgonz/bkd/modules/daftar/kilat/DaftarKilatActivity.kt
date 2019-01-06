@@ -3,6 +3,7 @@ package rzgonz.bkd.modules.daftar.kilat
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_daftar_kilat.*
+import kotlinx.android.synthetic.main.header_daftar.*
 import rzgonz.bkd.R
 import rzgonz.core.kotlin.activity.DIBaseActivity
 

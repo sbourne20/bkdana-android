@@ -26,6 +26,8 @@
     <string name="pilih">-- PILIH --</string>
     <string name="saya_telah_membaca_dan_saya_setuju_dengan_kebijakan_privasi_syarat_ketentuan"><![CDATA[Saya telah membaca dan saya setuju dengan kebijakan Privasi & Syarat Ketentuan]]></string>
     <string name="informasi_usaha_silahkan_masukan_data_diri_anda_sebenar_benarnya">Informasi Usaha\nSilahkan masukan data diri Anda sebenar - benarnya.</string>
+    <string name="upload_dokumen_upload_dokumen_dokumen_anda_sebagai_tolak_ukur_kredit_skor_anda">Upload Dokumen\nUpload dokumen - dokumen Anda sebagai tolak ukur kredit skor anda.</string>
+    <string name="deskripsi_pribadi_silahkan_masukan_data_diri_anda_sebenar_benarnya">Deskripsi Pribadi\nSilahkan masukan data diri Anda sebenar - benarnya.</string>
     <string-array name="array_gender">
         <item>Pria</item>
         <item>Wanita</item>

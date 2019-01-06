@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitCenter"
-                    android:id="@+id/imgKTP"
+                    android:id="@+id/imgNIK"
                     android:layout_margin="9dp"
                     android:visibility="invisible"
                     android:src="@drawable/ic_default_profile"/>
@@ -104,6 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:id="@+id/llNIK"
                     android:layout_centerInParent="true">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -194,6 +195,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:id="@+id/llSuratKerja"
                         android:layout_centerInParent="true">
                         <ImageView
                             android:layout_width="wrap_content"
@@ -263,6 +265,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:id="@+id/llSlipGaji"
                         android:layout_centerInParent="true">
                         <ImageView
                             android:layout_width="wrap_content"
@@ -313,6 +316,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:id="@+id/llSelfi"
                         android:layout_centerInParent="true">
                         <ImageView
                             android:layout_width="wrap_content"

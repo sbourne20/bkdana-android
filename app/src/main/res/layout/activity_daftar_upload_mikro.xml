@@ -78,7 +78,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="150dp"
                     android:background="@drawable/bg_dash">
                     <ImageView
                         android:layout_width="match_parent"
@@ -88,9 +88,10 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                         android:layout_margin="9dp"
                         android:src="@drawable/ic_default_profile"/>
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:layout_centerInParent="true"
                         android:id="@+id/llFoto">
                         <ImageView
                             android:layout_width="wrap_content"
@@ -98,14 +99,14 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                             android:src="@android:drawable/ic_menu_upload"
                             android:layout_gravity="center"
                             android:layout_margin="9dp"/>
-                        <Button
+                        <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="32dp"
                             android:background="@drawable/btn_purpel_rounded"
                             android:textColor="@android:color/white"
-                            android:text="Browse file"
-                            android:paddingLeft="9dp"
-                            android:paddingRight="9dp"
+                           android:src="@android:drawable/ic_menu_camera"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
                             android:layout_gravity="center"
                             android:id="@+id/btnFoto"
                             />
@@ -153,9 +154,19 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     />
 
             </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:text="* Uplad NIK File"/>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:background="@drawable/bg_dash">
                 <ImageView
                     android:layout_width="match_parent"
@@ -165,10 +176,10 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_margin="9dp"
                     android:src="@drawable/ic_default_profile"/>
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-
+                    android:layout_centerInParent="true"
                     android:id="@+id/llNIK">
                     <ImageView
                         android:layout_width="wrap_content"
@@ -190,6 +201,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                 </LinearLayout>
 
             </RelativeLayout>
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -219,6 +231,93 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
+                    android:text="* Usaha"/>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:lines="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:id="@+id/etUsaha"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
+                    android:text="* Uplad Foto Usaha"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@drawable/bg_dash">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/imgUsaha"
+                        android:layout_margin="9dp"
+                        android:src="@drawable/ic_default_profile"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/llUsaha">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@android:drawable/ic_menu_upload"
+                            android:layout_gravity="center"
+                            android:layout_margin="9dp"/>
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:background="@drawable/btn_purpel_rounded"
+                            android:textColor="@android:color/white"
+                            android:paddingLeft="9dp"
+                            android:paddingRight="9dp"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:id="@+id/btnUsaha"
+                            />
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
+                    android:text="* Lama Usaha"/>
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:inputType="numberDecimal"
+                    android:lines="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:id="@+id/etLamaUsaha"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
                     android:text="* Jumlah Pinjaman (Rp)"/>
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
@@ -233,6 +332,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="18dp"
                 android:layout_marginBottom="9dp">
                 <CheckBox
                     android:id="@+id/cbTnC"

@@ -16,9 +16,22 @@ import java.io.File
 
 class DaftarUploadKilatActivity : DIBaseActivity() {
 
-    var isfoto = true
-    var imgfoto : File? = null
-    var imgNIK : File? = null
+    var imgfoto = -1
+    var imgnik = -2
+    var imgsuratkerja = -3
+    var imgslipgaji = -4
+    var imgselfiktp = -5
+
+    var pathfoto :File? = null
+    var pathnik :File? = null
+    var pathsuratkerja :File? = null
+    var pathslipgaji:File? = null
+    var pathselfiktp:File? = null
+
+
+
+
+    var flagImage :Int = 0
 
     override fun initLayout(): Int {
         return R.layout.activity_daftar_upload_kilat
@@ -35,12 +48,24 @@ class DaftarUploadKilatActivity : DIBaseActivity() {
         }
 
         btnFoto.setOnClickListener {
-            isfoto = true
+            flagImage = imgfoto
             easyImage()
         }
 
         btnNIK.setOnClickListener {
-            isfoto = false
+            flagImage = imgnik
+            easyImage()
+        }
+        btnSuratKerja.setOnClickListener {
+            flagImage = imgsuratkerja
+            easyImage()
+        }
+        btnSlipGaji.setOnClickListener {
+            flagImage = imgslipgaji
+            easyImage()
+        }
+        btnSelfiKtp.setOnClickListener {
+            flagImage = imgselfiktp
             easyImage()
         }
     }
@@ -77,14 +102,62 @@ class DaftarUploadKilatActivity : DIBaseActivity() {
             override fun onImagesPicked(imagesFiles: List<File>, source: EasyImage.ImageSource, type: Int) {
                 //Handle the images
                 for (i in 0..imagesFiles.size) {
-                    if (isfoto) {
-                        imgfoto = imagesFiles.get(i)
-                        imgFoto.visibility = View.VISIBLE
-                        Glide.with(imgFoto).load(imagesFiles[i]).into(imgFoto)
-                    } else {
-                        imgNIK = imagesFiles.get(i)
-                        imgKTP.visibility = View.VISIBLE
-                        Glide.with(imgKTP).load(imagesFiles[i]).into(imgKTP)
+                    when(flagImage){
+                        imgfoto ->{
+                            pathfoto = imagesFiles.get(i)
+                            imgFoto.visibility = View.VISIBLE
+                            llFoto.visibility = View.INVISIBLE
+                            Glide.with(imgFoto).load(imagesFiles[i]).into(imgFoto)
+                            imgFoto.setOnClickListener {
+                                imgFoto.visibility = View.INVISIBLE
+                                pathfoto = null
+                                llFoto.visibility = View.VISIBLE
+                            }
+                        }
+                        imgnik ->{
+                            pathnik = imagesFiles.get(i)
+                            imgNIK.visibility = View.VISIBLE
+                            Glide.with(imgNIK).load(imagesFiles[i]).into(imgNIK)
+                            llNIK.visibility = View.INVISIBLE
+                            imgNIK.setOnClickListener {
+                                imgNIK.visibility = View.INVISIBLE
+                                pathnik = null
+                                llNIK.visibility = View.VISIBLE
+                            }
+                        }
+                        imgsuratkerja ->{
+                            pathsuratkerja = imagesFiles.get(i)
+                            imgSuratKerja.visibility = View.VISIBLE
+                            Glide.with(imgSuratKerja).load(imagesFiles[i]).into(imgSuratKerja)
+                            llSuratKerja.visibility = View.INVISIBLE
+                            imgSuratKerja.setOnClickListener {
+                                imgSuratKerja.visibility = View.INVISIBLE
+                                pathsuratkerja = null
+                                llSuratKerja.visibility = View.VISIBLE
+                            }
+                        }
+                        imgslipgaji ->{
+                            pathslipgaji = imagesFiles.get(i)
+                            imgSlipGaji.visibility = View.VISIBLE
+                            Glide.with(imgSlipGaji).load(imagesFiles[i]).into(imgSlipGaji)
+                            llSlipGaji.visibility = View.INVISIBLE
+                            imgSlipGaji.setOnClickListener {
+                                imgSlipGaji.visibility = View.INVISIBLE
+                                pathslipgaji = null
+                                llSlipGaji.visibility = View.VISIBLE
+                            }
+                        }
+                        imgselfiktp ->{
+                            pathselfiktp = imagesFiles.get(i)
+                            imgSelfiKtp.visibility = View.VISIBLE
+                            Glide.with(imgSelfiKtp).load(imagesFiles[i]).into(imgSelfiKtp)
+                            llSelfi.visibility = View.INVISIBLE
+                            imgSelfiKtp.setOnClickListener {
+                                imgSelfiKtp.visibility = View.INVISIBLE
+                                pathselfiktp = null
+                                llSelfi.visibility = View.VISIBLE
+                            }
+                        }
                     }
                 }
             }

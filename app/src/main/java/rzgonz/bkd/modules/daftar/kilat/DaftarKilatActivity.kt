@@ -20,7 +20,7 @@ class DaftarKilatActivity : DIBaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Daftar BKDana Kilat")
         btnSelanjutnya.setOnClickListener {
-            startActivity(Intent(baseContext,DaftarUploadKilatActivity::class.java))
+            startActivity(Intent(baseContext,DaftarDataDiriKilatActivity::class.java))
         }
 
     }

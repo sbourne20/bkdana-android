@@ -108,9 +108,13 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="9dp"
+                        android:layout_alignTop="@id/spGender"
+                        android:layout_alignBottom="@id/spGender"
+                        android:background="@drawable/grey_rounded"
+                        android:paddingRight="9dp"
+                        android:paddingLeft="9dp"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/arrow_down_float"/>
+                        app:srcCompat="@drawable/ic_arrow_down"/>
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout
@@ -158,7 +162,7 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Tempat Lahir"/>
+                    android:text="* Provinsi"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -174,9 +178,13 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="9dp"
+                        android:layout_alignTop="@id/spProvinsi"
+                        android:layout_alignBottom="@id/spProvinsi"
+                        android:background="@drawable/grey_rounded"
+                        android:paddingRight="9dp"
+                        android:paddingLeft="9dp"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/arrow_down_float"/>
+                        app:srcCompat="@drawable/ic_arrow_down"/>
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout

@@ -65,7 +65,8 @@
         <activity
             android:name=".modules.daftar.mikro.DaftarUsahaMirkoActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".modules.daftar.kilat.DaftarDataDiriKilatActivity"></activity>
+        <activity android:name=".modules.daftar.kilat.DaftarDataDiriKilatActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
     </application>
 
 </manifest>

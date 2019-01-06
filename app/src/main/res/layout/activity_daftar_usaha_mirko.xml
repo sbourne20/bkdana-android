@@ -79,6 +79,7 @@
                     android:lines="1"
                     android:background="@drawable/bg_edit_text"
                     android:id="@+id/etDeskripsi"
+                    android:textAlignment="textStart"
                     />
 
             </LinearLayout>
@@ -96,37 +97,48 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="150dp"
                     android:background="@drawable/bg_dash">
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:id="@+id/llUsaha"/>
+                        </HorizontalScrollView>
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        android:id="@+id/imgFoto"
+                        android:id="@+id/imgInfoUsaha"
                         android:layout_margin="9dp"
+                        android:visibility="invisible"
                         android:src="@drawable/ic_default_profile"/>
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:id="@+id/llFoto">
+                        android:layout_centerInParent="true"
+                        android:id="@+id/llInfoUsaha">
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@android:drawable/ic_menu_upload"
                             android:layout_gravity="center"
                             android:layout_margin="9dp"/>
-                        <Button
+
+                        <ImageButton
+                            android:id="@+id/btnInfoUsaha"
                             android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:background="@drawable/btn_purpel_rounded"
-                            android:textColor="@android:color/white"
-                            android:text="Browse file"
-                            android:paddingLeft="9dp"
-                            android:paddingRight="9dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:id="@+id/btnFoto"
-                            />
+                            android:background="@drawable/btn_purpel_rounded"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
+                            android:src="@android:drawable/ic_menu_camera"
+                            android:textColor="@android:color/white" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -270,15 +282,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Bank"/>
-                <Spinner
+                    android:text="* Nama Bank"/>
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_fill"
-                    android:id="@+id/spBank"
-                    android:entries="@array/array_gender"
-                    android:prompt="@string/pilih"
-                    />
+                    android:layout_height="wrap_content">
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_edit_text"
+                        android:id="@+id/spBank"
+                        android:entries="@array/array_gender"
+                        android:prompt="@string/pilih"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@id/spBank"
+                        android:layout_alignBottom="@id/spBank"
+                        android:background="@drawable/grey_rounded"
+                        android:paddingRight="9dp"
+                        android:paddingLeft="9dp"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/ic_arrow_down"/>
+                </RelativeLayout>
 
             </LinearLayout>
 

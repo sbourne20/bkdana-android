@@ -32,4 +32,6 @@
         <item>Pria</item>
         <item>Wanita</item>
     </string-array>
+    <string name="FACEBOOK_APP_ID">617243342038126</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">27ef9cc687b9f3ebdcaef2923c78e412</string>
 </resources>

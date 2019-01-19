@@ -14,6 +14,14 @@ import rzgonz.bkd.modules.register.RegisterActivity
 import rzgonz.bkd.modules.splashscreen.HomeActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import javax.inject.Inject
+import android.content.pm.PackageManager
+import android.provider.SyncStateContract.Helpers.update
+import android.content.pm.PackageInfo
+import android.util.Base64
+import android.util.Log
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 class LoginActivity : DIBaseActivity(),LoginContract.View {
 
@@ -37,7 +45,9 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
     }
 
     override fun initUI(savedInstanceState: Bundle?) {
-        et_email_login.setText("rzgonz@gmail.com")
+//        et_email_login.setText("rzgonz@gmail.com")
+//        et_password_login.setText("123456abcD")
+        et_email_login.setText("iriawan.jakarta@yahoo.com")
         et_password_login.setText("123456abcD")
         btnDaftar.setOnClickListener {
             startActivity(Intent(baseContext,RegisterActivity::class.java))
@@ -46,6 +56,8 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
             showProgressDialog(this,"Please waiting",false)
             loginPresenter.checkLogin(et_email_login.text.toString(),et_password_login.text.toString())
         }
+
+        printhashkey()
     }
 
     override fun returnLogin(status: Boolean, responde: LoginResponse?, message: String) {
@@ -55,5 +67,22 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
         }else{
             Toast.makeText(baseContext,message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun printhashkey() {
+
+        try {
+            val info = packageManager.getPackageInfo("rzgonz.bkd", PackageManager.GET_SIGNATURES)
+            for (signature in info.signatures) {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+
+        } catch (e: NoSuchAlgorithmException) {
+
+        }
+
     }
 }

@@ -6,6 +6,8 @@ import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.models.transaksi.TransaksiResponse
 import rzgonz.bkd.models.transaksi.detail.DetailTransaksiResponse
+import rzgonz.bkd.models.user.Content
+import rzgonz.bkd.models.user.UserResponse
 
 
 /**
@@ -37,7 +39,4 @@ interface APIService {
     @FormUrlEncoded
     @POST("register_pendana/submit_register/")
     fun sendReg(@Field("fullname")fullname:String,@Field("email")email:String,@Field("telp")telp:String,@Field("password")pasword:String,@Field("confirm_password")confirm_password:String,@Field("sumberdana")sumberdana:String): Call<BaseResponse<String>>
-
-
-
 }

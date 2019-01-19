@@ -4,7 +4,8 @@
     package="rzgonz.bkd">
 
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <application
         android:name=".Apps.APKModel"
         android:allowBackup="true"
@@ -14,6 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Splash"
         tools:replace="android:theme">
+        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
+        <meta-data android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
+        <meta-data android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
+            android:value="false"/>
+        <activity
+            android:name="com.facebook.accountkit.ui.AccountKitActivity" />
         <activity
             android:name=".modules.Login.LoginActivity"
             android:screenOrientation="portrait"
@@ -51,21 +62,22 @@
         <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity" />
         <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity" />
         <activity
-            android:name=".modules.daftar.kilat.DaftarKilatActivity"
+            android:name=".modules.daftar.kilat.pribadi.DaftarKilatActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".modules.daftar.mikro.DaftarMikroActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:name=".modules.daftar.mikro.pribadi.DaftarMikroActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".modules.daftar.kilat.DaftarUploadKilatActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:name=".modules.daftar.kilat.upload.DaftarKilatUploadActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".modules.daftar.mikro.DaftarUploadMikroActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
+            android:name=".modules.daftar.mikro.upload.DaftarMikroUploadActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".modules.daftar.mikro.DaftarUsahaMirkoActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".modules.daftar.kilat.DaftarDataDiriKilatActivity"></activity>
+            android:name=".modules.daftar.mikro.usaha.DaftarMirkoUsahaActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

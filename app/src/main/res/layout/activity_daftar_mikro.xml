@@ -4,46 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".modules.daftar.mikro.DaftarMikroActivity">
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        android:id="@+id/appBar">
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="18dp"
-                android:layout_marginTop="?actionBarSize"
-                android:text="@string/beberapa_langkah_lagi_untuk_menjadi_peminjam_di_bkdana_silahkan_lengkapi_informasi_dan_data_data_anda_terlebih_dahulu"
-                android:textColor="@android:color/white"/>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                app:title="Daftar BKDana Kilat"
-                app:layout_collapseMode="pin"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:titleTextAppearance="@style/Toolbar.TitleBug"
-                app:subtitleTextAppearance="@style/Toolbar.SubTitleText"/>
-
-
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-    </android.support.design.widget.AppBarLayout>
+    tools:context=".modules.daftar.mikro.pribadi.DaftarMikroActivity">
+    <include layout="@layout/header_daftar"/>
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -79,6 +41,8 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:background="@drawable/bg_edit_text"
+                    android:padding="5dp"
+                    android:lines="1"
                     android:id="@+id/etTempatLahir"
                     />
 
@@ -101,16 +65,22 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                         android:layout_height="32dp"
                         android:background="@drawable/bg_edit_text"
                         android:id="@+id/spGender"
+                        android:padding="5dp"
                         android:entries="@array/array_gender"
-                        android:prompt="@string/pilih"
                         />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="9dp"
+                        android:layout_alignTop="@id/spGender"
+                        android:layout_alignBottom="@id/spGender"
+                        android:background="@drawable/grey_rounded"
+                        android:paddingRight="9dp"
+                        android:paddingLeft="9dp"
                         android:layout_centerVertical="true"
-                        android:src="@android:drawable/arrow_down_float"/>
+                        app:srcCompat="@drawable/ic_arrow_down"/>
+
+
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout
@@ -128,6 +98,8 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_height="64dp"
                     android:background="@drawable/bg_edit_text"
                     android:id="@+id/etAlamat"
+                    android:gravity="top|left"
+                    android:padding="5dp"
                     />
 
             </LinearLayout>
@@ -146,6 +118,8 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_height="32dp"
                     android:background="@drawable/bg_edit_text"
                     android:id="@+id/etKota"
+                    android:lines="1"
+                    android:padding="5dp"
                     />
 
             </LinearLayout>
@@ -158,25 +132,17 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey"
-                    android:text="* Tempat Lahir"/>
+                    android:text="* Provinsi"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <Spinner
+                    <AutoCompleteTextView
+                        android:id="@+id/spProvinsi"
+                        android:hint="-- PILIH --"
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
-                        android:background="@drawable/bg_edit_text"
-                        android:id="@+id/spProvinsi"
-                        android:entries="@array/array_gender"
-                        android:prompt="@string/pilih"
-                        />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="9dp"
-                        android:layout_centerVertical="true"
-                        android:src="@android:drawable/arrow_down_float"/>
+                        android:padding="5dp"
+                        android:background="@drawable/bg_edit_text" />
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout
@@ -195,6 +161,8 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                     android:inputType="numberDecimal"
                     android:background="@drawable/bg_edit_text"
                     android:id="@+id/etKodePost"
+                    android:padding="5dp"
+                    android:lines="1"
                     />
 
             </LinearLayout>

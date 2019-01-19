@@ -4,4 +4,56 @@
         <item>Contract</item>
         <item>Tetap</item>
     </string-array>
+
+    <string-array name="array_pekerjaan">
+        <item>PNS</item>
+        <item>BUMN</item>
+        <item>Swasta</item>
+        <item>Wiraswasta</item>
+        <item>Lain-lain</item>
+    </string-array>
+
+    <string-array name="array_pendidikan">
+        <item>SD</item>
+        <item>SMP</item>
+        <item>SMA</item>
+        <item>Diploma</item>
+        <item>Sarjana</item>
+    </string-array>
+    <string-array name="array_provinsi">
+    <item>aceh</item>
+    <item>bali</item>
+    <item>banten</item>
+    <item>bengkulu</item>
+    <item>dki yogyakarta</item>
+    <item>dki jakarta</item>
+    <item>gorontalo</item>
+    <item>jambi</item>
+    <item>jawa barat</item>
+    <item>jawa tengah</item>
+    <item>jawa timur</item>
+    <item>kalimantan barat</item>
+    <item>kalimantan selatan</item>
+    <item>kalimantan tengah</item>
+    <item>kalimantan timur</item>
+    <item>kalimantan utara</item>
+    <item>kepulauan bangka belitung</item>
+    <item>kepulauan riau</item>
+    <item>lampung</item>
+    <item>maluku</item>
+    <item>maluku utara</item>
+    <item>nusa tenggara barat</item>
+    <item>nusa tenggara timur</item>
+    <item>papua</item>
+    <item>papua barat</item>
+    <item>riau</item>
+    <item>sulawesi barat</item>
+    <item>sulawesi selatan</item>
+    <item>sulawesi tengah</item>
+    <item>sulawesi tenggara</item>
+    <item>sulawesi utara</item>
+    <item>sumatera barat</item>
+    <item>sumatera selatan</item>
+    <item>sumatera utara</item>
+</string-array>
 </resources>

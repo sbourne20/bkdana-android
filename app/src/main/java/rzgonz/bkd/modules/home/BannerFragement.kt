@@ -11,8 +11,12 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_banner_dashboard.*
 
 import rzgonz.bkd.R
-import rzgonz.bkd.modules.daftar.kilat.DaftarKilatActivity
-import rzgonz.bkd.modules.daftar.mikro.DaftarMikroActivity
+import rzgonz.bkd.constant.BKD
+import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
+import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
+import rzgonz.bkd.modules.peminjam.PeminjamActivity
+import rzgonz.core.kotlin.fragment.DIBaseFragment
+import rzgonz.core.kotlin.helper.SharedPreferenceService
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,35 +32,45 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class BannerFragement : Fragment() {
+class BannerFragement : DIBaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: Int? = null
     private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun inject() {
+
+    }
+
+    override fun onAttachView() {
+
+    }
+
+    override fun onDetachView() {
+
+    }
+
+    override fun initLayout(): Int {
+        return R.layout.fragment_banner_dashboard
+    }
+
+    override fun initUI(savedInstanceState: Bundle?) {
         arguments?.let {
             param1 = it.getInt(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_banner_dashboard, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         when(arguments?.getInt(ARG_PARAM1)){
             1 ->{ cardBanner.background = resources.getDrawable(R.drawable.ic_card_red)
                 imgBanner.setImageDrawable(resources.getDrawable(R.drawable.ic_banner_1))
                 tvBannerTitle.setText("BKDana Kilat")
                 tvBannerDetial.setText("Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!")
                 cardBanner.setOnClickListener {
-                    startActivity(Intent(this.context, DaftarKilatActivity::class.java))
+
+                    if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
+                        startActivity(Intent(this.context, DaftarKilatActivity::class.java))
+                    }else{
+                        showMessage("Anda Login Sebagai Pendana")
+                    }
+
                 }
             }
             2 ->{cardBanner.background = resources.getDrawable(R.drawable.ic_card_aqua)
@@ -64,23 +78,18 @@ class BannerFragement : Fragment() {
                 tvBannerTitle.setText("BKDana Mikro")
                 tvBannerDetial.setText("Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!")
                 cardBanner.setOnClickListener {
-                    startActivity(Intent(this.context, DaftarMikroActivity::class.java))
+                    if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
+                        startActivity(Intent(this.context, DaftarMikroActivity::class.java))
+                    }else{
+                        showMessage("Anda Login Sebagai Pendana")
+                    }
+
                 }
             }
             else -> { // Note the block
                 print("x is neither 1 nor 2")
             }
         }
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
     }
 
     /**
@@ -94,11 +103,6 @@ class BannerFragement : Fragment() {
      * (http://developer.android.com/training/basics/fragments/communicating.html)
      * for more information.
      */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

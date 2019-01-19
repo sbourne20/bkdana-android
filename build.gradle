@@ -6,7 +6,7 @@ buildscript {
         multidex = '1.0.3'
         buildToolsVersion = '28.0.3'
         compileSdkVersion = 28
-        minSdkVersion = 19
+        minSdkVersion = 16
         targetSdkVersion = 27
         supportLibraryVersion = '27.1.1'
         firebaseVersion = '11.8.0'

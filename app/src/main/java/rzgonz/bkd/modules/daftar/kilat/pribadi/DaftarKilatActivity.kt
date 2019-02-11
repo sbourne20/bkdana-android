@@ -9,7 +9,7 @@ import android.app.DatePickerDialog
 import android.util.Log
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.injector.User.DaggerUserComponent
-import rzgonz.bkd.models.user.Content
+import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
 import java.util.*
 
@@ -22,7 +22,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
     @Inject
     lateinit var mPresenter : DaftarKilatPresenter
 
-    var myData: Content? = null
+    var myData: UserContent? = null
 
     val myCalendar = Calendar.getInstance()
     override fun initLayout(): Int {
@@ -95,8 +95,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
         super.onResume()
     }
 
-    override fun returnUser(status: Boolean, responde: Content?, message: String) {
-        Log.d("user","${status}, ${responde} , ${message}")
+    override fun returnUser(status: Boolean, responde: UserContent?, message: String) {
         if(status){
             etTempatLahir.setText("${responde?.tempatLahir}")
             if(responde?.jenisKelamin.equals("pria")){
@@ -112,6 +111,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
             spPekerjaan.setSelection(responde?.pekerjaan!!.toInt())
             etNIK.setText("${responde?.nomorNik}")
             myData = responde
+            Log.d("user","${status}, ${myData}")
         }
     }
 
@@ -119,6 +119,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
         Log.d("USER","${responde}")
         progressDialog?.dismiss()
         if(status){
+            Log.d("user1","${status}, ${myData}")
             DaftarKilatDataDiriActivity.startThisActivity(this,myData!!)
         }
 

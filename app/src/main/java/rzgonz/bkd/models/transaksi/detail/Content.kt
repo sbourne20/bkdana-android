@@ -1,6 +1,8 @@
 package rzgonz.bkd.models.transaksi.detail
 
+
 import com.google.gson.annotations.SerializedName
+
 
 data class Content(
 
@@ -16,9 +18,15 @@ data class Content(
 	@field:SerializedName("jml_angsuran")
 	val jmlAngsuran: String? = null,
 
+	@field:SerializedName("repayment_list")
+	var repaymentList: ArrayList<RepaymentListItem> = ArrayList(),
+
 	@field:SerializedName("total_bayar")
 	val totalBayar: String? = null,
 
 	@field:SerializedName("log_pinjaman")
-	val logPinjaman: LogPinjaman? = null
+	val logPinjaman: LogPinjaman? = null,
+
+	@field:SerializedName("nominal_jml_angsuran")
+	val nominalJmlAngsuran: String? = null
 )

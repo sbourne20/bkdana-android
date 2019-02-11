@@ -4,16 +4,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import rzgonz.bkd.R
-import rzgonz.bkd.models.transaksi.detail.LogPinjaman
+import rzgonz.bkd.models.redem.ContentItem
 
 /**
  * Code taken from https://developer.android.com/training/material/lists-cards.html and modified
  * according to need.
  */
-class RedemAdapter(val mDataset: ArrayList<String>) : RecyclerView.Adapter<RedemAdapter.ViewHolder>() {
+class RedemAdapter(val mDataset: ArrayList<ContentItem?> = ArrayList()) : RecyclerView.Adapter<RedemAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -25,8 +24,11 @@ class RedemAdapter(val mDataset: ArrayList<String>) : RecyclerView.Adapter<Redem
         var tvStatus = v.findViewById<TextView>(R.id.tvStatus)
         var tvTotal = v.findViewById<TextView>(R.id.tvTotal)
 
-        fun bindData(data: String) {
-
+        fun bindData(data: ContentItem?) {
+            tvNoTransaksi.setText(data?.modRedeemId)
+            tvDate.setText(data?.redeemDate)
+            tvTotal.setText(data?.redeemAmount)
+            tvStatus.setText(data?.redeemStatus)
 
         }
     }
@@ -60,5 +62,12 @@ class RedemAdapter(val mDataset: ArrayList<String>) : RecyclerView.Adapter<Redem
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
         return mDataset.size
+    }
+
+
+    fun addAll(data:List<ContentItem?>){
+        val old = mDataset.size
+        mDataset.addAll(data)
+        notifyItemRangeInserted(old,mDataset.size)
     }
 }

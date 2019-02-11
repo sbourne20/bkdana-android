@@ -1,6 +1,8 @@
 package rzgonz.bkd.modules.home
 
 
+import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -11,6 +13,18 @@ import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 import rzgonz.bkd.R
 import rzgonz.core.kotlin.view.CustomeViewPager
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.ThreadMode
+import org.greenrobot.eventbus.Subscribe
+import com.bumptech.glide.Glide
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.WriterException
+import com.journeyapps.barcodescanner.BarcodeEncoder
+import rzgonz.bkd.models.dashboard.RepaymentResponse
+import rzgonz.bkd.models.user.UserContent
+import rzgonz.core.kotlin.fragment.DIBaseFragment
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,12 +37,16 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class DashboardFragment : Fragment(),CustomeViewPager.PagerListener {
+class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,DashboardContract.DashboardView {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     lateinit var handler : Handler
+
+    val mPresenter = DashboardFragmentPresenter()
+
+    var progressDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,22 +56,75 @@ class DashboardFragment : Fragment(),CustomeViewPager.PagerListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+
+
+    override fun initLayout(): Int {
+        return R.layout.fragment_dashboard
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initUI(savedInstanceState: Bundle?) {
         cvpBanner.listener = this
         cvpBanner.setAdapter(activity)
         cvpBanner.clipToPadding = false
         cvpBanner.setPadding(0, 0, 40, 0)
         indicator.setViewPager(cvpBanner)
         runBanner()
+        mPresenter.getMyRepayment()
+        llOne.visibility =View.GONE
+        llTwo.visibility =View.GONE
+        btnRefresh.visibility =View.GONE
+//        btnRefresh.setOnClickListener {
+//            mPresenter.getMyRepayment()
+//        }
+
+        sr.setOnRefreshListener {
+            mPresenter.getMyRepayment()
+        }
+
+        tvName.setText(arguments?.getString(ARG_PARAM1,""))
     }
 
+    override fun inject() {
+
+    }
+
+
+
+    override fun onAttachView() {
+        mPresenter.attachView(this)
+    }
+
+    override fun onDetachView() {
+        mPresenter.detachView()
+    }
+
+    override fun returnMyRepayment(status: Boolean, responde: RepaymentResponse?, message: String) {
+        progressDialog?.dismiss()
+        sr.isRefreshing = false
+        if(status){
+            tvTotal.setText(responde?.content?.saldo)
+            tvTolalPendaanan.setText("Jumlah Pendanaan : ${responde?.content?.jmlAllTransaksi}")
+            tvAccountType.setText(responde?.content?.tipeUser)
+            responde?.content?.listRepayment?.forEachIndexed { index, listRepaymentItem ->
+                when(index){
+                    0 ->{
+                        llOne.visibility = View.VISIBLE
+                        tvTitleOne.setText(listRepaymentItem?.titleTransaksi)
+                        tvTvTempoOne.setText("Jatuh Tempo : ${listRepaymentItem?.jatuhTempoTransaksi}")
+                        tvJumlahOne.setText(listRepaymentItem?.nominalTransaksi)
+                    }
+                    1 ->{
+                        llTwo.visibility = View.VISIBLE
+                        tvTItleTwo.setText(listRepaymentItem?.titleTransaksi)
+                        tvTempoTwo.setText("Jatuh Tempo : ${listRepaymentItem?.jatuhTempoTransaksi}")
+                        tvJUmlahTwo.setText(listRepaymentItem?.nominalTransaksi)
+                    }
+                }
+            }
+        }else{
+            showMessage(message)
+        }
+    }
 
     companion object {
         /**
@@ -104,6 +175,11 @@ class DashboardFragment : Fragment(),CustomeViewPager.PagerListener {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: UserContent) {
+      //  Glide.with(imgFoto).load(event)
+        tvName.setText(event.namaPengguna)
+    }
     override fun onDestroy() {
         super.onDestroy()
         handler.removeMessages(0)
@@ -113,5 +189,32 @@ class DashboardFragment : Fragment(),CustomeViewPager.PagerListener {
         cvpBanner.setCurrentItem(page, true)
         indicator.setViewPager(cvpBanner)
         runBanner()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+
+
+    fun showProgressDialog(context: Context?, message: String?, isCancelable: Boolean) {
+        if (context == null) return
+        // TODO: Change Progress dialog color
+        progressDialog = ProgressDialog(context)
+        progressDialog?.run {
+            if (message != null) {
+                progressDialog!!.setMessage(message)
+            }
+            setIndeterminate(true)
+            setCancelable(isCancelable)
+            setCanceledOnTouchOutside(false)
+            show()
+        }
     }
 }

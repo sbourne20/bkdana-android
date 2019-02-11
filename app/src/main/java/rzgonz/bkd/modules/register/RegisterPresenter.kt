@@ -54,4 +54,24 @@ class RegisterPresenter @Inject constructor(context: Context) : DIBasePresenter<
         })
     }
 
+    override fun sendPhone(phone: String) {
+        apiService.postPhone("+62${phone}").enqueue(object :Callback<BaseResponse<String>>{
+            override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
+                getView()?.returnPhone(false,null,"Gagal register harap coba kembali")
+
+            }
+
+            override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
+                if(response.isSuccessful){
+                    if(response.body()?.response?.contains("fail")!!) {
+                        getView()?.returnPhone(true, "bisa dipake", "success")
+                    }else{
+                        getView()?.returnPhone(false,null,response.body()?.message!!)
+                    }
+                }else{
+                    getView()?.returnPhone(false,null,response.body()?.message!!)
+                }
+            }
+        })
+    }
 }

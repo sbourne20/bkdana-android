@@ -22,19 +22,20 @@ class LoginPresenter @Inject constructor(val context: Context) : DIBasePresenter
 
         apiService.postLogin(username,password).enqueue(object : Callback<LoginResponse> {
             override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
-                getView()?.returnLogin(false,null,"Username or Password Salah")
+                getView()?.returnLogin(false,null,"${t}")
             }
 
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if(response.isSuccessful){
                     val header = HashMap<String,String>()
-                   // header.set("Authorization",response.body()?.token!!)
-                    header.set("Authorization","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6IjIwOSIsImlzcyI6IjE0OS4xMjkuMjEzLjMwIiwiaWF0IjoxNTQ2OTU3NDU1LCJuYmYiOjE1NDY5NTc0NTUsImV4cCI6MTU0ODE2NzA1NSwibG9ndHlwZSI6IjEifQ.2FXjxDfdD4VsdXngLdKX68egq46vBUm7oP1G9HTZ-sco7FGMwRHj_odT2Y0QNLKUZ7rcxg05ZZi4Mu6hOD4Pqw")
+                   header.set("Authorization",response.body()?.token!!)
+                   // header.set("Authorization","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6IjIxNSIsImlzcyI6IjE0OS4xMjkuMjEzLjMwIiwiaWF0IjoxNTQ5MjI2NDEwLCJuYmYiOjE1NDkyMjY0MTAsImV4cCI6MTU1MDQzNjAxMCwibG9ndHlwZSI6IjIifQ.mlkkenrmMy6zz-qA-GDvv-XdFNKZLHTR7KIgVX0T6xQ20IOmAW8N1oGDHEKi8kWbsawUNYBcSRtBdrD_FG9VeA")
                     APIHelper.Headers  = header
+                    SharedPreferenceService(context).saveString(BKD.TOKEN,response.body()?.token)
                     SharedPreferenceService(context).saveInt(BKD.LOGINTYPE,response.body()?.logtype!!.toInt())
                     getView()?.returnLogin(true,response.body(),"success")
                 }else{
-                    getView()?.returnLogin(false,null,"Username or Password Salah")
+                    getView()?.returnLogin(false,null,"${response.errorBody()}")
                 }
             }
         })

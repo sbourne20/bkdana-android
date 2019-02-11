@@ -2,7 +2,6 @@ package rzgonz.bkd.modules.daftar.mikro.usaha
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,9 +16,10 @@ import pl.aprilapps.easyphotopicker.EasyImage
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
-import rzgonz.bkd.models.user.Content
+import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
 import rzgonz.bkd.modules.daftar.kilat.upload.DaftarKilatUploadActivity
+import rzgonz.bkd.modules.daftar.mikro.upload.DaftarMikroUploadActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import java.io.File
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
     companion object {
         var extra_data ="extra_data"
         @JvmStatic
-        fun startThisActivity(context: Context, data: Content) {
+        fun startThisActivity(context: Context, data: UserContent) {
             context.startActivity(Intent(context, DaftarMirkoUsahaActivity::class.java).apply {
                 putExtra(extra_data,data)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -62,7 +62,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Daftar BKDana Mikro")
         if(intent.hasExtra(DaftarKilatDataDiriActivity.extra_data)){
-            val data = intent.getParcelableExtra<Content>(DaftarKilatDataDiriActivity.extra_data)
+            val data = intent.getParcelableExtra<UserContent>(DaftarKilatDataDiriActivity.extra_data)
             bindData(data)
         }
 
@@ -78,7 +78,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         }
     }
 
-    private fun bindData(data: Content?) {
+    private fun bindData(data: UserContent?) {
         Log.d("BIND","${data}")
         etDeskripsi.setText("${data?.deskripsi_usaha}")
         etOmzet.setText("${data?.omzet_usaha}")
@@ -90,14 +90,14 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
     }
 
     fun easyImage(){
-        EasyImage.openChooserWithGallery(this,"Pilih untuk cari gambar",1)
+        EasyImage.openCamera(this,1)
     }
 
     override fun returnDataUsaha(status: Boolean, responde: String?, message: String) {
         progressDialog?.dismiss()
         if(status){
             showMessage("Pendaftaran berhasil")
-            startActivity(Intent(baseContext,DaftarKilatUploadActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            startActivity(Intent(baseContext,DaftarMikroUploadActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
         }
     }
 

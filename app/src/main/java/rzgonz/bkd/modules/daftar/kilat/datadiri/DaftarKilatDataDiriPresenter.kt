@@ -5,9 +5,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rzgonz.bkd.models.BaseResponse
-import rzgonz.bkd.models.user.Content
-import rzgonz.bkd.models.user.UserResponse
-import rzgonz.bkd.services.APIService
 import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
 import rzgonz.core.kotlin.presenter.DIBasePresenter

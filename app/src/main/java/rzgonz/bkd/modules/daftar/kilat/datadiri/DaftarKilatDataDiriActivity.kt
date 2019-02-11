@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.header_daftar.*
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
-import rzgonz.bkd.models.user.Content
+import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.daftar.kilat.upload.DaftarKilatUploadActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
     companion object {
         var extra_data ="extra_data"
         @JvmStatic
-        fun startThisActivity(context: Context, data:Content) {
+        fun startThisActivity(context: Context, data:UserContent) {
             context.startActivity(Intent(context, DaftarKilatDataDiriActivity::class.java).apply {
                 putExtra(extra_data,data)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -52,7 +52,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Daftar BKDana Kilat")
         if(intent.hasExtra(extra_data)){
-            val data = intent.getParcelableExtra<Content>(extra_data)
+            val data = intent.getParcelableExtra<UserContent>(extra_data)
             bindData(data)
         }
 
@@ -104,7 +104,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
         return true
     }
 
-    private fun bindData(data: Content) {
+    private fun bindData(data: UserContent) {
         Log.d("BIND","${data}")
         spPendidikan.setSelection(data.pendidikan!!.toInt())
         etLamaBekerja.setText("${data.lamaBekerja}")

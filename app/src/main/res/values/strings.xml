@@ -34,4 +34,6 @@
     </string-array>
     <string name="FACEBOOK_APP_ID">617243342038126</string>
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">27ef9cc687b9f3ebdcaef2923c78e412</string>
+    <string name="update">Update</string>
+    <string name="catatan_saldo_anda_akan_dikurangi_tagihan_anda_jika_menekan_tombol_submit_jika_saldo_anda_tidak_mencukupi_harap_segera_melakukan_b_top_up_b_terlebih_dahulu"><![CDATA[* Catatan : Saldo Anda akan dikurangi tagihan Anda jika menekan tombol Submit. JIka saldo Anda tidak mencukupi harap segera melakukan</b> Top Up </b> terlebih dahulu.]]></string>
 </resources>

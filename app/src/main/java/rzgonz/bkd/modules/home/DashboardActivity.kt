@@ -1,14 +1,12 @@
 package rzgonz.bkd.modules.home
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.bottomnavigation.LabelVisibilityMode
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -16,6 +14,7 @@ import kotlinx.android.synthetic.main.app_bar_dashboard.*
 import kotlinx.android.synthetic.main.content_darsboard.*
 import rzgonz.bkd.R
 import rzgonz.bkd.constant.BKD
+import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.koran.KoranActivity
 import rzgonz.bkd.modules.peminjam.PeminjamActivity
 import rzgonz.bkd.modules.profile.EditProfileActivity
@@ -24,12 +23,19 @@ import rzgonz.bkd.modules.topup.TopupFragment
 import rzgonz.bkd.modules.transaksi.TransaksiFragment
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import rzgonz.core.kotlin.helper.SharedPreferenceService
+import org.greenrobot.eventbus.EventBus
+import rzgonz.bkd.Apps.APKModel
+import rzgonz.bkd.modules.QRCodeActivity
+import android.widget.TextView
+import rzgonz.bkd.models.dashboard.MySaldoResponse
 
-class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelectedListener,DashboardContract.View {
+    var username= ""
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, DashboardFragment()).commit()
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame, DashboardFragment.newInstance(username,"")).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_transaksi -> {
@@ -78,22 +84,32 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
 
     }
 
+    val mPresenter = DashboardPresenter()
+
     override fun inject() {
 
     }
 
     override fun onAttachView() {
-
+        mPresenter.attachView(this)
     }
 
 
     override fun onDetachView() {
-
+        mPresenter.detachView()
     }
 
     override fun initLayout(): Int {
-    return R.layout.activity_dashboard
+        if(SharedPreferenceService(applicationContext).getInt(BKD.LOGINTYPE,1) == 1){
+            return R.layout.activity_dashboard_peminjam
+        }else{
+            return R.layout.activity_dashboard
+        }
+
     }
+
+    lateinit var navUsername: TextView
+    lateinit var navSaldo: TextView
 
     override fun initUI(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar)
@@ -107,6 +123,18 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         nav_view.setNavigationItemSelectedListener(this)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navigation.selectedItemId =  R.id.navigation_home
+
+
+        val headerView = nav_view.getHeaderView(0)
+        navUsername = headerView.findViewById<TextView>(R.id.tvName)
+        navSaldo = headerView.findViewById<TextView>(R.id.tvSalod)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter.getMyData()
+        mPresenter.getMySaldo()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -125,7 +153,11 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
             R.id.itemKoran -> {
                 startActivity(Intent(baseContext,KoranActivity::class.java))
             }
+            R.id.itemQR -> {
+                startActivity(Intent(baseContext,QRCodeActivity::class.java))
+            }
             R.id.itemLogout -> {
+                SharedPreferenceService(this).saveString(BKD.TOKEN,"kosong")
                finish()
             }
         }
@@ -134,5 +166,19 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         return true
     }
 
+    override fun returnUser(status: Boolean, responde: UserContent?, message: String) {
+        if(status){
+            navUsername.setText(responde?.namaPengguna)
+            username = responde?.namaPengguna!!
+            EventBus.getDefault().post(responde)
+            SharedPreferenceService(applicationContext).saveString("MEMBER_ID",responde?.member_id!!)
+        }
+    }
 
+    override fun returnMySaldo(status: Boolean, responde: MySaldoResponse?, message: String) {
+        if(status){
+            SharedPreferenceService(applicationContext).saveString("SALDO",responde?.content?.Amount)
+            navSaldo.setText(responde?.content?.Amount)
+        }
+    }
 }

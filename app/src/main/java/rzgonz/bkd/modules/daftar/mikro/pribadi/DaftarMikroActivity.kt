@@ -1,14 +1,12 @@
 package rzgonz.bkd.modules.daftar.mikro.pribadi
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_daftar_mikro.*
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
-import rzgonz.bkd.models.user.Content
-import rzgonz.bkd.modules.daftar.mikro.upload.DaftarMikroUploadActivity
+import rzgonz.bkd.models.user.UserContent
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import java.util.*
 import javax.inject.Inject
@@ -22,7 +20,7 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
     @Inject
     lateinit var mPresenter : DaftarMirkoPresenter
 
-    var myData: Content? = null
+    var myData: UserContent? = null
 
     val myCalendar = Calendar.getInstance()
 
@@ -75,7 +73,7 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
         mPresenter.detachView()
     }
 
-    override fun returnUser(status: Boolean, responde: Content?, message: String) {
+    override fun returnUser(status: Boolean, responde: UserContent?, message: String) {
         if(status){
             etTempatLahir.setText("${responde?.tempatLahir}")
             if(responde?.jenisKelamin.equals("pria")){

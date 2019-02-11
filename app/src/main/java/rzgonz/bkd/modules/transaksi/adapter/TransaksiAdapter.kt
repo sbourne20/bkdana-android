@@ -11,10 +11,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import jp.wasabeef.recyclerview.animators.holder.AnimateViewHolder
 import rzgonz.bkd.R
+import rzgonz.bkd.constant.BKD
 import rzgonz.bkd.models.transaksi.ListTransaksiItem
+import rzgonz.bkd.models.transaksi.dana.TransaksiDanaResponse
 import rzgonz.bkd.modules.transaksi.TransaksiActivity
+import rzgonz.bkd.modules.transaksi.dana.TransaksiDanaDetailActivity
 import rzgonz.bkd.modules.transaksi.detail.DetailTransaksiActivity
 import rzgonz.core.kotlin.adapter.BaseRVAdapter
+import rzgonz.core.kotlin.helper.SharedPreferenceService
 import rzgonz.core.kotlin.holder.BaseItemHolder
 import rzgonz.core.kotlin.model.RvPropertise
 import java.util.ArrayList
@@ -73,7 +77,12 @@ class TransaksiAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, ite
             tvStatus.setText(listTransaksiItem.transaksiStatus)
 
             tvStatus.rootView.setOnClickListener {
-                it.context.startActivity(Intent(it.context,DetailTransaksiActivity::class.java).putExtra(DETIAL,listTransaksiItem))
+                if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,1) == 1){
+                    it.context.startActivity(Intent(it.context,DetailTransaksiActivity::class.java).putExtra(DETIAL,listTransaksiItem))
+                }else{
+                    it.context.startActivity(Intent(it.context,TransaksiDanaDetailActivity::class.java).putExtra(DETIAL,listTransaksiItem))
+
+                }
             }
         }
 

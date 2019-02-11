@@ -26,6 +26,10 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <android.support.v7.widget.CardView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="18dp"
@@ -34,21 +38,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Detail"
+                android:layout_weight="1"
+                />
             <TableRow
                 android:layout_margin="2dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No. Transaksi Pendanaan"
+                    android:text="NO"
                     android:textStyle="bold"
                     android:layout_weight="1"
-                    android:textColor="@color/nav_grey"
+                    android:textColor="@color/brownish_grey_two"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No. Transaksi Pendanaan"
-                    android:textColor="@color/nav_grey"
+                    android:text="Jenis"
+                    android:textColor="@color/brownish_grey_two"
                     />
             </TableRow>
             <TableRow
@@ -62,12 +72,11 @@
                     android:layout_weight="1"
                     />
                 <TextView
-                    android:id="@+id/tvNoTransaksiSub"
+                    android:id="@+id/tvJenis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="PM-2000F4152832E56"
-                    android:textColor="@android:color/holo_red_light"
-                    
+                    android:text="Pinjaman"
+                    android:textStyle="bold"
                     />
             </TableRow>
             <TableRow android:layout_margin="5dp"/>
@@ -78,14 +87,14 @@
                     android:text="Nama Transaksi"
                     android:textStyle="bold"
                     android:layout_weight="1"
-                    android:textColor="@color/nav_grey"
+                    android:textColor="@color/brownish_grey_two"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Nama Peminjam"
                     
-                    android:textColor="@color/nav_grey"
+                    android:textColor="@color/brownish_grey_two"
                     />
             </TableRow>
             <TableRow android:layout_margin="2dp">
@@ -111,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Tenor"
-                    android:textColor="@color/nav_grey"
+                    android:textColor="@color/brownish_grey_two"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     />
@@ -119,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Jatuh Tempo"
-                    android:textColor="@color/nav_grey"
+                    android:textColor="@color/brownish_grey_two"
                     
                     />
             </TableRow>
@@ -133,7 +142,7 @@
                     android:layout_weight="2"
                     />
                 <TextView
-                    android:id="@+id/tvStatus"
+                    android:id="@+id/tvJatuhTempo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="01/01/1970"
@@ -146,15 +155,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Jumlah Pendanaan"
-                    android:textColor="@color/nav_grey"
-                    android:textStyle="bold"
+                    android:textColor="@color/brownish_grey_two"
                     android:layout_weight="1"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Jumlah PInjaman"
-                    android:textColor="@color/nav_grey"
+                    android:textColor="@color/brownish_grey_two"
                     
                     />
             </TableRow>
@@ -175,48 +183,12 @@
                     
                     />
             </TableRow>
-            <TableRow android:layout_margin="5dp"/>
-            <TableRow android:layout_margin="2dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Jumlah Saldo Diterima"
-                    android:textColor="@color/nav_grey"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Status"
-                    android:textColor="@color/nav_grey"
-                    />
-            </TableRow>
-
-            <TableRow>
-                <TextView
-                    android:id="@+id/tvTotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="10,150,000 - PPH % = 10,150,000 IDR (PPH % : 0 IDR)"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    />
-                <TextView
-                    android:id="@+id/tvStatusPinjam"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Review"
-                    
-                    />
-            </TableRow>
-            <TableRow android:layout_margin="5dp"/>
             <TableRow android:layout_margin="2dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Status"
-                    android:textColor="@color/nav_grey"
+                    android:textColor="@color/brownish_grey_two"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     />
@@ -226,20 +198,51 @@
                     android:id="@+id/tvStatusDana"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Approve"
+                    android:text="-"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     android:layout_marginBottom="30dp"
                     />
             </TableRow>
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rvView2"
-                />
         </TableLayout>
     </android.support.v7.widget.CardView>
+
+     <android.support.v7.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_margin="9dp"
+         android:layout_height="wrap_content">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:textSize="14sp"
+                 android:text="Riwayat"
+                 android:layout_margin="9dp"/>
+         <android.support.v7.widget.RecyclerView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:id="@+id/rvView2"
+             />
+
+              <Button android:layout_width="wrap_content"
+                 android:layout_height="32dp"
+                 android:id="@+id/btnBayar"
+                 android:layout_gravity="center"
+                 android:gravity="center"
+                 android:paddingLeft="32dp"
+                  android:paddingRight="32dp"
+                 android:text="Bayar"
+                 android:layout_margin="18dp"
+                 android:textColor="@android:color/white"
+                 android:background="@color/Purpel500"
+                 />
+         </LinearLayout>
+     </android.support.v7.widget.CardView>
+
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

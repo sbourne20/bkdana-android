@@ -91,6 +91,22 @@ class RegisterActivity : DIBaseActivity(),RegisterContract.View {
 
         })
 
+        etPhone.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                if(p0.toString().length>4) {
+                    mPresenter.sendPhone(p0.toString())
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
+
         tvBantuan.setOnClickListener {
             phoneLogin(it)
         }
@@ -179,7 +195,7 @@ class RegisterActivity : DIBaseActivity(),RegisterContract.View {
     override fun returnRegister(status: Boolean, responde: BaseResponse<String>?, message: String) {
         progressDialog?.dismiss()
         if (status){
-            startActivity(Intent(baseContext,VerifyPhoneActivity::class.java))
+            finish()
         }else{
             showError(message)
         }
@@ -248,6 +264,16 @@ class RegisterActivity : DIBaseActivity(),RegisterContract.View {
             // Surface the result to your user in an appropriate way.
             Toast.makeText(this, toastMessage, Toast.LENGTH_LONG).show()
             }
+        }
+    }
+
+    override fun returnPhone(status: Boolean, responde: String?, message: String) {
+        if(status){
+            til_phone.isErrorEnabled = false
+        }else{
+            til_phone.isErrorEnabled = true
+            etPhone.setError("Nomer Telah Digunakan")
+            etPhone.requestFocus()
         }
     }
 }

@@ -1,9 +1,6 @@
 package rzgonz.bkd.modules.daftar.mikro.upload
 
 import okhttp3.RequestBody
-import rzgonz.bkd.models.LoginResponse
-import rzgonz.bkd.models.user.Content
-import rzgonz.bkd.models.user.UserResponse
 import rzgonz.core.kotlin.contract.DIBaseContract
 
 object DaftarMikroUploadContract  {

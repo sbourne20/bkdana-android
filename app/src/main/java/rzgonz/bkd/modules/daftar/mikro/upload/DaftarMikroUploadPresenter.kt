@@ -16,7 +16,7 @@ class DaftarMikroUploadPresenter @Inject constructor(context: Context) : DIBaseP
 
     val apiService = APIHelper.getClient().create(PinjamanService::class.java)
     override fun getPinjaman() {
-        apiService.getPengajuanKilat().enqueue(object : Callback<PengajuanResponse> {
+        apiService.getPengajuanMikro().enqueue(object : Callback<PengajuanResponse> {
             override fun onFailure(call: Call<PengajuanResponse>?, t: Throwable?) {
                 getView()?.retrunPijanam(false,null,"Username or Password Salah")
             }

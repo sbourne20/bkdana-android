@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
     <application
         android:name=".Apps.APKModel"
         android:allowBackup="true"
@@ -15,16 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/Splash"
         tools:replace="android:theme">
-        <meta-data android:name="com.facebook.accountkit.ApplicationName"
+        <activity android:name=".modules.transaksi.dana.TransaksiDanaDetailActivity"></activity>
+        <activity android:name=".modules.QRCodeActivity" />
+        <activity android:name=".modules.midtrans.MidtransActivity" />
+
+        <meta-data
+            android:name="com.facebook.accountkit.ApplicationName"
             android:value="@string/app_name" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/FACEBOOK_APP_ID" />
-        <meta-data android:name="com.facebook.accountkit.ClientToken"
+        <meta-data
+            android:name="com.facebook.accountkit.ClientToken"
             android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
-        <meta-data android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
-            android:value="false"/>
-        <activity
-            android:name="com.facebook.accountkit.ui.AccountKitActivity" />
+        <meta-data
+            android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
+            android:value="false" />
+
+        <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
         <activity
             android:name=".modules.Login.LoginActivity"
             android:screenOrientation="portrait"
@@ -57,7 +66,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".modules.transaksi.TransaksiActivity" />
         <activity android:name=".modules.peminjam.PeminjamActivity" />
-        <activity android:name=".modules.profile.EditProfileActivity" />
+        <activity
+            android:name=".modules.profile.EditProfileActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".modules.koran.KoranActivity" />
         <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity" />
         <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity" />
@@ -76,8 +87,9 @@
         <activity
             android:name=".modules.daftar.mikro.usaha.DaftarMirkoUsahaActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

@@ -1,6 +1,5 @@
 package rzgonz.bkd.modules.daftar.kilat.datadiri
 
-import rzgonz.bkd.models.user.Content
 import rzgonz.core.kotlin.contract.DIBaseContract
 
 object DaftarKilatDataDiriContract  {

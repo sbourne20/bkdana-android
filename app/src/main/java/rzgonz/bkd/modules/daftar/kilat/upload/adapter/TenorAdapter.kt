@@ -15,7 +15,7 @@ import rzgonz.bkd.models.pinjaman.ProductsItem
 import android.R.attr.name
 
 
-class TenorAdapter(context: Context, users: List<ProductsItem?>) : ArrayAdapter<ProductsItem?>(context, R.layout.row_spinner, users) {
+class TenorAdapter(context: Context, users: List<ProductsItem?>,val isBulan:Boolean = false) : ArrayAdapter<ProductsItem?>(context, R.layout.row_spinner, users) {
     // View lookup cache
     private class ViewHolder {
         internal var name: TextView? = null
@@ -42,7 +42,12 @@ class TenorAdapter(context: Context, users: List<ProductsItem?>) : ArrayAdapter<
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-        viewHolder.name?.setText("${user?.loanTerm} hari")
+
+        if(isBulan){
+            viewHolder.name?.setText("${user?.loanTerm} Bulan")
+        }else{
+            viewHolder.name?.setText("${user?.loanTerm} hari")
+        }
         // Return the completed view to render on screen
         return convertView
     }
@@ -72,7 +77,11 @@ class TenorAdapter(context: Context, users: List<ProductsItem?>) : ArrayAdapter<
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-        viewHolder.name?.setText("${user?.loanTerm} hari")
+        if(isBulan){
+            viewHolder.name?.setText("${user?.loanTerm} Bulan")
+        }else{
+            viewHolder.name?.setText("${user?.loanTerm} hari")
+        }
         // Return the completed view to render on screen
         return convertView
     }

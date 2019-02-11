@@ -1,27 +1,28 @@
 package rzgonz.bkd.modules.koran
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_pinjaman.*
+import kotlinx.android.synthetic.main.activity_koran.*
 import rzgonz.bkd.R
+import rzgonz.bkd.models.koran.KoranListResponse
 import rzgonz.bkd.modules.koran.adapter.KoranAdapter
-import rzgonz.bkd.modules.peminjam.adapter.PeminjamAdapter
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import rzgonz.core.kotlin.adapter.BaseRVAdapter
 import rzgonz.core.kotlin.view.CustomeRV
 
-class KoranActivity :  DIBaseActivity(), CustomeRV.RVListener {
+class KoranActivity :  DIBaseActivity(), CustomeRV.RVListener,KoranContract.View {
+
+    val mPresenter = KoranPresenter()
 
     override fun inject() {
 
     }
 
     override fun onAttachView() {
-
+        mPresenter.attachView(this)
     }
 
     override fun onDetachView() {
-
+        mPresenter.detachView()
     }
 
     override fun initLayout(): Int {
@@ -40,14 +41,20 @@ class KoranActivity :  DIBaseActivity(), CustomeRV.RVListener {
     }
 
     override fun onLoadItems(limit: Int, offset: Int) {
-        var data = ArrayList<String>()
-        for (i in 0..10) {
-            data.add("${rvView.getAdapter().colomCount + i}")
-        }
-        return rvView.getAdapter().setItems(data)
+        mPresenter.getKoranList()
     }
 
     override fun initRV(): CustomeRV {
         return rvView
+    }
+
+    override fun returnKoranList(status: Boolean, responde: KoranListResponse?, message: String) {
+        if(status){
+            rvView.getAdapter().setItems(responde?.content!!)
+        }else{
+            if(rvView.getAdapter().getItems().size == 0) vf.displayedChild = 1
+
+            showMessage(message)
+        }
     }
 }

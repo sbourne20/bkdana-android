@@ -81,7 +81,9 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
         }
         mPresenter.getPinjaman()
     }
-
+    fun easyImage(){
+        EasyImage.openCamera(this,1)
+    }
     private fun checkInput(): Boolean {
 
         if(imgfoto == null){
@@ -167,9 +169,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
         checkPermissionAndCreateCamera()
     }
 
-    fun easyImage(){
-        EasyImage.openChooserWithGallery(this,"Pilih untuk cari gambar",1)
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

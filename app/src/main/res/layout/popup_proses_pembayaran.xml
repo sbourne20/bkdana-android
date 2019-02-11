@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="9dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="@color/black80"
+        android:text="PROSES PEMBAYARAN"
+        android:layout_margin="9dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Saldo : 2,535,000 IDR"
+        android:textColor="@color/aqua"
+        android:layout_margin="5dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/tvSaldo"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tagihan : 2,535,000 IDR"
+        android:textAlignment="center"
+        android:layout_margin="5dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:id="@+id/tvTagihan"
+        android:textColor="@color/Red500"/>
+
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:textColor="@android:color/white"
+        android:layout_height="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:paddingRight="32dp"
+        android:paddingLeft="32dp"
+        android:text="Submit"
+        android:background="@color/Purpel500" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18sp"
+        android:textColor="@color/black80"
+        android:id="@+id/tvInfo"
+        android:text="@string/catatan_saldo_anda_akan_dikurangi_tagihan_anda_jika_menekan_tombol_submit_jika_saldo_anda_tidak_mencukupi_harap_segera_melakukan_b_top_up_b_terlebih_dahulu"
+        android:layout_margin="18dp"/>
+
+</LinearLayout>

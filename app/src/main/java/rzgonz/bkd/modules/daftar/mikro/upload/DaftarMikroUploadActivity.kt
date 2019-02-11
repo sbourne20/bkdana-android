@@ -118,7 +118,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
     }
 
     fun easyImage(){
-        EasyImage.openChooserWithGallery(this,"Pilih untuk cari gambar",1)
+        EasyImage.openCamera(this,1)
     }
 
     override fun returnUpload(status: Boolean, responde: String?, message: String) {
@@ -132,7 +132,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
     override fun retrunPijanam(status: Boolean, content: Content?, message: String) {
         Log.d("berak","${content}")
         if(status){
-            spinnerAdapterTenor = TenorAdapter(baseContext, content?.products!!)
+            spinnerAdapterTenor = TenorAdapter(baseContext, content?.products!!,true)
             spTenor.adapter = spinnerAdapterTenor
         }
     }

@@ -19,6 +19,8 @@ import android.provider.SyncStateContract.Helpers.update
 import android.content.pm.PackageInfo
 import android.util.Base64
 import android.util.Log
+import android.view.View
+import rzgonz.bkd.BuildConfig
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -47,15 +49,33 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
     override fun initUI(savedInstanceState: Bundle?) {
 //        et_email_login.setText("rzgonz@gmail.com")
 //        et_password_login.setText("123456abcD")
-        et_email_login.setText("iriawan.jakarta@yahoo.com")
-        et_password_login.setText("123456abcD")
+        if(BuildConfig.DEBUG) {
+            et_email_login.setText("iriawan.jakarta@yahoo.com")
+            et_password_login.setText("master199")
+        }
+
+
         btnDaftar.setOnClickListener {
             startActivity(Intent(baseContext,RegisterActivity::class.java))
         }
+
         btnLogin.setOnClickListener {
             showProgressDialog(this,"Please waiting",false)
             loginPresenter.checkLogin(et_email_login.text.toString(),et_password_login.text.toString())
         }
+        if(BuildConfig.DEBUG) {
+            tvForget.setOnClickListener {
+                et_email_login.setText("iriawan.maarif@gmail.com")
+                et_password_login.setText("Ab123456")
+            }
+        }else{
+            tvForget.visibility= View.GONE
+        }
+
+        btnBack.setOnClickListener {
+            finish()
+        }
+
 
         printhashkey()
     }

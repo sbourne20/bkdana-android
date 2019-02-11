@@ -1,33 +1,32 @@
 package rzgonz.bkd.modules.peminjam.detial
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_detail_pinjaman.*
-import rzgonz.bkd.Apps.APKModel
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import rzgonz.bkd.R
-import rzgonz.bkd.injector.transaksi.DaggerTransaksiComponent
-import rzgonz.bkd.models.transaksi.ListTransaksiItem
-import rzgonz.bkd.models.transaksi.detail.DetailTransaksiResponse
+import rzgonz.bkd.models.peminjam.ListPeminjamItem
+import rzgonz.bkd.models.peminjam.Message
+import rzgonz.bkd.models.peminjam.detail.PeminjamDetailResponse
 import rzgonz.bkd.modules.peminjam.custome.DialogProsesPembiayaan
-import rzgonz.bkd.modules.transaksi.adapter.TransaksiAdapter
 import rzgonz.core.kotlin.activity.DIBaseActivity
-import javax.inject.Inject
+import kotlin.math.roundToInt
 
-class DetailPinjamanActivity : DIBaseActivity() {
+class DetailPinjamanActivity : DIBaseActivity(),DetailPinjmanContract.View {
 
-//    @Inject
-//    lateinit var detialtransaksiPresenter: DetailTransaksiPresenter
-
+    val  mPresenter = DetailPeminjamPresenter()
+    lateinit var data : ListPeminjamItem
     override fun inject() {
       //  DaggerTransaksiComponent.builder().appsComponent(APKModel.appsComponent).build().inject(this)
     }
 
     override fun onAttachView() {
-      //  detialtransaksiPresenter.attachView(this)
+      mPresenter.attachView(this)
     }
 
     override fun onDetachView() {
-     //   detialtransaksiPresenter.detachView()
+        mPresenter.detachView()
     }
 
     override fun initLayout(): Int {
@@ -39,18 +38,60 @@ class DetailPinjamanActivity : DIBaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Detail Transaksi")
         supportActionBar?.setSubtitle("Detail Transaksi Anda")
-        val detail = intent.getParcelableExtra<ListTransaksiItem>(TransaksiAdapter.DETIAL)
-      //  detialtransaksiPresenter.getDetail(detail.transaksiId!!)
+       // showProgressDialog(this,"Mohon tunggu",false)
+        data = intent.getParcelableExtra("ID")
+
+        tvQuota.setText("Kuota ${data.totalPinjam?.toDouble()?.times(100)?.div(data.totalApprove!!.toDouble())!!.roundToInt()}")
+        tvNoTransaksi.setText(data.transaksiId)
+        tvTotalpinjaman.setText(data.totalPinjam)
+        tvTolalPendaanan.setText(data.totalApprove)
+        tvNamaPeminjam.setText(data.namaPeminjam)
+        tvProgress.setText("${data.totalLender} Lender mengikuti pendanaan ini")
+        tvGrade.setText(data.peringkatPengguna)
+        tvTenor.setText(data.productTitle)
+        progressBar.progress = data.totalPinjam!!.toDouble().times(100).div(data.totalApprove!!.toDouble()).roundToInt()
         btnBayar.setOnClickListener {
-            DialogProsesPembiayaan(this).show()
+            DialogProsesPembiayaan(this,data).show()
         }
+       // mPresenter.getDetail(intent.getStringExtra("ID"))
+
     }
 
-//    override fun returnDetialTransaksi(status: Boolean, responde: DetailTransaksiResponse?, message: String) {
-//        if(status){
-//            tvNoTransaksi.setText(responde?.content?.transaksi?.transaksiId)
-//            tvNoTransaksiSub.setText(responde?.content?.transaksi?.masterLoanId)
-//            tvNamaPeminjam.setText(responde?.content?.transaksi?.namaPeminjam)
-//        }
-//    }
+    override fun returnDetial(status: Boolean, responde: PeminjamDetailResponse?, message: String) {
+        progressDialog?.dismiss()
+        if(status){
+            tvNoTransaksi.setText(responde?.content?.noTransaksiPinjaman)
+            tvTotalpinjaman.setText(responde?.content?.totalPinjaman)
+            tvTolalPendaanan.setText(responde?.content?.totalPendanaan)
+            tvNamaPeminjam.setText(responde?.content?.namaPeminjam)
+            btnBayar.setOnClickListener {
+              //  DialogProsesPembiayaan(this,responde).show()
+            }
+
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: Message) {
+        showProgressDialog(this,"Mohon Tunggu",false)
+        mPresenter.postPendanaan(tvNoTransaksi.text.toString(),event.nominal_pendanaan)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this);
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this);
+    }
+
+    override fun retrunPendanaan(status: Boolean, responde: String?, message: String) {
+        progressDialog?.dismiss()
+        if(status){
+            finish()
+        }
+        showMessage(message)
+    }
 }

@@ -5,13 +5,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import rzgonz.bkd.R
+import rzgonz.bkd.models.peminjam.ListPeminjamItem
 import rzgonz.bkd.modules.peminjam.detial.DetailPinjamanActivity
 import rzgonz.core.kotlin.adapter.BaseRVAdapter
 import rzgonz.core.kotlin.holder.BaseItemHolder
 import rzgonz.core.kotlin.model.RvPropertise
 import java.util.ArrayList
+import kotlin.math.roundToInt
 
 class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, items) {
 
@@ -28,13 +31,13 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
 
     override fun onBindViewHolderItem(holder: BaseItemHolder?, position: Int, positionData: Int) {
         if (holder is Item){
-            holder.sentData(getItem(positionData) as String)
+            holder.sentData(getItem(positionData) as ListPeminjamItem)
         }
 
     }
 
     override fun onCreateViewHolderItem(viewGroup: ViewGroup, viewType: Int): Item {
-        var v = LayoutInflater.from(c).inflate(R.layout.cell_peminjam, viewGroup, false)
+        val v = LayoutInflater.from(c).inflate(R.layout.cell_peminjam, viewGroup, false)
         return Item(v)
     }
 
@@ -44,18 +47,32 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
 
 
         val tvName =itemView.findViewById<TextView>(R.id.tvName)
+        val tvTenor =itemView.findViewById<TextView>(R.id.tvTenor)
+        val tvNoTransaksi =itemView.findViewById<TextView>(R.id.tvNoTransaksi)
+        val tvTotalPinjaman =itemView.findViewById<TextView>(R.id.tvTotalPinjaman)
+        val tvTotalDana =itemView.findViewById<TextView>(R.id.tvTotalDana)
+        val tvGrade =itemView.findViewById<TextView>(R.id.tvGrade)
+        val tvLender =itemView.findViewById<TextView>(R.id.tvLender)
+        val progressBar =itemView.findViewById<ProgressBar>(R.id.progressBar)
+        val tvProgress =itemView.findViewById<TextView>(R.id.tvProgress)
 
-        init {
+        fun sentData(s: ListPeminjamItem) {
+            tvName.setText(s.namaPeminjam)
+            tvTenor.setText(s.loanTerm)
+            tvNoTransaksi.setText(s.transaksiId)
+            tvTotalPinjaman.setText(s.totalPinjam)
+            tvTotalDana.setText(s.totalApprove)
+            tvGrade.setText(s.peringkatPengguna)
+            tvLender.setText(s.totalLender)
 
+            val prog = (s.totalApprove?.toDouble()!!.times(100).div(s.totalPinjam?.toDouble()!!)).roundToInt()
 
-        }
-
-        fun sentData(s: String) {
+            tvProgress.setText("${prog}%")
+            progressBar.progress = (prog)
             tvName.rootView.setOnClickListener {
-                tvName.context.startActivity(Intent(tvName.context,DetailPinjamanActivity::class.java))
+                tvName.context.startActivity(Intent(tvName.context,DetailPinjamanActivity::class.java).putExtra("ID",s))
             }
         }
-
 
     }
 

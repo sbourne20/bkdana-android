@@ -4,6 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'rzgonz'
+            keyPassword '[Setiyawan21]'
+            storeFile file('/home/rzgonz/Documents/keystore/rzgonz.jks')
+            storePassword '[Setiyawan21]'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion '28.0.3'
     defaultConfig {
@@ -15,12 +23,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    productFlavors {
     }
 }
 
@@ -35,7 +50,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //implementation project(':core')
-    implementation 'com.github.rzgonz:RzKolin:8d396928fd'
+    implementation 'com.github.rzgonz:RzKolin:28bb1480f5'
     //dagger
     api "com.google.dagger:dagger:$dagger"
     kapt("com.google.dagger:dagger-compiler:$dagger")
@@ -45,5 +60,9 @@ dependencies {
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
     implementation 'com.github.jkwiecien:EasyImage:2.0.4'
     implementation 'com.facebook.android:account-kit-sdk:4.+'
-
+    implementation 'com.github.tajchert:WaitingDots:0.4.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.google.zxing:core:3.2.1'
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
 }

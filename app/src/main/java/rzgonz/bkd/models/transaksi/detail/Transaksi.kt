@@ -1,6 +1,7 @@
 package rzgonz.bkd.models.transaksi.detail
 
 import com.google.gson.annotations.SerializedName
+
 data class Transaksi(
 
 	@field:SerializedName("date_fundraise")
@@ -28,7 +29,7 @@ data class Transaksi(
 	val idModUserMember: String? = null,
 
 	@field:SerializedName("Kota")
-	val kota: Any? = null,
+	val kota: String? = null,
 
 	@field:SerializedName("tgl_pinjaman_disetujui")
 	val tglPinjamanDisetujui: String? = null,
@@ -61,7 +62,7 @@ data class Transaksi(
 	val jmlKredit: String? = null,
 
 	@field:SerializedName("Alamat")
-	val alamat: Any? = null,
+	val alamat: String? = null,
 
 	@field:SerializedName("size_foto_profil")
 	val sizeFotoProfil: Any? = null,
@@ -103,7 +104,7 @@ data class Transaksi(
 	val typeBusinessName: String? = null,
 
 	@field:SerializedName("Provinsi")
-	val provinsi: Any? = null,
+	val provinsi: String? = null,
 
 	@field:SerializedName("nama_peminjam")
 	val namaPeminjam: String? = null,

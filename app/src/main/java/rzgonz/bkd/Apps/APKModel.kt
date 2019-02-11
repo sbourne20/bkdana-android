@@ -14,15 +14,13 @@ class APKModel : RzApps {
 
     constructor() : super()
 
-
-
     init {
         APIHelper.BASE_URL = "http://149.129.213.30/"
        // APIHelper.Authorization ="Basic dXNlcm5hbWU6aW5kb25lc2lhZ28="
 //        var header = HashMap<String,String>()
 //        header.set("Authorization","Basic cnpnb256OjFxe30hUVtd")
 //        APIHelper.Headers  = header
-      //  APIHelper.setAuthInterceptor(AuthTokenInterceptor(this))
+        APIHelper.setAuthInterceptor(AuthTokenInterceptor(this))
        // APIHelper.HOST_NAME = "bkdroid.bknime.com"
        // APIHelper.PUBLIC_KEY_HASH = "sha256/ZtTK4ku9tn5Sq7YqN6piQIbnJvkYoLuTi1/ujEVRkzI="
 

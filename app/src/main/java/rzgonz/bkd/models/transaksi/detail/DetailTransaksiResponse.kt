@@ -1,5 +1,6 @@
 package rzgonz.bkd.models.transaksi.detail
 
+
 import com.google.gson.annotations.SerializedName
 
 data class DetailTransaksiResponse(

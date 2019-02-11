@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import rzgonz.bkd.R
+import rzgonz.bkd.models.koran.KorantItem
 import rzgonz.core.kotlin.adapter.BaseRVAdapter
 import rzgonz.core.kotlin.holder.BaseItemHolder
 import rzgonz.core.kotlin.model.RvPropertise
@@ -20,14 +21,14 @@ class KoranAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, items) 
         rvPropertise.colomCount = 1
         rvPropertise.reverseLayout = false
         rvPropertise.hasRefresh = true
-        rvPropertise.hasLoadmore = true
+        rvPropertise.hasLoadmore = false
         return rvPropertise
     }
 
 
     override fun onBindViewHolderItem(holder: BaseItemHolder?, position: Int, positionData: Int) {
         if (holder is Item){
-           // holder.sentData(getItem(positionData) as String)
+            holder.sentData(getItem(positionData) as KorantItem)
         }
 
     }
@@ -41,7 +42,24 @@ class KoranAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, items) 
 
     class Item(itemView: View) : BaseItemHolder(itemView) {
 
-        init {
+        val tvJenis =itemView.findViewById<TextView>(R.id.tvJenis)
+        val tvNo =itemView.findViewById<TextView>(R.id.tvNo)
+        val tvTile =itemView.findViewById<TextView>(R.id.tvTitle)
+        val tvTolal =itemView.findViewById<TextView>(R.id.tvTotal)
+        val tvDate =itemView.findViewById<TextView>(R.id.tvDate)
+        val tvLender =itemView.findViewById<TextView>(R.id.tvLender)
+
+        fun sentData(korantItem: KorantItem) {
+            if(korantItem.tipeDana.equals("1")){
+                tvJenis.setText("Debit")
+            }else{
+                tvJenis.setText("Kredit")
+            }
+            tvNo.setText("No ${korantItem.id}")
+            tvTile.setText(korantItem.notes)
+            tvTolal.setText(korantItem.amountDetail)
+            tvDate.setText(korantItem.dateTransaction)
+
 
         }
 

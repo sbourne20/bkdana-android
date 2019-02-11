@@ -4,11 +4,8 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 import rzgonz.bkd.models.BaseResponse
-import rzgonz.bkd.models.LoginResponse
+import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.models.pinjaman.PengajuanResponse
-import rzgonz.bkd.models.transaksi.TransaksiResponse
-import rzgonz.bkd.models.transaksi.detail.DetailTransaksiResponse
-import rzgonz.bkd.models.user.Content
 import rzgonz.bkd.models.user.UserResponse
 
 
@@ -35,6 +32,9 @@ interface PinjamanService {
     @POST("pinjaman/pengajuan_kilat")
     fun getPengajuanKilat(): Call<PengajuanResponse>
 
+    @POST("pinjaman/pengajuan_mikro")
+    fun getPengajuanMikro(): Call<PengajuanResponse>
+
     @FormUrlEncoded
     @POST("pinjaman/submit_mikro1/")
     fun sendMirko1(@Field("tempat_lahir")tempat_lahir:String,@Field("jenis_kelamin")jenis_kelamin:String,@Field("alamat")alamat:String,@Field("kota")kota:String,@Field("provinsi")provinsi:String,@Field("kodepos")kodepos:String): Call<BaseResponse<String>>
@@ -44,5 +44,8 @@ interface PinjamanService {
 
     @POST("pinjaman/submit_mikro3/")
     fun sendMikro3(@Body file : RequestBody): Call<BaseResponse<String?>>
+
+    @POST("member/mysaldo")
+    fun getMysaldo(): Call<MySaldoResponse>
 
 }

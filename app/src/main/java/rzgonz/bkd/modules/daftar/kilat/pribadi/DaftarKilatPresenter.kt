@@ -5,9 +5,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rzgonz.bkd.models.BaseResponse
-import rzgonz.bkd.models.user.Content
+import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.models.user.UserResponse
-import rzgonz.bkd.services.APIService
 import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
 import rzgonz.core.kotlin.presenter.DIBasePresenter
@@ -34,7 +33,7 @@ class DaftarKilatPresenter @Inject constructor(context: Context) : DIBasePresent
         })
     }
 
-    override fun sendMyData(user: Content) {
+    override fun sendMyData(user: UserContent) {
 
         apiService.sendKilat1(user.tempatLahir!!,user.jenisKelamin!!,user.tanggalLahir!!,user.alamat!!,user.kota!!,user.provinsi!!, user.kodepos!!,user.pekerjaan!!,user.nomorNik!!)
                 .enqueue(object : Callback<BaseResponse<String>> {

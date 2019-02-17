@@ -46,6 +46,10 @@ class PeminjamActivity : DIBaseActivity(),CustomeRV.RVListener,PeminjamContract.
 //            data.add("${rvView.getAdapter().colomCount+i}")
 //        }
 //        return rvView.getAdapter().setItems(data)
+        if(offset==0){
+            PAGE=1
+        }
+
         mPresenter.getListPeminjam(limit,PAGE)
     }
 

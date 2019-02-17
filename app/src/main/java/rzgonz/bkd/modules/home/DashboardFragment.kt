@@ -102,7 +102,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
         progressDialog?.dismiss()
         sr.isRefreshing = false
         if(status){
-            tvTotal.setText(responde?.content?.saldo)
+            tvTotal.setText("${responde?.content?.saldo}")
             tvTolalPendaanan.setText("Jumlah Pendanaan : ${responde?.content?.jmlAllTransaksi}")
             tvAccountType.setText(responde?.content?.tipeUser)
             responde?.content?.listRepayment?.forEachIndexed { index, listRepaymentItem ->

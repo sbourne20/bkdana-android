@@ -94,6 +94,7 @@ class TransaksiFragment : DIBaseFragment(),CustomeRV.RVListener,TransaksiContrac
             moveDuration = 1000
             changeDuration = 100
         }
+
     }
 
     override fun initAdapter(): BaseRVAdapter {
@@ -105,6 +106,9 @@ class TransaksiFragment : DIBaseFragment(),CustomeRV.RVListener,TransaksiContrac
 //        for (i in 0..10) {
 //            data.add("${rvView.getAdapter().colomCount + i}")
 //        }
+        if(offset==0){
+            PAGE=1
+        }
 
         if(SharedPreferenceService(activity).getInt(BKD.LOGINTYPE,1) == 1){
             transaksiPresenter.getListTransaksi(limit,PAGE)

@@ -83,6 +83,7 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
     override fun returnLogin(status: Boolean, responde: LoginResponse?, message: String) {
          progressDialog?.dismiss()
         if(status){
+            finish()
             startActivity(Intent(baseContext,DashboardActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
         }else{
             Toast.makeText(baseContext,message, Toast.LENGTH_LONG).show()

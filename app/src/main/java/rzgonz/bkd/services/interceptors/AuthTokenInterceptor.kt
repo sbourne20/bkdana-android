@@ -1,99 +1,47 @@
 package rzgonz.bkd.services.interceptors
-
 import android.content.Context
+import android.content.Intent
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
+import android.widget.Toast
 import okhttp3.*
-import org.json.JSONException
-import org.json.JSONObject
+import rzgonz.bkd.constant.BKD
+import rzgonz.bkd.modules.Login.LoginActivity
+import rzgonz.core.kotlin.helper.SharedPreferenceService
 import java.io.IOException
 import javax.net.ssl.HttpsURLConnection
+import android.os.Looper
 
 
-/**
- * Created by NAZAR on 30/07/2016.
- */
+
+
 class AuthTokenInterceptor(private val mContext: Context) : Interceptor {
     private val isGw: Boolean = false
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val refreshTokenUrl = "https://api.bkdroid.com/api/access"
         val original = chain.request()
         var response = chain.proceed(original)
 
         Log.d("bkdroid", "intercape")
-        if (response.code() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
-            val refreshToken = "Refresh token"
-            if (!TextUtils.isEmpty(refreshToken)) {
-                val refreshTokenRequest: Request
-                val refreshTokenResponse: Response
-                Log.d("bkdroid", "refresh token")
-                val requestBody = getRequestBody(refreshToken)
-                val requestBuilder = original.newBuilder()
-                refreshTokenRequest = requestBuilder.url(refreshTokenUrl).get().build()
-                refreshTokenResponse = chain.proceed(refreshTokenRequest)
-                Log.d("bkdroid", " respond " + refreshTokenResponse.toString())
-                Log.d("bkdroid", " respond " + refreshTokenResponse.toString())
-
-                if (refreshTokenResponse.code() == HttpsURLConnection.HTTP_FORBIDDEN || refreshTokenResponse.code() == HttpsURLConnection.HTTP_UNAUTHORIZED) {
-                    forceLogout()
-                    return response
-                }
-
-                val data = getJsonData(refreshTokenResponse) ?: return response
-
-                processResult(data)
-
-                val newOriginalRequest = reWriteRequest(original) ?: return response
-                response = chain.proceed(newOriginalRequest)
-            }
+        if (response.code() == HttpsURLConnection.HTTP_UNAUTHORIZED ||response.code() == HttpsURLConnection.HTTP_FORBIDDEN) {
+            forceLogout()
         }
 
         return response
     }
 
-    @Throws(IOException::class)
-    private fun getJsonData(refreshTokenResponse: Response): JSONObject? {
-        var data: JSONObject? = null
-        try {
-            if (refreshTokenResponse.body() != null) {
-                val refreshTokenObject = JSONObject(refreshTokenResponse.body()!!.string())
-                if (refreshTokenObject.optJSONArray("data") != null) {
-                    data = refreshTokenObject.optJSONArray("data").getJSONObject(0)
-                }
-            }
-        } catch (ex: JSONException) {
-            ex.printStackTrace()
-        }
-
-        return data
-    }
-
-    private fun reWriteRequest(originalRequest: Request): Request? {
-        Log.d("bkdroid", "ulang")
-        val accessToken = "ACCES TOKEN"
-        return originalRequest.newBuilder().removeHeader("Authorization").addHeader("Authorization", accessToken).build()
-    }
-
-    private fun getRequestBody(refreshToken: String): RequestBody {
-        return FormBody.Builder()
-                .add("FIELD_REFRESH_TOKE", refreshToken)
-                .add("FIELD_CLIENT_ID", "ID")
-                .add("FIELD_CLIENT_SECRET", "KEY")
-                .build()
-    }
-
-    private fun processResult(data: JSONObject) {
-        Log.d("bkdroid", "procee result")
-    }
 
     private fun forceLogout() {
-        Log.d("bkdroid", "logout")
+        SharedPreferenceService(mContext).saveString(BKD.TOKEN,"kosong")
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(mContext,"Session Habis Harap Login Kembali",Toast.LENGTH_LONG).show()
+            mContext.startActivity(Intent(mContext, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP))
+        }
     }
 
     companion object {
-
         private val TAG = AuthTokenInterceptor::class.java.simpleName
     }
 }

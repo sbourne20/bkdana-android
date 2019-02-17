@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import jp.wasabeef.recyclerview.animators.holder.AnimateViewHolder
 import rzgonz.bkd.R
@@ -58,6 +59,7 @@ class TransaksiAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, ite
          var tvJumlah:TextView
          var tvTotal:TextView
          var tvStatus:TextView
+          val btnDetail =  itemView.findViewById<Button>(R.id.btnDetail)
 
         init {
             tvNoTransaksi =itemView.findViewById(R.id.tvNoTransaksi)
@@ -66,6 +68,7 @@ class TransaksiAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, ite
             tvJumlah =itemView.findViewById(R.id.tvJumlah)
             tvTotal =itemView.findViewById(R.id.tvTotal)
             tvStatus =itemView.findViewById(R.id.tvStatus)
+
 
         }
         fun sentData(listTransaksiItem: ListTransaksiItem) {
@@ -76,7 +79,7 @@ class TransaksiAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, ite
             tvTotal.setText(listTransaksiItem.totalApprove)
             tvStatus.setText(listTransaksiItem.transaksiStatus)
 
-            tvStatus.rootView.setOnClickListener {
+            btnDetail.setOnClickListener {
                 if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,1) == 1){
                     it.context.startActivity(Intent(it.context,DetailTransaksiActivity::class.java).putExtra(DETIAL,listTransaksiItem))
                 }else{

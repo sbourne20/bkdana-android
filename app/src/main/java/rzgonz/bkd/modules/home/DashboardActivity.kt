@@ -28,6 +28,7 @@ import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.modules.QRCodeActivity
 import android.widget.TextView
 import rzgonz.bkd.models.dashboard.MySaldoResponse
+import rzgonz.bkd.modules.Login.LoginActivity
 
 
 class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelectedListener,DashboardContract.View {
@@ -158,7 +159,8 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
             }
             R.id.itemLogout -> {
                 SharedPreferenceService(this).saveString(BKD.TOKEN,"kosong")
-               finish()
+                finish()
+                startActivity(Intent(baseContext,LoginActivity::class.java))
             }
         }
 

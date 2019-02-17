@@ -6,6 +6,8 @@ import rzgonz.bkd.injector.DaggerAppsComponent
 import rzgonz.bkd.services.interceptors.AuthTokenInterceptor
 import rzgonz.core.kotlin.apps.RzApps
 import rzgonz.core.kotlin.helper.APIHelper
+import java.text.NumberFormat
+import java.util.*
 
 /**
  * Created by rzgonz on 7/12/17.
@@ -37,4 +39,9 @@ class APKModel : RzApps {
 
     }
 
+    fun Int.toThousand(): String {
+//        val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
+//        formatter.applyPattern("#.###")
+        return  NumberFormat.getNumberInstance(Locale.GERMANY).format(this)
+    }
 }

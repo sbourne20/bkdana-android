@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import rzgonz.bkd.R
@@ -55,6 +56,7 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
         val tvLender =itemView.findViewById<TextView>(R.id.tvLender)
         val progressBar =itemView.findViewById<ProgressBar>(R.id.progressBar)
         val tvProgress =itemView.findViewById<TextView>(R.id.tvProgress)
+        val btnDetail =itemView.findViewById<Button>(R.id.btnDetail)
 
         fun sentData(s: ListPeminjamItem) {
             tvName.setText(s.namaPeminjam)
@@ -69,7 +71,7 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
 
             tvProgress.setText("${prog}%")
             progressBar.progress = (prog)
-            tvName.rootView.setOnClickListener {
+            btnDetail.setOnClickListener {
                 tvName.context.startActivity(Intent(tvName.context,DetailPinjamanActivity::class.java).putExtra("ID",s))
             }
         }

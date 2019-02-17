@@ -41,6 +41,7 @@
         <activity
             android:name=".modules.splashscreen.SplashScreen"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,6 +52,7 @@
         <activity
             android:name=".modules.splashscreen.WorktourActivity"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             android:theme="@style/Splash" />
         <activity
             android:name=".modules.splashscreen.HomeActivity"

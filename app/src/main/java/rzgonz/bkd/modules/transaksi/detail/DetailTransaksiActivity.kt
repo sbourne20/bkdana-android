@@ -97,9 +97,9 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View,Tr
             }else{
                 btnBayar.visibility = View.GONE
             }
-            btnBayar.hint =responde?.content?.jmlAngsuran!!
+            btnBayar.hint =responde?.content?.nominalJmlAngsuran!!
             btnBayar.setOnClickListener {
-                showTopup(responde?.content?.jmlAngsuran!!)
+                showTopup(responde?.content?.nominalJmlAngsuran!!)
             }
 
         }

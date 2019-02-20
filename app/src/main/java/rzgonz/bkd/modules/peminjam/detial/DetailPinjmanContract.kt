@@ -12,7 +12,7 @@ object DetailPinjmanContract  {
 
     interface View : DIBaseContract.View {
             fun returnDetial(status : Boolean, responde: PeminjamDetailResponse?, message:String)
-            fun retrunPendanaan(status : Boolean, responde:String?, message:String)
+            fun retrunPendanaan(status : Boolean, responde:String?, message:String?)
     }
 
 

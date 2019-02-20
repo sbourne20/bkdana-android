@@ -3,6 +3,7 @@ package rzgonz.bkd.modules.home
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -21,8 +22,11 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import rzgonz.bkd.models.Event
 import rzgonz.bkd.models.dashboard.RepaymentResponse
 import rzgonz.bkd.models.user.UserContent
+import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
+import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
 import rzgonz.core.kotlin.fragment.DIBaseFragment
 
 
@@ -180,6 +184,12 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
       //  Glide.with(imgFoto).load(event)
         tvName.setText(event.namaPengguna)
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onBannerEvet(event: Event) {
+        showProgressDialog(activity,"Mohon Tunggu",false)
+        mPresenter.checkPinjaman()
+    }
     override fun onDestroy() {
         super.onDestroy()
         handler.removeMessages(0)
@@ -217,4 +227,14 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
             show()
         }
     }
+
+    override fun returnCheckPinjaman(status: Boolean, responde: String?, message: String?) {
+        progressDialog?.dismiss()
+        if(status){
+            startActivity(Intent(this.context, DaftarKilatActivity::class.java))
+        }else{
+            showError(message)
+        }
+    }
+
 }

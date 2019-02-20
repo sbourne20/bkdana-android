@@ -4,5 +4,6 @@ class BKD{
     companion object {
         val TOKEN = "TOKEN"
         val LOGINTYPE = "LOGINTYPE"
+        val EMAIL = "EMAIL"
     }
 }

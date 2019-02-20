@@ -45,7 +45,12 @@ class DetailPeminjamPresenter: DIBasePresenter<DetailPinjmanContract.View>(),Det
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
                 if(response.isSuccessful){
-                    getView()?.retrunPendanaan(true,response.body()?.message,"success")
+                    if(response.body()?.response.equals("fail")){
+                        getView()?.retrunPendanaan(false,response.body()?.message,response.body()?.message)
+                    }else{
+                        getView()?.retrunPendanaan(true,response.body()?.message,response.body()?.message)
+                    }
+
                 }else{
                     getView()?.retrunPendanaan(false,null,response.errorBody().toString())
                 }

@@ -21,11 +21,13 @@ object DashboardContract  {
 
     interface DashboardView : DIBaseContract.View {
         fun returnMyRepayment(status : Boolean, responde: RepaymentResponse?, message:String)
+        fun returnCheckPinjaman(status : Boolean, responde: String?, message:String?)
     }
 
 
     interface DashboardPresenter : DIBaseContract.Presenter<DashboardView> {
 
         fun getMyRepayment()
+        fun checkPinjaman()
     }
 }

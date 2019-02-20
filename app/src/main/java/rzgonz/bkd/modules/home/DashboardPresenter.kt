@@ -3,6 +3,7 @@ package rzgonz.bkd.modules.home
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.models.user.UserResponse
 
@@ -46,4 +47,5 @@ class DashboardPresenter () : DIBasePresenter<DashboardContract.View>(),Dashboar
             }
         })
     }
+
 }

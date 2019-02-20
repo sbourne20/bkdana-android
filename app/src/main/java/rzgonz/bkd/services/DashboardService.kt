@@ -5,6 +5,7 @@ import retrofit2.http.*
 import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.models.bank.ListBankResponse
+import rzgonz.bkd.models.checking.CheckPinjamanResponse
 import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.models.dashboard.RepaymentResponse
 import rzgonz.bkd.models.profile.UserProfileResponse
@@ -26,5 +27,8 @@ interface DashboardService {
 
     @GET("home/data_transaksi")
     fun getRepayment(): Call<RepaymentResponse>
+
+    @GET("pinjaman/cek_pinjaman_aktif/")
+    fun checkPinjaman(): Call<CheckPinjamanResponse>
 
 }

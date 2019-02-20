@@ -54,7 +54,7 @@
                     android:textColor="@android:color/white"
                     android:layout_height="24dp"
                     android:layout_width="match_parent"
-                    android:text="Detial"
+                    android:text="Detail"
                     android:background="@drawable/btn_aqua_rounded" />
             </TableRow>
             <TableLayout

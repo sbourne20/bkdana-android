@@ -11,7 +11,7 @@ import rzgonz.core.kotlin.view.CustomeRV
 class PeminjamActivity : DIBaseActivity(),CustomeRV.RVListener,PeminjamContract.View {
 
     val mPresenter = PeminjamPresenter()
-    var PAGE= 1
+    var PAGE= 0
     override fun inject() {
 
     }
@@ -47,7 +47,7 @@ class PeminjamActivity : DIBaseActivity(),CustomeRV.RVListener,PeminjamContract.
 //        }
 //        return rvView.getAdapter().setItems(data)
         if(offset==0){
-            PAGE=1
+            PAGE=0
         }
 
         mPresenter.getListPeminjam(limit,PAGE)

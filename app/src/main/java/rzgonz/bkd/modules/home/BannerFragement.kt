@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_banner_dashboard.*
+import org.greenrobot.eventbus.EventBus
 
 import rzgonz.bkd.R
 import rzgonz.bkd.constant.BKD
+import rzgonz.bkd.models.Event
 import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
 import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
 import rzgonz.bkd.modules.peminjam.PeminjamActivity
@@ -66,7 +68,8 @@ class BannerFragement : DIBaseFragment() {
                 cardBanner.setOnClickListener {
 
                     if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
-                        startActivity(Intent(this.context, DaftarKilatActivity::class.java))
+                        val data = Event(1)
+                        EventBus.getDefault().post(data)
                     }else{
                         showMessage("Anda Login Sebagai Pendana")
                     }
@@ -79,7 +82,8 @@ class BannerFragement : DIBaseFragment() {
                 tvBannerDetial.setText("Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!")
                 cardBanner.setOnClickListener {
                     if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
-                        startActivity(Intent(this.context, DaftarMikroActivity::class.java))
+                        val data  = Event(2)
+                        EventBus.getDefault().post(data)
                     }else{
                         showMessage("Anda Login Sebagai Pendana")
                     }

@@ -1,5 +1,6 @@
 package rzgonz.bkd.modules.peminjam.detial
 
+import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_detail_pinjaman.*
 import org.greenrobot.eventbus.EventBus
@@ -9,9 +10,13 @@ import rzgonz.bkd.R
 import rzgonz.bkd.models.peminjam.ListPeminjamItem
 import rzgonz.bkd.models.peminjam.Message
 import rzgonz.bkd.models.peminjam.detail.PeminjamDetailResponse
+import rzgonz.bkd.modules.password.ConfimPasswordActivity
 import rzgonz.bkd.modules.peminjam.custome.DialogProsesPembiayaan
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import kotlin.math.roundToInt
+import android.R.attr.data
+import android.app.Activity
+
 
 class DetailPinjamanActivity : DIBaseActivity(),DetailPinjmanContract.View {
 
@@ -51,10 +56,21 @@ class DetailPinjamanActivity : DIBaseActivity(),DetailPinjmanContract.View {
         tvTenor.setText(data.productTitle)
         progressBar.progress = data.totalPinjam!!.toDouble().times(100).div(data.totalApprove!!.toDouble()).roundToInt()
         btnBayar.setOnClickListener {
-            DialogProsesPembiayaan(this,data).show()
+            startActivityForResult(Intent(this,ConfimPasswordActivity::class.java),99)
+
         }
        // mPresenter.getDetail(intent.getStringExtra("ID"))
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 99){
+            if (resultCode == Activity.RESULT_OK) {
+                DialogProsesPembiayaan(this,this.data).show()
+            }
+
+        }
     }
 
     override fun returnDetial(status: Boolean, responde: PeminjamDetailResponse?, message: String) {
@@ -87,11 +103,11 @@ class DetailPinjamanActivity : DIBaseActivity(),DetailPinjmanContract.View {
         EventBus.getDefault().unregister(this);
     }
 
-    override fun retrunPendanaan(status: Boolean, responde: String?, message: String) {
+    override fun retrunPendanaan(status: Boolean, responde: String?, message: String?) {
         progressDialog?.dismiss()
         if(status){
             finish()
         }
-        showMessage(message)
+        showMessage("${message}")
     }
 }

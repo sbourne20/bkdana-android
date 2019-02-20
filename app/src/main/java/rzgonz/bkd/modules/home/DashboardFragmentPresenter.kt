@@ -3,12 +3,9 @@ package rzgonz.bkd.modules.home
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import rzgonz.bkd.models.dashboard.MySaldoResponse
+import rzgonz.bkd.models.checking.CheckPinjamanResponse
 import rzgonz.bkd.models.dashboard.RepaymentResponse
-import rzgonz.bkd.models.user.UserResponse
 import rzgonz.bkd.services.DashboardService
-
-import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
 import rzgonz.core.kotlin.presenter.DIBasePresenter
 
@@ -30,7 +27,24 @@ class DashboardFragmentPresenter : DIBasePresenter<DashboardContract.DashboardVi
                 }
             }
         })
-
     }
+    override fun checkPinjaman() {
+        apiService.checkPinjaman().enqueue(object : Callback<CheckPinjamanResponse> {
+            override fun onFailure(call: Call<CheckPinjamanResponse>?, t: Throwable?) {
+                getView()?.returnCheckPinjaman(false,null,"${t}")
+            }
 
+            override fun onResponse(call: Call<CheckPinjamanResponse>, response: Response<CheckPinjamanResponse>) {
+                if(response.isSuccessful){
+                    if(response.body()?.response.equals("fail")){
+                        getView()?.returnCheckPinjaman(true,response.body()?.response,response.body()?.message)
+                    }else{
+                        getView()?.returnCheckPinjaman(false,response.body()?.response,response.body()?.message)
+                    }
+                }else{
+                    getView()?.returnCheckPinjaman(false,null,"${response.errorBody()}")
+                }
+            }
+        })
+    }
 }

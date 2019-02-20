@@ -47,6 +47,10 @@ interface APIService {
     fun postLogin(@Field("username")userName:String,@Field("password")passWord:String): Call<LoginResponse>
 
     @FormUrlEncoded
+    @POST("member/cek_password/")
+    fun postPassoword(@Field("username")userName:String,@Field("password")passWord:String): Call<LoginResponse>
+
+    @FormUrlEncoded
     @POST("register_peminjam/submit_reg/")
     fun sendRegPinjam(@Field("fullname")fullname:String,@Field("email")email:String,@Field("telp")telp:String,@Field("password")pasword:String,@Field("confirm_password")confirm_password:String,@Field("type")type:Int): Call<BaseResponse<String>>
 
@@ -78,7 +82,6 @@ interface APIService {
     @FormUrlEncoded
     @POST("member/check_notelp")
     fun postPhone(@Field("no_telp")no_telp:String): Call<BaseResponse<String>>
-
 
 
 }

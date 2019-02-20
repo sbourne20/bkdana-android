@@ -1,5 +1,7 @@
 package rzgonz.bkd.modules.transaksi.detail
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
@@ -11,6 +13,7 @@ import rzgonz.bkd.injector.transaksi.DaggerTransaksiComponent
 import rzgonz.bkd.models.transaksi.ListTransaksiItem
 import rzgonz.bkd.models.transaksi.detail.DetailTransaksiResponse
 import rzgonz.bkd.models.transaksi.detail.LogPinjaman
+import rzgonz.bkd.modules.password.ConfimPasswordActivity
 import rzgonz.bkd.modules.transaksi.adapter.TransaksiDetailAdapter
 import rzgonz.bkd.modules.transaksi.adapter.TransaksiAdapter
 import rzgonz.core.kotlin.activity.DIBaseActivity
@@ -99,13 +102,25 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View,Tr
             }
             btnBayar.hint =responde?.content?.nominalJmlAngsuran!!
             btnBayar.setOnClickListener {
-                showTopup(responde?.content?.nominalJmlAngsuran!!)
+                startActivityForResult(Intent(this, ConfimPasswordActivity::class.java),99)
+
             }
 
         }
     }
 
-    override fun sendBayar() {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 99){
+            if (resultCode == Activity.RESULT_OK) {
+                showTopup(btnBayar.hint.toString())
+            }
+
+        }
+    }
+
+
+override fun sendBayar() {
         showProgressDialog(this,"Mohon Tunggu",false)
         mPresenter.postAngsuran(tvNoTransaksi.text.toString(),btnBayar.hint.toString())
     }

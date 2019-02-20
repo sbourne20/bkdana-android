@@ -10,6 +10,7 @@ import rzgonz.bkd.modules.daftar.kilat.upload.DaftarKilatUploadActivity
 import rzgonz.bkd.modules.daftar.mikro.upload.DaftarMikroUploadActivity
 import rzgonz.bkd.modules.daftar.mikro.usaha.DaftarMirkoUsahaActivity
 import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
+import rzgonz.bkd.modules.password.ConfimPasswordActivity
 import rzgonz.bkd.modules.register.RegisterActivity
 
 @Component(dependencies = [AppsComponent::class],modules = [UserModule::class])
@@ -24,6 +25,7 @@ interface UserComponent {
     fun inject(activity: DaftarMikroActivity)
     fun inject(activity: DaftarMirkoUsahaActivity)
     fun inject(activity: DaftarMikroUploadActivity)
+    fun inject(activity: ConfimPasswordActivity)
 
 
 

@@ -6,6 +6,7 @@ import retrofit2.http.*
 import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.models.pinjaman.PengajuanResponse
+import rzgonz.bkd.models.provinsi.ProvinsiResponse
 import rzgonz.bkd.models.user.UserResponse
 
 
@@ -47,5 +48,8 @@ interface PinjamanService {
 
     @POST("member/mysaldo")
     fun getMysaldo(): Call<MySaldoResponse>
+
+    @GET("province/list")
+    fun getListProvinsi(): Call<ProvinsiResponse>
 
 }

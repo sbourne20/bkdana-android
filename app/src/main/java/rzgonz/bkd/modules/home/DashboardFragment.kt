@@ -7,9 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 import rzgonz.bkd.R
@@ -17,11 +15,6 @@ import rzgonz.core.kotlin.view.CustomeViewPager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.Subscribe
-import com.bumptech.glide.Glide
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.MultiFormatWriter
-import com.google.zxing.WriterException
-import com.journeyapps.barcodescanner.BarcodeEncoder
 import rzgonz.bkd.models.Event
 import rzgonz.bkd.models.dashboard.RepaymentResponse
 import rzgonz.bkd.models.user.UserContent
@@ -188,7 +181,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onBannerEvet(event: Event) {
         showProgressDialog(activity,"Mohon Tunggu",false)
-        mPresenter.checkPinjaman()
+        mPresenter.checkPinjaman(event.value)
     }
     override fun onDestroy() {
         super.onDestroy()
@@ -230,8 +223,13 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
 
     override fun returnCheckPinjaman(status: Boolean, responde: String?, message: String?) {
         progressDialog?.dismiss()
-        if(status){
-            startActivity(Intent(this.context, DaftarKilatActivity::class.java))
+        if(true){
+            if(responde.equals("1")){
+                startActivity(Intent(this.context, DaftarKilatActivity::class.java))
+            }else if(responde.equals("2")){
+                startActivity(Intent(this.context, DaftarMikroActivity::class.java))
+            }
+
         }else{
             showError(message)
         }

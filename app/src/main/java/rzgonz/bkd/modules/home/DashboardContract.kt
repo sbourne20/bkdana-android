@@ -28,6 +28,6 @@ object DashboardContract  {
     interface DashboardPresenter : DIBaseContract.Presenter<DashboardView> {
 
         fun getMyRepayment()
-        fun checkPinjaman()
+        fun checkPinjaman(value: Int)
     }
 }

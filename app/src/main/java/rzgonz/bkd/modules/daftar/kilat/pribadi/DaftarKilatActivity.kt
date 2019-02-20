@@ -9,8 +9,11 @@ import android.app.DatePickerDialog
 import android.util.Log
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.injector.User.DaggerUserComponent
+import rzgonz.bkd.models.provinsi.ProvinsiItem
+import rzgonz.bkd.models.provinsi.ProvinsiResponse
 import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
+import rzgonz.bkd.modules.profile.adapter.ProvinsiAdapter
 import java.util.*
 
 import java.text.SimpleDateFormat
@@ -25,6 +28,10 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
     var myData: UserContent? = null
 
     val myCalendar = Calendar.getInstance()
+
+    val listProvinsi = ArrayList<ProvinsiItem>()
+
+    var provinsi = ""
     override fun initLayout(): Int {
         return R.layout.activity_daftar_kilat
     }
@@ -66,7 +73,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
            myData?.tanggalLahir = myCalendar.time.toLocaleString()
            myData?.alamat      = etAlamat.text.toString()
            myData?.kota = etKota.text.toString()
-           myData?.provinsi = spProvinsi.text.toString()
+           myData?.provinsi = listProvinsi.get(spProvinsi.selectedItemPosition).toString()
            myData?.kodepos = etKodePos.text.toString()
            myData?.nomorNik = etNIK.text.toString()
            mPresenter.sendMyData(myData!!)
@@ -106,11 +113,12 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
             etTanggalLahir.setText("${responde?.tanggalLahir}")
             etAlamat.setText("${responde?.alamat}")
             etKota.setText("${responde?.kota}")
-            spProvinsi.setText("${responde?.provinsi}")
+            provinsi = "${responde?.provinsi}"
             etKodePos.setText("${responde?.kodepos}")
             spPekerjaan.setSelection(responde?.pekerjaan!!.toInt())
             etNIK.setText("${responde?.nomorNik}")
             myData = responde
+            mPresenter.getProvinsi()
             Log.d("user","${status}, ${myData}")
         }
     }
@@ -147,8 +155,8 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
         }
 
 
-        if(spProvinsi.text.isNullOrEmpty()){
-            spProvinsi.setError( "is required!" )
+        if(spProvinsi.selectedItemPosition == 0 ){
+          showMessage( "Provinsi Belum Dipilih" )
             return  false
         }
 
@@ -162,8 +170,24 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
             return  false
         }
 
-
-
         return true
+    }
+
+    override fun returnProvinsi(status: Boolean, responde: ProvinsiResponse?, message: String) {
+        if(status){
+            var inde = 0
+            listProvinsi.add(ProvinsiItem("Pilih Provinsi"))
+            responde?.content?.forEachIndexed { index, provinsiItem ->
+                listProvinsi.add(provinsiItem!!)
+                if(provinsi.equals(provinsiItem.provinceName)){
+                    inde= index+1
+                }
+            }
+            val adater = ProvinsiAdapter(baseContext,listProvinsi.toList())
+            spProvinsi.adapter= adater
+            spProvinsi.setSelection(inde)
+        }else{
+            showMessage(message)
+        }
     }
 }

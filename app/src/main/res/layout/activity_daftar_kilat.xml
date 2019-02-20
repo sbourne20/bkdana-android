@@ -171,29 +171,12 @@ Silahkan masukan data diri Anda sebenar - benarnya."
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <EditText
+                    <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
                         android:background="@drawable/bg_edit_text"
                         android:id="@+id/spProvinsi"
-                        android:entries="@array/array_gender"
-                        android:prompt="@string/pilih"
-                        android:padding="5dp"
-                        android:editable="false"
-                        android:focusable="false"
                         />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignTop="@id/spProvinsi"
-                        android:layout_alignBottom="@id/spProvinsi"
-                        android:background="@drawable/grey_rounded"
-                        android:paddingRight="9dp"
-                        android:paddingLeft="9dp"
-                        android:layout_centerVertical="true"
-                        app:srcCompat="@drawable/ic_arrow_down"/>
-
 
                 </RelativeLayout>
             </LinearLayout>

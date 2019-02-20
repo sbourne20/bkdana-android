@@ -108,11 +108,10 @@ class RedemFragment : DIBaseFragment(),RedemContract.View {
                 val lastVisibleItem = (rvView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
                 if (!loading && totalItemCount <= (lastVisibleItem + 4)) {
                     loading = true
-                    mPresenter.getListRedem(LIMIT,PAGE)
+                 //   mPresenter.getListRedem(LIMIT,PAGE)
                 }
             }
         })
-        mPresenter.getListRedem(LIMIT,PAGE)
         mPresenter.getListBank()
 
         btnSelanjutnya.setOnClickListener {
@@ -160,6 +159,13 @@ class RedemFragment : DIBaseFragment(),RedemContract.View {
         }else{
             showMessage(message)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mAdapter.clear()
+        PAGE = 1
+        mPresenter.getListRedem(LIMIT,PAGE)
     }
 
     override fun returnRedem(status: Boolean, responde: String?, message: String?) {

@@ -28,7 +28,7 @@ class DashboardFragmentPresenter : DIBasePresenter<DashboardContract.DashboardVi
             }
         })
     }
-    override fun checkPinjaman() {
+    override fun checkPinjaman(value: Int) {
         apiService.checkPinjaman().enqueue(object : Callback<CheckPinjamanResponse> {
             override fun onFailure(call: Call<CheckPinjamanResponse>?, t: Throwable?) {
                 getView()?.returnCheckPinjaman(false,null,"${t}")
@@ -37,9 +37,9 @@ class DashboardFragmentPresenter : DIBasePresenter<DashboardContract.DashboardVi
             override fun onResponse(call: Call<CheckPinjamanResponse>, response: Response<CheckPinjamanResponse>) {
                 if(response.isSuccessful){
                     if(response.body()?.response.equals("fail")){
-                        getView()?.returnCheckPinjaman(true,response.body()?.response,response.body()?.message)
+                        getView()?.returnCheckPinjaman(true,value.toString(),response.body()?.message)
                     }else{
-                        getView()?.returnCheckPinjaman(false,response.body()?.response,response.body()?.message)
+                        getView()?.returnCheckPinjaman(false,value.toString(),response.body()?.message)
                     }
                 }else{
                     getView()?.returnCheckPinjaman(false,null,"${response.errorBody()}")

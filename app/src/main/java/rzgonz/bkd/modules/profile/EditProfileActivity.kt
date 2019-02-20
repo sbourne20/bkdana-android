@@ -203,7 +203,7 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
     override fun returnProvinsi(status: Boolean, responde: ProvinsiResponse?, message: String) {
         if(status){
             var inde = 0
-            listProvinsi.add(ProvinsiItem("PiliH Provinsi"))
+            listProvinsi.add(ProvinsiItem("Pilih Provinsi"))
             responde?.content?.forEachIndexed { index, provinsiItem ->
                 listProvinsi.add(provinsiItem!!)
                 if(provinsi.equals(provinsiItem.provinceName)){

@@ -12,7 +12,10 @@ import java.util.*
 import javax.inject.Inject
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.header_daftar.*
+import rzgonz.bkd.models.provinsi.ProvinsiItem
+import rzgonz.bkd.models.provinsi.ProvinsiResponse
 import rzgonz.bkd.modules.daftar.mikro.usaha.DaftarMirkoUsahaActivity
+import rzgonz.bkd.modules.profile.adapter.ProvinsiAdapter
 
 
 class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
@@ -23,6 +26,10 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
     var myData: UserContent? = null
 
     val myCalendar = Calendar.getInstance()
+
+    val listProvinsi = ArrayList<ProvinsiItem>()
+
+    var provinsi = ""
 
     override fun initLayout(): Int {
         return R.layout.activity_daftar_mikro
@@ -42,10 +49,10 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
         }
         mPresenter.getMyData()
 
-        val adapter = ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.array_provinsi))
-
-        spProvinsi.setAdapter<ArrayAdapter<String>>(adapter)
+//        val adapter = ArrayAdapter<String>(this,
+//                android.R.layout.simple_dropdown_item_1line, resources.getStringArray(R.array.array_provinsi))
+//
+//        spProvinsi.setAdapter<ArrayAdapter<String>>(adapter)
     }
 
     private fun sendMyData() {
@@ -55,7 +62,7 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
             myData?.tanggalLahir = myCalendar.time.toLocaleString()
             myData?.alamat      = etAlamat.text.toString()
             myData?.kota = etKota.text.toString()
-            myData?.provinsi = spProvinsi.text.toString()
+             myData?.provinsi = listProvinsi.get(spProvinsi.selectedItemPosition).toString()
             myData?.kodepos = etKodePost.text.toString()
             mPresenter.sendMyData(myData!!)
         }
@@ -83,9 +90,10 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
             }
             etAlamat.setText("${responde?.alamat}")
             etKota.setText("${responde?.kota}")
-            spProvinsi.setText("${responde?.provinsi}")
+            provinsi = "${responde?.provinsi}"
             etKodePost.setText("${responde?.kodepos}")
             myData = responde
+            mPresenter.getProvinsi()
         }
     }
 
@@ -115,12 +123,31 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
         }
 
 
-        if(spProvinsi.text.isNullOrEmpty()){
-            spProvinsi.setError( "is required!" )
+        if(spProvinsi.selectedItemPosition == 0 ){
+            showMessage( "Provinsi Belum Dipilih" )
             return  false
         }
 
 
         return true
     }
+
+    override fun returnProvinsi(status: Boolean, responde: ProvinsiResponse?, message: String) {
+        if(status){
+            var inde = 0
+            listProvinsi.add(ProvinsiItem("Pilih Provinsi"))
+            responde?.content?.forEachIndexed { index, provinsiItem ->
+                listProvinsi.add(provinsiItem!!)
+                if(provinsi.equals(provinsiItem.provinceName)){
+                    inde= index+1
+                }
+            }
+            val adater = ProvinsiAdapter(baseContext,listProvinsi.toList())
+            spProvinsi.adapter = adater
+            spProvinsi.setSelection(inde)
+        }else{
+            showMessage(message)
+        }
+    }
+
 }

@@ -64,6 +64,10 @@ class RedemAdapter(val mDataset: ArrayList<ContentItem?> = ArrayList()) : Recycl
         return mDataset.size
     }
 
+    fun clear(){
+        mDataset.clear()
+        notifyDataSetChanged()
+    }
 
     fun addAll(data:List<ContentItem?>){
         val old = mDataset.size

@@ -5,6 +5,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rzgonz.bkd.models.BaseResponse
+import rzgonz.bkd.models.provinsi.ProvinsiResponse
 import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.models.user.UserResponse
 import rzgonz.bkd.services.PinjamanService
@@ -46,6 +47,21 @@ class DaftarMirkoPresenter @Inject constructor(context: Context) : DIBasePresent
                     getView()?.returnSendUser(true,response.body()?.message,"success")
                 }else{
                     getView()?.returnSendUser(false,null,"no data")
+                }
+            }
+        })
+    }
+    override fun getProvinsi() {
+        apiService.getListProvinsi().enqueue(object : Callback<ProvinsiResponse>{
+            override fun onFailure(call: Call<ProvinsiResponse>, t: Throwable) {
+                getView()?.returnProvinsi(false,null,"${t}")
+            }
+
+            override fun onResponse(call: Call<ProvinsiResponse>, response: Response<ProvinsiResponse>) {
+                if(response.isSuccessful){
+                    getView()?.returnProvinsi(true,response.body(),"success")
+                }else{
+                    getView()?.returnProvinsi(false,null,"Maaf Terjadi masalah pada sistem")
                 }
             }
         })

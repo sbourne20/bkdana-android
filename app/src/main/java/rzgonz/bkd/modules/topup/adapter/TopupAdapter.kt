@@ -66,6 +66,10 @@ class TopupAdapter(val mDataset: ArrayList<ContentItem?> = ArrayList()) : Recycl
     }
 
     // Return the size of your dataset (invoked by the layout manager)
+    fun clear(){
+        mDataset.clear()
+        notifyDataSetChanged()
+    }
     override fun getItemCount(): Int {
         return mDataset.size
     }

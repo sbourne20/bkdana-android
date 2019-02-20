@@ -131,7 +131,7 @@ class TopupFragment : DIBaseFragment(),TopupContract.View,TopupDialogFragment.To
                 }
             }
         })
-        mPresenter.getListTopup(LIMIT,PAGE)
+
         mPresenter.getListBank()
     }
 
@@ -210,6 +210,13 @@ class TopupFragment : DIBaseFragment(),TopupContract.View,TopupDialogFragment.To
             setCanceledOnTouchOutside(false)
             show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mAdapter.clear()
+        PAGE = 1
+        mPresenter.getListTopup(LIMIT,PAGE)
     }
 
     override fun onStart() {

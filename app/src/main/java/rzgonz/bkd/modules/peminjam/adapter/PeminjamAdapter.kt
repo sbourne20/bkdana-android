@@ -60,17 +60,21 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
 
         fun sentData(s: ListPeminjamItem) {
             tvName.setText(s.namaPeminjam)
-            tvTenor.setText(s.loanTerm)
+            tvTenor.setText(s.productTitle)
             tvNoTransaksi.setText(s.transaksiId)
             tvTotalPinjaman.setText(s.totalPinjam)
             tvTotalDana.setText(s.totalApprove)
             tvGrade.setText(s.peringkatPengguna)
             tvLender.setText(s.totalLender)
 
-            val prog = (s.totalApprove?.toDouble()!!.times(100).div(s.totalPinjam?.toDouble()!!)).roundToInt()
+           // val prog = (s.totalApprove?.toDouble()!!.times(100).div(s.totalPinjam?.toDouble()!!)).roundToInt()
 
-            tvProgress.setText("${prog}%")
-            progressBar.progress = (prog)
+            tvProgress.setText("${s.kuota_dana}")
+            val  prog =  s.kuota_dana?.replace("%","")?.toInt()
+            if(prog !=null){
+                progressBar.progress = (prog)
+            }
+
             btnDetail.setOnClickListener {
                 tvName.context.startActivity(Intent(tvName.context,DetailPinjamanActivity::class.java).putExtra("ID",s))
             }

@@ -50,9 +50,12 @@ data class ListPeminjamItem(
 	val typeBusinessName: String? = null,
 
 	@field:SerializedName("nama_peminjam")
-	val namaPeminjam: String? = null
+	val namaPeminjam: String? = null,
+	@field:SerializedName("kuota_dana")
+	val kuota_dana: String? = null
 ) : Parcelable {
 	constructor(parcel: Parcel) : this(
+			parcel.readString(),
 			parcel.readString(),
 			parcel.readString(),
 			parcel.readString(),
@@ -86,6 +89,7 @@ data class ListPeminjamItem(
 		parcel.writeString(totalPinjam)
 		parcel.writeString(typeBusinessName)
 		parcel.writeString(namaPeminjam)
+		parcel.writeString(kuota_dana)
 	}
 
 	override fun describeContents(): Int {

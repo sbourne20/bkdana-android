@@ -32,5 +32,7 @@ data class PeminjamContent(
 	val noTransaksiPinjaman: String? = null,
 
 	@field:SerializedName("total_pendanaan")
-	val totalPendanaan: String? = null
+	val totalPendanaan: String? = null,
+	@field:SerializedName("kuota_dana")
+	val kuota_dana: String? = null
 )

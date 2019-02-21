@@ -51,10 +51,17 @@ class DetailPinjamanActivity : DIBaseActivity(),DetailPinjmanContract.View {
         tvTotalpinjaman.setText(data.totalPinjam)
         tvTolalPendaanan.setText(data.totalApprove)
         tvNamaPeminjam.setText(data.namaPeminjam)
-        tvProgress.setText("${data.totalLender} Lender mengikuti pendanaan ini")
+        tvLender.setText("${data.totalLender} Lender mengikuti pendanaan ini")
         tvGrade.setText(data.peringkatPengguna)
         tvTenor.setText(data.productTitle)
-        progressBar.progress = data.totalPinjam!!.toDouble().times(100).div(data.totalApprove!!.toDouble()).roundToInt()
+       // progressBar.progress = data.totalPinjam!!.toDouble().times(100).div(data.totalApprove!!.toDouble()).roundToInt()
+        tvProgress.setText("${data.kuota_dana}")
+        tvQuota.setText("Kuota ${data.kuota_dana}")
+        val  prog =  data.kuota_dana?.replace("%","")?.toInt()
+        if(prog !=null){
+            progressBar.progress = (prog)
+        }
+
         btnBayar.setOnClickListener {
             startActivityForResult(Intent(this,ConfimPasswordActivity::class.java),99)
 

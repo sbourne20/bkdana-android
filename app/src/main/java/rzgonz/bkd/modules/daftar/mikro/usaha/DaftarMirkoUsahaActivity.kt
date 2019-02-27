@@ -96,7 +96,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
     override fun returnDataUsaha(status: Boolean, responde: String?, message: String) {
         progressDialog?.dismiss()
         if(status){
-            showMessage("Pendaftaran berhasil")
+           // showMessage("Pendaftaran berhasil")
             startActivity(Intent(baseContext,DaftarMikroUploadActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
         }
     }

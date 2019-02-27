@@ -8,6 +8,7 @@ import android.view.Window
 import android.widget.Toast
 import kotlinx.android.synthetic.main.popup_proses_pembiayaan.*
 import org.greenrobot.eventbus.EventBus
+import rzgonz.bkd.Apps.toThousand
 import rzgonz.bkd.R
 import rzgonz.bkd.models.peminjam.ListPeminjamItem
 import rzgonz.bkd.models.peminjam.Message
@@ -19,9 +20,9 @@ open  class DialogProsesPembiayaan(context: Context, val responde: ListPeminjamI
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.popup_proses_pembiayaan)
-        tvSaldo.setText("Saldo : ${SharedPreferenceService(context).getString("SALDO","0")}")
-        tagihan = responde.totalPinjam?.toInt()!!.minus(responde.totalApprove?.toInt()!!)
-        tvTagihan.setText("Tagihan : ${tagihan}")
+        tvSaldo.setText("Saldo : ${SharedPreferenceService(context).getString("SALDO","0")} IDR")
+        tagihan = responde.totalPinjam?.replace(",","")?.toInt()!!.minus(responde.totalApprove?.replace(",","")?.toInt()!!)
+        tvTagihan.setText("Tagihan : ${tagihan.toThousand()} IDR")
         btnSubmit.setOnClickListener(this)
     }
 

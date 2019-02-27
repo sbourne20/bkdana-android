@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "101405613341",
+    "firebase_url": "https://bkdana-27edd.firebaseio.com",
+    "project_id": "bkdana-27edd",
+    "storage_bucket": "bkdana-27edd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101405613341:android:94612a1687788fa6",
+        "android_client_info": {
+          "package_name": "rzgonz.bkdana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101405613341-q3oe96dggf9g929r1um3k8c2r5lriea8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCauv8cUvbmVxECblv6m9Q57vVR0zrzudA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

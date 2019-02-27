@@ -8,6 +8,10 @@ import rzgonz.core.kotlin.apps.RzApps
 import rzgonz.core.kotlin.helper.APIHelper
 import java.text.NumberFormat
 import java.util.*
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+
+
 
 /**
  * Created by rzgonz on 7/12/17.
@@ -32,6 +36,7 @@ class APKModel : RzApps {
     override fun onCreate() {
         super.onCreate()
         appsComponent = DaggerAppsComponent.builder().appsModule(AppsModule(applicationContext)).build()
+        Fabric.with(this, Crashlytics())
     }
 
     companion object {
@@ -39,9 +44,12 @@ class APKModel : RzApps {
 
     }
 
-    fun Int.toThousand(): String {
+
+}
+
+
+fun Int.toThousand(): String {
 //        val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
 //        formatter.applyPattern("#.###")
-        return  NumberFormat.getNumberInstance(Locale.GERMANY).format(this)
-    }
+    return  NumberFormat.getNumberInstance(Locale.US).format(this)
 }

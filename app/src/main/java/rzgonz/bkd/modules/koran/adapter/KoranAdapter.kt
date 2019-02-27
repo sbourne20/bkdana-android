@@ -57,7 +57,7 @@ class KoranAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, items) 
             }
             tvNo.setText("No ${korantItem.id}")
             tvTile.setText(korantItem.notes)
-            tvTolal.setText(korantItem.amountDetail)
+            tvTolal.setText("${korantItem.amountDetail} IDR")
             tvDate.setText(korantItem.dateTransaction)
 
 

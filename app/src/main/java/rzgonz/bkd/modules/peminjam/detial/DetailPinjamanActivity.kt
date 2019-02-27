@@ -46,10 +46,9 @@ class DetailPinjamanActivity : DIBaseActivity(),DetailPinjmanContract.View {
        // showProgressDialog(this,"Mohon tunggu",false)
         data = intent.getParcelableExtra("ID")
 
-        tvQuota.setText("Kuota ${data.totalPinjam?.toDouble()?.times(100)?.div(data.totalApprove!!.toDouble())!!.roundToInt()}")
         tvNoTransaksi.setText(data.transaksiId)
-        tvTotalpinjaman.setText(data.totalPinjam)
-        tvTolalPendaanan.setText(data.totalApprove)
+        tvTotalpinjaman.setText("${data.totalPinjam} IDR")
+        tvTolalPendaanan.setText("${data.jmlKredit} IDR")
         tvNamaPeminjam.setText(data.namaPeminjam)
         tvLender.setText("${data.totalLender} Lender mengikuti pendanaan ini")
         tvGrade.setText(data.peringkatPengguna)

@@ -75,8 +75,8 @@ class TransaksiAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, ite
             tvNoTransaksi.setText(listTransaksiItem.transaksiId)
             tvNamaTransaksi.setText(listTransaksiItem.productTitle)
             tvJenis.setText(listTransaksiItem.typeBusinessName)
-            tvJumlah.setText(listTransaksiItem.totalrp)
-            tvTotal.setText(listTransaksiItem.totalApprove)
+            tvJumlah.setText("${listTransaksiItem.totalrp} IDR")
+            tvTotal.setText("${listTransaksiItem.totalApprove} IDR")
             tvStatus.setText(listTransaksiItem.transaksiStatus)
 
             btnDetail.setOnClickListener {

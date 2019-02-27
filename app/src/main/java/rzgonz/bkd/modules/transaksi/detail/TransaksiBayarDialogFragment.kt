@@ -13,6 +13,7 @@ import android.graphics.Point
 import android.text.Html
 import android.widget.Toast
 import kotlinx.android.synthetic.main.popup_proses_pembayaran.*
+import rzgonz.bkd.Apps.toThousand
 import rzgonz.bkd.R
 
 
@@ -77,12 +78,12 @@ class TransaksiBayarDialogFragment : DialogFragment(){
         super.onViewCreated(view, savedInstanceState)
 
 
-        tvSaldo.setText("SALDO : ${arguments?.getString(ARG_PARAM1)}")
-        tvTagihan.setText("TAGIHAN : ${arguments?.getString(ARG_PARAM2)}")
+        tvSaldo.setText("SALDO : ${arguments?.getString(ARG_PARAM1)} IDR")
+        tvTagihan.setText("TAGIHAN : ${arguments?.getString(ARG_PARAM2)?.toInt()?.toThousand()} IDR")
         tvInfo.setText(Html.fromHtml(tvInfo.text.toString()))
 
-        val saldo = arguments?.getString(ARG_PARAM1)?.toDouble()!!
-        val tagihan = arguments?.getString(ARG_PARAM2)?.toDouble()!!
+        val saldo = arguments?.getString(ARG_PARAM1)?.replace(",","")?.toDouble()!!
+        val tagihan = arguments?.getString(ARG_PARAM2)?.replace(",","")?.toDouble()!!
         btnSubmit.setOnClickListener {
                 if(saldo >= tagihan){
                     dismiss()

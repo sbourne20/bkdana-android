@@ -15,12 +15,14 @@ import rzgonz.core.kotlin.view.CustomeViewPager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.Subscribe
+import rzgonz.bkd.constant.BKD
 import rzgonz.bkd.models.Event
 import rzgonz.bkd.models.dashboard.RepaymentResponse
 import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
 import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
 import rzgonz.core.kotlin.fragment.DIBaseFragment
+import rzgonz.core.kotlin.helper.SharedPreferenceService
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -79,6 +81,9 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
         }
 
         tvName.setText(arguments?.getString(ARG_PARAM1,""))
+        if(SharedPreferenceService(activity).getInt(BKD.LOGINTYPE,0)==2) {
+            cvpBanner.visibility = View.GONE
+        }
     }
 
     override fun inject() {
@@ -99,8 +104,8 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
         progressDialog?.dismiss()
         sr.isRefreshing = false
         if(status){
-            tvTotal.setText("${responde?.content?.saldo}")
-            tvTolalPendaanan.setText("Jumlah Pendanaan : ${responde?.content?.jmlAllTransaksi}")
+            tvTotal.setText("${responde?.content?.saldo} IDR")
+            tvTolalPendaanan.setText("Jumlah Pendanaan : ${responde?.content?.jmlAllTransaksi} IDR")
             tvAccountType.setText(responde?.content?.tipeUser)
             responde?.content?.listRepayment?.forEachIndexed { index, listRepaymentItem ->
                 when(index){
@@ -108,13 +113,13 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
                         llOne.visibility = View.VISIBLE
                         tvTitleOne.setText(listRepaymentItem?.titleTransaksi)
                         tvTvTempoOne.setText("Jatuh Tempo : ${listRepaymentItem?.jatuhTempoTransaksi}")
-                        tvJumlahOne.setText(listRepaymentItem?.nominalTransaksi)
+                        tvJumlahOne.setText("${listRepaymentItem?.nominalTransaksi} IDR")
                     }
                     1 ->{
                         llTwo.visibility = View.VISIBLE
                         tvTItleTwo.setText(listRepaymentItem?.titleTransaksi)
                         tvTempoTwo.setText("Jatuh Tempo : ${listRepaymentItem?.jatuhTempoTransaksi}")
-                        tvJUmlahTwo.setText(listRepaymentItem?.nominalTransaksi)
+                        tvJUmlahTwo.setText("${listRepaymentItem?.nominalTransaksi} IDR")
                     }
                 }
             }
@@ -208,7 +213,6 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
 
     fun showProgressDialog(context: Context?, message: String?, isCancelable: Boolean) {
         if (context == null) return
-        // TODO: Change Progress dialog color
         progressDialog = ProgressDialog(context)
         progressDialog?.run {
             if (message != null) {

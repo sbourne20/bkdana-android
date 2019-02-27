@@ -5,7 +5,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class UserContent(
-
 		@field:SerializedName("member_id")
 		var member_id: String? = null,
 
@@ -31,7 +30,7 @@ data class UserContent(
 	var kota: String? = null,
 
 	@field:SerializedName("lama_bekerja")
-	var lamaBekerja: String = "0",
+	var lamaBekerja: String? = "0",
 
 	@field:SerializedName("Pendidikan")
 	var pendidikan: Int? = null,
@@ -69,7 +68,9 @@ data class UserContent(
 	@field:SerializedName("jml_bunga_usaha")
 	var jml_bunga_usaha: String? = null,
 	@field:SerializedName("lama_usaha")
-	var lama_usaha: String? = null
+	var lama_usaha: String? = null,
+		@field:SerializedName("peringkat_pengguna_persentase")
+	var peringkat_pengguna_persentase: String? = null
 
 ) : Parcelable {
 	constructor(parcel: Parcel) : this(
@@ -83,6 +84,7 @@ data class UserContent(
 			parcel.readString(),
 			parcel.readString(),
 			parcel.readValue(Int::class.java.classLoader) as? Int,
+			parcel.readString(),
 			parcel.readString(),
 			parcel.readString(),
 			parcel.readString(),
@@ -122,6 +124,7 @@ data class UserContent(
 		parcel.writeString(laba_usaha)
 		parcel.writeString(jml_bunga_usaha)
 		parcel.writeString(lama_usaha)
+		parcel.writeString(peringkat_pengguna_persentase)
 	}
 
 	override fun describeContents(): Int {

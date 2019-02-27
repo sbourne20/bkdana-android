@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import rzgonz.bkd.Apps.toThousand
 import rzgonz.bkd.R
 import rzgonz.bkd.models.transaksi.detail.LogPinjaman
 import rzgonz.bkd.models.transaksi.detail.RepaymentListItem
@@ -30,7 +31,7 @@ class TransaksiDetailAdapter(val mDataset: ArrayList<RepaymentListItem>) : Recyc
         fun bindData(position: Int,data: RepaymentListItem) {
             tvTgl.setText(data.jatuhTempo)
             tvCicilan.setText("Angsuran Ke ${position+1}")
-            tvSetoran.setText(data.nominalCicilan)
+            tvSetoran.setText("${data.nominalCicilan?.toInt()?.toThousand()} IDR")
             tvStatus.setText("Status : ${data.status}")
             if(data.status.equals("lunas",true)){
                 imgIcon.setImageResource(R.drawable.ic_check)

@@ -3,6 +3,7 @@ package rzgonz.bkd.services
 import retrofit2.Call
 import retrofit2.http.*
 import rzgonz.bkd.models.BaseResponse
+import rzgonz.bkd.models.BaseResponseMessage
 import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.models.bank.ListBankResponse
 import rzgonz.bkd.models.dashboard.MySaldoResponse
@@ -30,6 +31,6 @@ interface PeminjamService {
     fun getDetial(@Query("t")id:String): Call<PeminjamDetailResponse>
     @FormUrlEncoded
     @POST("pendanaan/submit")
-    fun postPendanaan(@Field("transaksi_id")trasaksId:String,@Field("nominal_pendanaan")nominal_pendanaan:String): Call<BaseResponse<String>>
+    fun postPendanaan(@Field("transaksi_id")trasaksId:String,@Field("nominal_pendanaan")nominal_pendanaan:String): Call<BaseResponseMessage>
 
 }

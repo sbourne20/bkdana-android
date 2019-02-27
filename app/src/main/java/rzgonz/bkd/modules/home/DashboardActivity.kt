@@ -2,7 +2,6 @@ package rzgonz.bkd.modules.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.design.bottomnavigation.LabelVisibilityMode
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
@@ -25,12 +24,12 @@ import rzgonz.bkd.modules.transaksi.TransaksiFragment
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import rzgonz.core.kotlin.helper.SharedPreferenceService
 import org.greenrobot.eventbus.EventBus
-import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.modules.QRCodeActivity
 import android.widget.TextView
 import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.modules.Login.LoginActivity
-
+import android.preference.PreferenceManager.getDefaultSharedPreferences
+import android.widget.ProgressBar
 
 class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelectedListener,DashboardContract.View {
     var username= ""
@@ -107,11 +106,11 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         }else{
             return R.layout.activity_dashboard
         }
-
     }
-
     lateinit var navUsername: TextView
     lateinit var navSaldo: TextView
+    lateinit var tvComplete: TextView
+    lateinit var pb: ProgressBar
 
     override fun initUI(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar)
@@ -126,11 +125,11 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navigation.selectedItemId =  R.id.navigation_home
 
-
         val headerView = nav_view.getHeaderView(0)
         navUsername = headerView.findViewById<TextView>(R.id.tvName)
         navSaldo = headerView.findViewById<TextView>(R.id.tvSalod)
-
+        tvComplete = headerView.findViewById<TextView>(R.id.tvComplete)
+        pb = headerView.findViewById<ProgressBar>(R.id.progressBar)
     }
 
     override fun onResume() {
@@ -159,7 +158,10 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
                 startActivity(Intent(baseContext,QRCodeActivity::class.java))
             }
             R.id.itemLogout -> {
-                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().clear().apply()
+                val sharedPrefs = getDefaultSharedPreferences(this)
+                val editor = sharedPrefs.edit()
+                editor.clear()
+                editor.commit()
                 finish()
                 startActivity(Intent(baseContext,LoginActivity::class.java))
             }
@@ -173,6 +175,8 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         if(status){
             navUsername.setText(responde?.namaPengguna)
             username = responde?.namaPengguna!!
+            pb.setProgress(responde.peringkat_pengguna_persentase?.toInt()!!)
+            tvComplete.setText("${responde.peringkat_pengguna_persentase}% Profil Terselesaikan")
             EventBus.getDefault().post(responde)
             SharedPreferenceService(applicationContext).saveString("MEMBER_ID",responde?.member_id!!)
         }
@@ -181,7 +185,7 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
     override fun returnMySaldo(status: Boolean, responde: MySaldoResponse?, message: String) {
         if(status){
             SharedPreferenceService(applicationContext).saveString("SALDO",responde?.content?.Amount)
-            navSaldo.setText(responde?.content?.Amount)
+            navSaldo.setText("${responde?.content?.Amount} IDR")
         }
     }
 

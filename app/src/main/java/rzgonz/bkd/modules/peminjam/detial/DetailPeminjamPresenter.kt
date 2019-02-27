@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rzgonz.bkd.models.BaseResponse
+import rzgonz.bkd.models.BaseResponseMessage
 import rzgonz.bkd.models.peminjam.detail.PeminjamDetailResponse
 import rzgonz.bkd.models.transaksi.TransaksiResponse
 import rzgonz.bkd.models.transaksi.detail.DetailTransaksiResponse
@@ -38,12 +39,12 @@ class DetailPeminjamPresenter: DIBasePresenter<DetailPinjmanContract.View>(),Det
     }
 
     override fun postPendanaan(id: String, nominal_pendanaan: String) {
-        apiService.postPendanaan(id,nominal_pendanaan).enqueue(object :Callback<BaseResponse<String>>{
-            override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
+        apiService.postPendanaan(id,nominal_pendanaan).enqueue(object :Callback<BaseResponseMessage>{
+            override fun onFailure(call: Call<BaseResponseMessage>, t: Throwable) {
                 getView()?.retrunPendanaan(false,null,"${t}")
             }
 
-            override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
+            override fun onResponse(call: Call<BaseResponseMessage>, response: Response<BaseResponseMessage>) {
                 if(response.isSuccessful){
                     if(response.body()?.response.equals("fail")){
                         getView()?.retrunPendanaan(false,response.body()?.message,response.body()?.message)

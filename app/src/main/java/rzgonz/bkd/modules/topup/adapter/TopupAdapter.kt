@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import rzgonz.bkd.Apps.toThousand
 import rzgonz.bkd.R
 import rzgonz.bkd.models.topup.ContentItem
 
@@ -29,7 +30,7 @@ class TopupAdapter(val mDataset: ArrayList<ContentItem?> = ArrayList()) : Recycl
         fun bindData(data: ContentItem?) {
             tvNoTransaksi.setText(data?.kodeTopUp)
             tvDate.setText(data?.tglTopUp)
-            tvTotal.setText(data?.jmlTopUp)
+            tvTotal.setText("${data?.jmlTopUp} IDR")
             tvStatus.setText(data?.statusTopUp)
             if(data?.statusTopUp.equals("pending")){
                 card.setCardBackgroundColor(card.context.resources.getColor(R.color.ivory))

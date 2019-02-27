@@ -33,6 +33,10 @@
         <meta-data
             android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
             android:value="false" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="0f46abe2380d259bf4ad7c340c06437c825ed151"
+            />
 
         <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
         <activity

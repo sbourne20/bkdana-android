@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import kotlinx.android.synthetic.main.activity_detail_transaksi.*
 import rzgonz.bkd.Apps.APKModel
+import rzgonz.bkd.Apps.toThousand
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.transaksi.DaggerTransaksiComponent
 import rzgonz.bkd.models.transaksi.ListTransaksiItem
@@ -83,8 +84,8 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View,Tr
             tvNamaPeminjam.setText(responde?.content?.transaksi?.namaPeminjam)
             tvTenor.setText("${responde?.content?.transaksi?.loanTerm!!} Bulan")
             tvNamaTransaksi.setText("${responde?.content?.transaksi?.typeBusinessName} ")
-            tvJumDana.setText("${responde?.content.transaksi.jmlPermohonanPinjamanDisetujui}")
-            tvJumPijam.setText("${responde?.content.transaksi.jmlPermohonanPinjaman} IDR")
+            tvJumDana.setText("${responde?.content.transaksi.jmlPermohonanPinjamanDisetujui?.toInt()?.toThousand()} IDR")
+            tvJumPijam.setText("${responde?.content.transaksi.jmlPermohonanPinjaman?.toInt()?.toThousand()} IDR")
             tvStatusDana.setText("${responde?.content.transaksi.masterLoanStatus}")
             tvJatuhTempo.setText("${responde?.content.jatuhTempo}")
 //

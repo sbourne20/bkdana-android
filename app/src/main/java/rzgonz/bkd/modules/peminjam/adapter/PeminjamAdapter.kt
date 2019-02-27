@@ -62,8 +62,8 @@ class PeminjamAdapter(c: Context, items: ArrayList<Any>) : BaseRVAdapter(c, item
             tvName.setText(s.namaPeminjam)
             tvTenor.setText(s.productTitle)
             tvNoTransaksi.setText(s.transaksiId)
-            tvTotalPinjaman.setText(s.totalPinjam)
-            tvTotalDana.setText(s.totalApprove)
+            tvTotalPinjaman.setText("${s.totalPinjam} IDR")
+            tvTotalDana.setText("${s.jmlKredit} IDR")
             tvGrade.setText(s.peringkatPengguna)
             tvLender.setText(s.totalLender)
 

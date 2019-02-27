@@ -27,7 +27,7 @@ class RedemAdapter(val mDataset: ArrayList<ContentItem?> = ArrayList()) : Recycl
         fun bindData(data: ContentItem?) {
             tvNoTransaksi.setText(data?.modRedeemId)
             tvDate.setText(data?.redeemDate)
-            tvTotal.setText(data?.redeemAmount)
+            tvTotal.setText("${data?.redeemAmount} IDR")
             tvStatus.setText(data?.redeemStatus)
 
         }

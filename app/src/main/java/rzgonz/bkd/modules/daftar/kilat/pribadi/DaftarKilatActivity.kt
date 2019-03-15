@@ -7,7 +7,10 @@ import rzgonz.bkd.R
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import android.app.DatePickerDialog
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import rzgonz.bkd.Apps.APKModel
+import rzgonz.bkd.Apps.dismissKeyboard
 import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.provinsi.ProvinsiItem
 import rzgonz.bkd.models.provinsi.ProvinsiResponse
@@ -56,12 +59,19 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
             updateLabel()
         }
 
-        etTanggalLahir.setOnClickListener { v ->
-            // TODO Auto-generated method stub
-            DatePickerDialog(v.context, date, myCalendar
-                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show()
-        }
+        etTanggalLahir.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+                if(p1?.action == MotionEvent.ACTION_DOWN){
+                    DatePickerDialog(this@DaftarKilatActivity, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+
+                }
+                etTanggalLahir.dismissKeyboard()
+                return false
+            }
+        })
+        showProgressDialog(this,"Mohon Tunggu",true)
         mPresenter.getMyData()
     }
 
@@ -73,7 +83,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
            myData?.tanggalLahir = myCalendar.time.toLocaleString()
            myData?.alamat      = etAlamat.text.toString()
            myData?.kota = etKota.text.toString()
-           myData?.provinsi = listProvinsi.get(spProvinsi.selectedItemPosition).toString()
+           myData?.provinsi = listProvinsi.get(spProvinsi.selectedItemPosition).provinceName
            myData?.kodepos = etKodePos.text.toString()
            myData?.nomorNik = etNIK.text.toString()
            mPresenter.sendMyData(myData!!)
@@ -81,7 +91,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
     }
 
     private fun updateLabel() {
-        val myFormat = "MM/dd/yyyy" //In which you need put here
+        val myFormat = "dd-MM-yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
         etTanggalLahir.setText(sdf.format(myCalendar.time))
@@ -103,9 +113,10 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
     }
 
     override fun returnUser(status: Boolean, responde: UserContent?, message: String) {
+        progressDialog?.dismiss()
         if(status){
             etTempatLahir.setText("${responde?.tempatLahir}")
-            if(responde?.jenisKelamin.equals("pria")){
+            if(responde?.jenisKelamin.equals("pria",true)){
                 spGender.setSelection(0)
             }else{
                 spGender.setSelection(1)
@@ -124,7 +135,6 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
     }
 
     override fun returnSendUser(status: Boolean, responde: String?, message: String) {
-        Log.d("USER","${responde}")
         progressDialog?.dismiss()
         if(status){
             Log.d("user1","${status}, ${myData}")

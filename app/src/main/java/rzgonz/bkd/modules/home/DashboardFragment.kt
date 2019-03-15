@@ -82,7 +82,8 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
 
         tvName.setText(arguments?.getString(ARG_PARAM1,""))
         if(SharedPreferenceService(activity).getInt(BKD.LOGINTYPE,0)==2) {
-            cvpBanner.visibility = View.GONE
+//            cvpBanner.visibility = View.GONE
+//            indicator.visibility = View.GONE
         }
     }
 
@@ -227,7 +228,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
 
     override fun returnCheckPinjaman(status: Boolean, responde: String?, message: String?) {
         progressDialog?.dismiss()
-        if(true){
+        if(status){
             if(responde.equals("1")){
                 startActivity(Intent(this.context, DaftarKilatActivity::class.java))
             }else if(responde.equals("2")){

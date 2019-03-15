@@ -20,7 +20,11 @@ import android.content.pm.PackageInfo
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import okhttp3.Interceptor
 import rzgonz.bkd.BuildConfig
+import rzgonz.bkd.services.interceptors.AuthTokenInterceptor
+import rzgonz.bkd.services.interceptors.KosongInterceptor
+import rzgonz.core.kotlin.helper.APIHelper
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -77,7 +81,8 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
         }
 
 
-        printhashkey()
+        APIHelper.setAuthInterceptor(KosongInterceptor(this))
+        //printhashkey()
     }
 
     override fun returnLogin(status: Boolean, responde: LoginResponse?, message: String) {

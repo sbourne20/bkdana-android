@@ -21,7 +21,7 @@ class DetailTransaksiPresenter @Inject constructor(context: Context) : DIBasePre
         apiService.getDetialTransaksi(id).enqueue(object : Callback<DetailTransaksiResponse>{
             override fun onFailure(call: Call<DetailTransaksiResponse>, t: Throwable) {
                 Log.d("return fail",t.message)
-                getView()?.returnDetialTransaksi(false,null,"${t}")
+                getView()?.returnDetialTransaksi(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<DetailTransaksiResponse>, response: Response<DetailTransaksiResponse>) {
@@ -38,7 +38,7 @@ class DetailTransaksiPresenter @Inject constructor(context: Context) : DIBasePre
     override fun postAngsuran(id: String, nominal_pendanaan: String) {
         apiService.postAngsuran(id,nominal_pendanaan).enqueue(object :Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
-                getView()?.retrunAngsuran(false,null,"${t}")
+                getView()?.retrunAngsuran(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {

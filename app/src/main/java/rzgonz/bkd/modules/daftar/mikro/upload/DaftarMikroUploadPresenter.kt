@@ -1,11 +1,13 @@
 package rzgonz.bkd.modules.daftar.mikro.upload
 
 import android.content.Context
+import com.google.gson.Gson
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rzgonz.bkd.models.BaseResponse
+import rzgonz.bkd.models.BaseResponseMessage
 import rzgonz.bkd.models.pinjaman.PengajuanResponse
 import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
@@ -42,9 +44,14 @@ class DaftarMikroUploadPresenter @Inject constructor(context: Context) : DIBaseP
 
                 override fun onResponse(call: Call<BaseResponse<String?>>, response: Response<BaseResponse<String?>>) {
                     if (response.isSuccessful) {
-                        getView()?.returnUpload(true, response.body()?.toString(), "success")
+                        if(response.body()?.status?.equals("failed")!!){
+                            getView()?.returnUpload(false, null, response.body()?.message!!)
+                        }else{
+                            getView()?.returnUpload(true, response.body()?.toString(), "success")
+                        }
                     } else {
-                        getView()?.returnUpload(false, null, "no data")
+                        val gson = Gson().fromJson(response.errorBody()?.charStream(),BaseResponseMessage::class.java)
+                        getView()?.returnUpload(false, null,gson.message)
                     }
                 }
             })

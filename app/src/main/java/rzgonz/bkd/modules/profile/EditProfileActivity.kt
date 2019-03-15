@@ -9,6 +9,13 @@ import rzgonz.bkd.models.provinsi.ProvinsiItem
 import rzgonz.bkd.models.provinsi.ProvinsiResponse
 import rzgonz.bkd.modules.profile.adapter.ProvinsiAdapter
 import rzgonz.core.kotlin.activity.DIBaseActivity
+import android.app.DatePickerDialog
+import android.view.MotionEvent
+import rzgonz.bkd.Apps.dismissKeyboard
+import rzgonz.bkd.models.user.UserResponse
+import java.util.*
+import java.text.SimpleDateFormat
+
 
 class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
 
@@ -17,6 +24,7 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
     val listProvinsi = ArrayList<ProvinsiItem>()
 
     var provinsi = ""
+    val myCalendar = Calendar.getInstance()
 
     override fun inject() {
 
@@ -50,9 +58,37 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
         supportActionBar?.setSubtitle("Isi Profil Anda Sesuai Dengan Identitas Anda")
         mPresenter.getProfile()
 
+
+        val date = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, monthOfYear)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateLabel()
+        }
+
+        etTanggalLahir.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+                if(p1?.action == MotionEvent.ACTION_DOWN){
+                    DatePickerDialog(this@EditProfileActivity, date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+
+                }
+                etTanggalLahir.dismissKeyboard()
+                return false
+            }
+        })
     }
 
-    override fun returnProfile(status: Boolean, responde: UserProfileResponse?, message: String) {
+
+    private fun updateLabel() {
+        val myFormat = "dd-MM-yyyy" //In which you need put here
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        etTanggalLahir.isCursorVisible = false
+        etTanggalLahir.setText(sdf.format(myCalendar.getTime()))
+    }
+
+    override fun returnProfile(status: Boolean, responde: UserResponse?, message: String) {
         progressDialog?.dismiss()
         if(status){
             setData(responde)
@@ -61,10 +97,15 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
         }
     }
 
-    private fun setData(responde: UserProfileResponse?) {
-        etNama.setText(responde?.content?.mumFullname)
-        etEmial.setText(responde?.content?.mumEmail)
-        etPhone.setText(responde?.content?.mumTelp)
+    private fun setData(responde: UserResponse?) {
+        etNama.setText(responde?.content?.namaPengguna)
+        etEmial.setText(responde?.content?.email)
+        etPhone.setText(responde?.content?.mobileno)
+        etNik.setText(responde?.content?.nomorNik)
+        etTanggalLahir.setText(responde?.content?.tanggalLahir)
+        if(!responde?.content?.jenisKelamin?.toLowerCase().equals("pria")){
+            spGender.setSelection(1)
+        }
         val listBank = resources.getStringArray(R.array.array_bank)
         listBank.forEachIndexed { index, s ->
             if(s.equals(responde?.content?.namaBank)){
@@ -80,23 +121,28 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
         btnUpdateAkun.setOnClickListener {
             if(checkAkun()){
                 showProgressDialog(this,"Mohon tunggu",false)
-                mPresenter.postEditAkun(etNama.text.toString(),etEmial.text.toString(),etPhone.text.toString(),etNoRek.text.toString(),spBank.selectedItem.toString())
+                mPresenter.postEditAkun(etNama.text.toString(),etEmial.text.toString(),etPhone.text.toString(),etNoRek.text.toString(),spBank.selectedItem.toString(),etNik.text.toString(),spGender.selectedItem.toString(),etTanggalLahir.text.toString(),spPekerjaan.selectedItemPosition.toString(),spPendidikan.selectedItemPosition.toString())
             }
 
         }
         btnUpdatePassword.setOnClickListener {
             if(checkPass()){
                 showProgressDialog(this,"Mohon tunggu",false)
-                mPresenter.postEditPassword(responde?.content?.idModUserMember!!,etOldPass.text.toString(),etNewPass.text.toString(),etPassKonfirm.text.toString())
+                mPresenter.postEditPassword(responde?.content?.memberId!!,etOldPass.text.toString(),etNewPass.text.toString(),etPassKonfirm.text.toString())
             }
         }
         btnUpdateAlamat.setOnClickListener {
             if(checkAlamat()){
                 showProgressDialog(this,"Mohon tunggu",false)
-                mPresenter.postEditAlamat(responde?.content?.idModUserMember!!,etAlamat.text.toString(),etKota.text.toString(),listProvinsi.get(spProvinsi.selectedItemPosition).provinceName!!,etKodePos.text.toString())
+                mPresenter.postEditAlamat(responde?.content?.memberId!!,etAlamat.text.toString(),etKota.text.toString(),listProvinsi.get(spProvinsi.selectedItemPosition).provinceName!!,etKodePos.text.toString())
             }
 
         }
+
+        responde?.content?.pekerjaan?.toInt()?.let { spPekerjaan.setSelection(it) }
+
+        responde?.content?.pendidikan?.toInt()?.let { spPendidikan.setSelection(it) }
+
 
         btnAkun.setOnClickListener {
             when(llAkun.visibility){
@@ -125,16 +171,19 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
 
         if(etNama.text.isNullOrEmpty()){
             etNama.setError( "is required!" )
+            etNama.requestFocus()
             return  false
         }
 
         if(etPhone.text.isNullOrEmpty()){
-            etNama.setError( "is required!" )
+            etPhone.setError( "is required!" )
+            etPhone
             return  false
         }
 
         if(etEmial.text.isNullOrEmpty()){
             etEmial.setError( "is required!" )
+            etEmial.requestFocus()
             return  false
         }
         if(spBank.selectedItemPosition ==0){
@@ -144,6 +193,21 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
 
         if(etNoRek.text.isNullOrEmpty()){
             etNoRek.setError( "is required!" )
+            etNoRek.requestFocus()
+            return  false
+        }
+
+
+        if(etNik.text.isNullOrEmpty()){
+            etNik.setError( "is required!" )
+            etNik.requestFocus()
+            return  false
+        }
+
+
+        if(etTanggalLahir.text.isNullOrEmpty()){
+            etTanggalLahir.setError( "is required!" )
+            etTanggalLahir.requestFocus()
             return  false
         }
         return true
@@ -217,4 +281,6 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
             showMessage(message)
         }
     }
+
+
 }

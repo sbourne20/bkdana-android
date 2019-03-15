@@ -111,6 +111,139 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/grey"
+                                android:text="NIK"/>
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                android:background="@drawable/bg_edit_text"
+                                android:id="@+id/etNik"
+                                android:inputType="number"
+                                android:singleLine="true"
+                                android:padding="5dp"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/grey"
+                                android:text="Jenis Kelamin"/>
+                            <Spinner
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                android:background="@drawable/bg_edit_text"
+                                android:id="@+id/spGender"
+                                android:entries="@array/array_gender"
+                                android:singleLine="true"
+                                android:padding="5dp"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/grey"
+                                android:text="Tanggal Lahir"/>
+                            <android.support.design.widget.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="32dp"
+                                android:background="@drawable/bg_edit_text"
+                                android:id="@+id/etTanggalLahir"
+                                android:singleLine="true"
+                                android:hint="dd/mm/yyyy"
+                                android:padding="5dp"
+                                />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/grey"
+                                android:text="Pendidikan"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <Spinner
+                                    android:layout_width="match_parent"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/bg_edit_text"
+                                    android:id="@+id/spPendidikan"
+                                    android:entries="@array/array_pendidikan"
+                                    android:prompt="@string/pilih"
+                                    />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignTop="@id/spPendidikan"
+                                    android:layout_alignBottom="@id/spPendidikan"
+                                    android:background="@drawable/grey_rounded"
+                                    android:paddingRight="9dp"
+                                    android:paddingLeft="9dp"
+                                    android:layout_centerVertical="true"
+                                    app:srcCompat="@drawable/ic_arrow_down"/>
+
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/grey"
+                                android:text="Pekerjaan"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <Spinner
+                                    android:layout_width="match_parent"
+                                    android:layout_height="32dp"
+                                    android:background="@drawable/bg_edit_text"
+                                    android:id="@+id/spPekerjaan"
+                                    android:entries="@array/array_pekerjaan"
+                                    android:prompt="@string/pilih" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignTop="@id/spPekerjaan"
+                                    android:layout_alignBottom="@id/spPekerjaan"
+                                    android:background="@drawable/grey_rounded"
+                                    android:paddingRight="9dp"
+                                    android:paddingLeft="9dp"
+                                    android:layout_centerVertical="true"
+                                    app:srcCompat="@drawable/ic_arrow_down"/>
+                            </RelativeLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/grey"
                                 android:text="Email"/>
                             <android.support.design.widget.TextInputEditText
                                 android:layout_width="match_parent"

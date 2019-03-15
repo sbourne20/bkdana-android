@@ -42,7 +42,7 @@ class TenorAdapter(context: Context, users: List<ProductsItem?>,val isBulan:Bool
         }
         // Populate the data from the data object via the viewHolder object
         // into the template view.
-
+        viewHolder.name?.setText("${user?.loanTerm}")
         if(isBulan){
             viewHolder.name?.setText("${user?.loanTerm} Bulan")
         }else{

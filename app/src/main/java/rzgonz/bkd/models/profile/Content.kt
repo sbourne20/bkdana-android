@@ -29,7 +29,7 @@ data class Content(
 	val kota: String? = null,
 
 	@field:SerializedName("mum_usaha")
-	val mumUsaha: Any? = null,
+	val mumUsaha: String? = null,
 
 	@field:SerializedName("Nama_pengguna")
 	val namaPengguna: String? = null,
@@ -38,7 +38,7 @@ data class Content(
 	val mumCreateDate: String? = null,
 
 	@field:SerializedName("mum_lama_usaha")
-	val mumLamaUsaha: Any? = null,
+	val mumLamaUsaha: String? = null,
 
 	@field:SerializedName("nama_bank")
 	val namaBank: String? = null,
@@ -71,7 +71,7 @@ data class Content(
 	val mumNomorRekening: String? = null,
 
 	@field:SerializedName("mum_ktp")
-	val mumKtp: Any? = null,
+	val mumKtp: String? = null,
 
 	@field:SerializedName("peringkat_pengguna")
 	val peringkatPengguna: String? = null,
@@ -81,7 +81,10 @@ data class Content(
 
 	@field:SerializedName("Provinsi")
 	val provinsi: String? = null,
-
-	@field:SerializedName("mum_type")
-	val mumType: String? = null
+	@field:SerializedName("nik")
+	val nik: String? = null,
+	@field:SerializedName("tgl_lahir")
+	val tgl_lahir: String? = null,
+	@field:SerializedName("Jenis_kelamin")
+	val Jenis_kelamin: String? = null
 )

@@ -10,7 +10,7 @@ object DaftarKilatDataDiriContract  {
 
 
     interface Presenter : DIBaseContract.Presenter<View> {
-        fun sendDataDiri(pendidikan:String,nama_perusahaan:String,telp_perusahaan:String,status_karyawan:String,lama_bekerja:String,nama_atasan:String,referensi_1:String,referensi_2:String)
+        fun sendDataDiri(pendidikan:String,nama_perusahaan:String,telp_perusahaan:String,status_karyawan:String,lama_bekerja:String,nama_atasan:String,referensi_1:String,referensi_2:String,namaReferensi:String,namaReferensi2:String)
 
     }
 }

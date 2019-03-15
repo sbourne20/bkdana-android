@@ -2,10 +2,14 @@ package rzgonz.bkd.modules.daftar.mikro.upload
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_daftar_mikro_upload.*
 import kotlinx.android.synthetic.main.header_daftar.*
@@ -18,6 +22,8 @@ import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.pinjaman.Content
+import rzgonz.bkd.models.user.UserContent
+import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
 import rzgonz.bkd.modules.daftar.kilat.upload.adapter.TenorAdapter
 import rzgonz.bkd.modules.home.DashboardActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
@@ -48,12 +54,19 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
     override fun initLayout(): Int {
         return R.layout.activity_daftar_mikro_upload
     }
+
+    private var data: UserContent? = null
+
     override fun initUI(savedInstanceState: Bundle?) {
         collapsing_toolbar.isTitleEnabled = false
         collapsing_toolbar.title = "Daftat BKDana Mikro"
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Daftar BKDana Mikro")
+        if(intent.hasExtra(DaftarKilatDataDiriActivity.extra_data)){
+            data = intent.getParcelableExtra<UserContent>(DaftarKilatDataDiriActivity.extra_data)
+            bindData(data)
+        }
         btnSelanjutnya.setOnClickListener {
             if(checkInput()) {
                 showProgressDialog(this,"Upload Progress",true)
@@ -74,6 +87,78 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
             easyImage()
         }
         mPresenter.getPinjaman()
+    }
+
+    private fun bindData(data: UserContent?) {
+        etNomorNIK.setText("${data?.nomorNik}")
+        etRekening.setText("${data?.nomorRekening}")
+        etLamaUsaha.setText("${data?.lamaUsaha}")
+        val pekerjaan = resources.getStringArray(R.array.array_pekerjaan)
+        pekerjaan.forEachIndexed { index, s ->
+            if(s.equals(data?.pekerjaan,true)){
+                spPekerjaan.setSelection(index)
+            }
+        }
+        Glide.with(this).asFile().load(data?.fotoFile).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgFoto.setImageURI(Uri.fromFile(resource))
+                imgfoto = resource
+                imgFoto.visibility = View.VISIBLE
+                llFoto.visibility = View.GONE
+                imgFoto.setOnClickListener {
+                    imgfoto = null
+                    llFoto.visibility = View.VISIBLE
+                    imgFoto.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgfoto = null
+                llFoto.visibility = View.VISIBLE
+                imgFoto.visibility = View.GONE
+            }
+        })
+        Glide.with(this).asFile().load(data?.nikFile).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgKTP.setImageURI(Uri.fromFile(resource))
+                imgNIK = resource
+                imgKTP.visibility = View.VISIBLE
+                llNIK.visibility = View.GONE
+                imgKTP.setOnClickListener {
+                    imgNIK = null
+                    llNIK.visibility = View.VISIBLE
+                    imgKTP.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgNIK = null
+                llNIK.visibility = View.VISIBLE
+                imgKTP.visibility = View.GONE
+            }
+        })
+        Glide.with(this).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgUsaha.setImageURI(Uri.fromFile(resource))
+                imgFotoUsaha = resource
+                imgUsaha.visibility = View.VISIBLE
+                llUsaha.visibility = View.GONE
+                imgUsaha.setOnClickListener {
+                    imgfoto = null
+                    llUsaha.visibility = View.VISIBLE
+                    imgUsaha.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgfoto = null
+                llUsaha.visibility = View.VISIBLE
+                imgUsaha.visibility = View.GONE
+            }
+        })
     }
 
     private fun sendUpload() {
@@ -126,6 +211,8 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         if(status){
             showMessage("Pendaftaran berhasil")
             startActivity(Intent(baseContext, DashboardActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+        }else{
+            showMessage(message)
         }
     }
 

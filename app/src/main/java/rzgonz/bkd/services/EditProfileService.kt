@@ -11,6 +11,7 @@ import rzgonz.bkd.models.redem.ListRedemResponse
 import rzgonz.bkd.models.topup.ListTopupResponse
 import rzgonz.bkd.models.transaksi.TransaksiResponse
 import rzgonz.bkd.models.transaksi.detail.DetailTransaksiResponse
+import rzgonz.bkd.models.user.UserResponse
 import java.util.stream.IntStream
 
 
@@ -29,11 +30,11 @@ interface EditProfileService {
 
     @FormUrlEncoded
     @POST("profile/update_informasiakun")
-    fun postEditAkun(@Field("fullname")fullname:String,@Field("email")email:String, @Field("telp")telp:String, @Field("nomor_rekening")nomor_rekening:String, @Field("nama_bank")nama_bank:String): Call<BaseResponse<String>>
+    fun postEditAkun(@Field("fullname")fullname:String,@Field("email")email:String, @Field("telp")telp:String, @Field("nomor_rekening")nomor_rekening:String, @Field("nama_bank")nama_bank:String,@Field("nik")nik:String,@Field("jenis_kelamin")jenis_kelamin:String,@Field("tgl_lahir")tgl_lahir:String,@Field("pendidikan")pendidikan:String,@Field("pekerjaan")pekerjaan:String): Call<BaseResponse<String>>
 
 
-    @GET("profile/edit_profile")
-    fun getEditProfile(): Call<UserProfileResponse>
+    @POST("member/mydata")
+    fun getEditProfile(): Call<UserResponse>
     @GET("province/list")
     fun getListProvinsi(): Call<ProvinsiResponse>
 

@@ -45,6 +45,8 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
        return R.layout.activity_daftar_kilat_data_diri
     }
 
+    private var data: UserContent?= null
+
     override fun initUI(savedInstanceState: Bundle?) {
         collapsing_toolbar.isTitleEnabled = false
         collapsing_toolbar.title = "Daftat BKDana Kilat"
@@ -52,7 +54,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Daftar BKDana Kilat")
         if(intent.hasExtra(extra_data)){
-            val data = intent.getParcelableExtra<UserContent>(extra_data)
+            data = intent.getParcelableExtra<UserContent>(extra_data)
             bindData(data)
         }
 
@@ -64,7 +66,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
     private fun sendDataDiri() {
         if(inputOK()) {
             showProgressDialog(this,"Upload Progress",true)
-            mPresenter.sendDataDiri(spPendidikan.selectedItem.toString(), etPerusahaan.text.toString(), etPhoneKantor.text.toString(), spKaryaan.selectedItem.toString(), etLamaBekerja.text.toString(), etNameAtasan.text.toString(), etReferensi.text.toString(), etReferensiSub.text.toString())
+            mPresenter.sendDataDiri(spPendidikan.selectedItemPosition.toString(), etPerusahaan.text.toString(), etPhoneKantor.text.toString(), spKaryaan.selectedItem.toString(), etLamaBekerja.text.toString(), etNameAtasan.text.toString(), etReferensi.text.toString(), etReferensiSub.text.toString(), etReferensiNama.text.toString(), etReferensiSubNama.text.toString())
         }
     }
 
@@ -98,23 +100,41 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
             etReferensiSub.setError( "is required!" )
             return  false
         }
+        if(etReferensiNama.text.isNullOrEmpty()){
+            etReferensiNama.setError( "is required!" )
+            return  false
+        }
 
+        if(etReferensiSubNama.text.isNullOrEmpty()){
+            etReferensiSubNama.setError( "is required!" )
+            return  false
+        }
 
 
         return true
     }
 
-    private fun bindData(data: UserContent) {
-        Log.d("BIND","${data}")
-        spPendidikan.setSelection(data.pendidikan!!.toInt())
-        etLamaBekerja.setText("${data.lamaBekerja}")
-
+    private fun bindData(data: UserContent?) {
+        spPendidikan.setSelection(data?.pendidikan!!.toInt())
+        etPerusahaan.setText("${data?.namaPerusahaan}")
+        etPhoneKantor.setText("${data?.noTelpPerusahaan}")
+        etNameAtasan.setText("${data?.namaAtasan}")
+        etReferensi.setText("${data?.referensi1}")
+        etReferensiSub.setText("${data?.referensi2}")
+        etLamaBekerja.setText("${data?.lamaBekerja}")
+        etReferensiNama.setText("${data?.referensiNama1}")
+        etReferensiSubNama.setText("${data?.referensiNama2}")
+        if(data?.statusKaryawan.equals("tetap")){
+            spKaryaan.setSelection(1)
+        }else {
+            spKaryaan.setSelection(0)
+        }
     }
 
     override fun returnSendDataDiri(status: Boolean, responde: String?, message: String) {
         progressDialog?.dismiss()
         if(status){
-            startActivity(Intent(this, DaftarKilatUploadActivity::class.java))
+            startActivity(Intent(this, DaftarKilatUploadActivity::class.java).putExtra(DaftarKilatDataDiriActivity.extra_data,data))
         }
 
     }

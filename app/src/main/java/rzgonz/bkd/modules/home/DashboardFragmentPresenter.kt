@@ -16,7 +16,7 @@ class DashboardFragmentPresenter : DIBasePresenter<DashboardContract.DashboardVi
     override fun getMyRepayment() {
         apiService.getRepayment().enqueue(object :Callback<RepaymentResponse>{
             override fun onFailure(call: Call<RepaymentResponse>, t: Throwable) {
-                getView()?.returnMyRepayment(false,null,"${t}")
+                getView()?.returnMyRepayment(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<RepaymentResponse>, response: Response<RepaymentResponse>) {
@@ -31,15 +31,15 @@ class DashboardFragmentPresenter : DIBasePresenter<DashboardContract.DashboardVi
     override fun checkPinjaman(value: Int) {
         apiService.checkPinjaman().enqueue(object : Callback<CheckPinjamanResponse> {
             override fun onFailure(call: Call<CheckPinjamanResponse>?, t: Throwable?) {
-                getView()?.returnCheckPinjaman(false,null,"${t}")
+                getView()?.returnCheckPinjaman(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<CheckPinjamanResponse>, response: Response<CheckPinjamanResponse>) {
                 if(response.isSuccessful){
                     if(response.body()?.response.equals("fail")){
-                        getView()?.returnCheckPinjaman(true,value.toString(),response.body()?.message)
-                    }else{
                         getView()?.returnCheckPinjaman(false,value.toString(),response.body()?.message)
+                    }else{
+                        getView()?.returnCheckPinjaman(true,value.toString(),response.body()?.message)
                     }
                 }else{
                     getView()?.returnCheckPinjaman(false,null,"${response.errorBody()}")

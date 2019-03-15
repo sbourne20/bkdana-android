@@ -47,11 +47,7 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View,Tr
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Detail Transaksi")
         supportActionBar?.setSubtitle("Detail Transaksi Anda")
-        val detail = intent.getParcelableExtra<ListTransaksiItem>(TransaksiAdapter.DETIAL)
-        mPresenter.getDetail(detail.transaksiId!!)
-        showProgressDialog(this,"Mohon Tunggu",false)
-
-
+        btnBayar.visibility = View.GONE
 
         // use a linear layout manager
         val mLayoutManager = LinearLayoutManager(baseContext)
@@ -62,10 +58,6 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View,Tr
         rvView2.setNestedScrollingEnabled(false)
 
         // specify an adapter (see also next example)
-
-        Handler().postDelayed({
-
-        }, 5000)
     }
 
     fun showTopup(tagihan:String) {
@@ -82,17 +74,12 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View,Tr
         if(status){
             tvNoTransaksi.setText(responde?.content?.transaksi?.transaksiId)
             tvNamaPeminjam.setText(responde?.content?.transaksi?.namaPeminjam)
-            tvTenor.setText("${responde?.content?.transaksi?.loanTerm!!} Bulan")
+            tvTenor.setText("${responde?.content?.transaksi?.loanTerm!!}")
             tvNamaTransaksi.setText("${responde?.content?.transaksi?.typeBusinessName} ")
             tvJumDana.setText("${responde?.content.transaksi.jmlPermohonanPinjamanDisetujui?.toInt()?.toThousand()} IDR")
             tvJumPijam.setText("${responde?.content.transaksi.jmlPermohonanPinjaman?.toInt()?.toThousand()} IDR")
             tvStatusDana.setText("${responde?.content.transaksi.masterLoanStatus}")
             tvJatuhTempo.setText("${responde?.content.jatuhTempo}")
-//
-//            val data = ArrayList<LogPinjaman>()
-//            for (index in 0..responde.content.logPinjaman?.ltpLamaAngsuran!!.toInt()){
-//                data.add(responde.content.logPinjaman)
-//            }
             val adapter2 =  TransaksiDetailAdapter(responde.content.repaymentList)
             rvView2.setAdapter(adapter2)
 
@@ -116,7 +103,6 @@ class DetailTransaksiActivity : DIBaseActivity(),DetailTransaksiContract.View,Tr
             if (resultCode == Activity.RESULT_OK) {
                 showTopup(btnBayar.hint.toString())
             }
-
         }
     }
 
@@ -136,6 +122,9 @@ override fun sendBayar() {
 
     override fun onResume() {
         super.onResume()
+        showProgressDialog(this,"Mohon Tunggu",false)
+        val detail = intent.getParcelableExtra<ListTransaksiItem>(TransaksiAdapter.DETIAL)
+        mPresenter.getDetail(detail.transaksiId!!)
     }
 
 }

@@ -55,7 +55,7 @@ class RegisterPresenter @Inject constructor(context: Context) : DIBasePresenter<
     }
 
     override fun sendPhone(phone: String) {
-        apiService.postPhone("+62${phone}").enqueue(object :Callback<BaseResponse<String>>{
+        apiService.postPhone("+62${phone.replaceFirst("^0+(?!$)", "")}").enqueue(object :Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
                 getView()?.returnPhone(false,null,"Gagal register harap coba kembali")
 

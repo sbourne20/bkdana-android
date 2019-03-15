@@ -19,7 +19,7 @@ class DashboardPresenter () : DIBasePresenter<DashboardContract.View>(),Dashboar
 
         apiService.getMyData().enqueue(object : Callback<UserResponse> {
             override fun onFailure(call: Call<UserResponse>?, t: Throwable?) {
-                getView()?.returnUser(false,null,"${t}")
+                getView()?.returnUser(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
@@ -35,7 +35,7 @@ class DashboardPresenter () : DIBasePresenter<DashboardContract.View>(),Dashboar
     override fun getMySaldo() {
         apiService.getMysaldo().enqueue(object : Callback<MySaldoResponse> {
             override fun onFailure(call: Call<MySaldoResponse>?, t: Throwable?) {
-                getView()?.returnMySaldo(false,null,"${t}")
+                getView()?.returnMySaldo(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<MySaldoResponse>, response: Response<MySaldoResponse>) {

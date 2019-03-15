@@ -40,6 +40,11 @@ class PeminjamActivity : DIBaseActivity(),CustomeRV.RVListener,PeminjamContract.
         return PeminjamAdapter(this, ArrayList<Any>())
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        rvView.onRefresh()
+    }
+
     override fun onLoadItems(limit: Int, offset: Int) {
 //        var data= ArrayList<String>()
 //        for (i in 0..10){
@@ -58,9 +63,12 @@ class PeminjamActivity : DIBaseActivity(),CustomeRV.RVListener,PeminjamContract.
             PAGE++
             rvView.getAdapter().setItems(responde!!)
         }else{
-            rvView.errorLoading()
-            showMessage(message)
+            if (rvView.getAdapter().itemCount ==0){
+                rvView.errorLoading()
+                showMessage(message)
+            }
         }
+
     }
 
     override fun initRV(): CustomeRV {

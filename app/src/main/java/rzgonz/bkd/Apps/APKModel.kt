@@ -1,5 +1,8 @@
 package rzgonz.bkd.Apps
 
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import rzgonz.bkd.injector.AppsComponent
 import rzgonz.bkd.injector.AppsModule
 import rzgonz.bkd.injector.DaggerAppsComponent
@@ -9,8 +12,10 @@ import rzgonz.core.kotlin.helper.APIHelper
 import java.text.NumberFormat
 import java.util.*
 import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
-
+import android.support.v4.content.ContextCompat.getSystemService
+import android.widget.EditText
 
 
 /**
@@ -26,7 +31,7 @@ class APKModel : RzApps {
 //        var header = HashMap<String,String>()
 //        header.set("Authorization","Basic cnpnb256OjFxe30hUVtd")
 //        APIHelper.Headers  = header
-        APIHelper.setAuthInterceptor(AuthTokenInterceptor(this))
+       // APIHelper.setAuthInterceptor(AuthTokenInterceptor(this))
        // APIHelper.HOST_NAME = "bkdroid.bknime.com"
        // APIHelper.PUBLIC_KEY_HASH = "sha256/ZtTK4ku9tn5Sq7YqN6piQIbnJvkYoLuTi1/ujEVRkzI="
 
@@ -37,6 +42,7 @@ class APKModel : RzApps {
         super.onCreate()
         appsComponent = DaggerAppsComponent.builder().appsModule(AppsModule(applicationContext)).build()
         Fabric.with(this, Crashlytics())
+        FirebaseAnalytics.getInstance(this);
     }
 
     companion object {
@@ -52,4 +58,9 @@ fun Int.toThousand(): String {
 //        val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
 //        formatter.applyPattern("#.###")
     return  NumberFormat.getNumberInstance(Locale.US).format(this)
+}
+
+fun EditText.dismissKeyboard() {
+    val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(this.windowToken, 0)
 }

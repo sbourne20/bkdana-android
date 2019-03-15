@@ -19,7 +19,7 @@ android {
         applicationId "rzgonz.bkdana"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.0.0'
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
     implementation 'com.github.jkwiecien:EasyImage:2.0.4'
-    implementation 'com.facebook.android:account-kit-sdk:4.+'
+    implementation 'com.facebook.android:account-kit-sdk:4.23.0'
     implementation 'com.github.tajchert:WaitingDots:0.4.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
@@ -73,6 +73,8 @@ dependencies {
     // Add dependency
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 
-
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
+        transitive = true;
+    }
 }
 apply plugin: 'com.google.gms.google-services'

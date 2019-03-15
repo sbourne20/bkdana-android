@@ -23,7 +23,7 @@ class DetailTransaksiDanaPresenter : DIBasePresenter<DetailTransaksiDanaContract
         apiService.getDetialTransaksiDana(id).enqueue(object : Callback<TransaksiDanaDetailResponse>{
             override fun onFailure(call: Call<TransaksiDanaDetailResponse>, t: Throwable) {
                 Log.d("return fail",t.message)
-                getView()?.returnDetialTransaksi(false,null,"${t}")
+                getView()?.returnDetialTransaksi(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<TransaksiDanaDetailResponse>, response: Response<TransaksiDanaDetailResponse>) {

@@ -27,8 +27,10 @@ interface PeminjamService {
 
     @GET("daftar_peminjam/index")
     fun getListPeminjam(@Query("page")page:Int,@Query("limit")limit:Int): Call<PeminjamListResponse>
-    @GET("/transaksi_pendana/detail")
+    @GET("/daftar_peminjam/detail")
     fun getDetial(@Query("t")id:String): Call<PeminjamDetailResponse>
+    @GET("/member/cek_biayai")
+    fun checkBiayai(): Call<BaseResponseMessage>
     @FormUrlEncoded
     @POST("pendanaan/submit")
     fun postPendanaan(@Field("transaksi_id")trasaksId:String,@Field("nominal_pendanaan")nominal_pendanaan:String): Call<BaseResponseMessage>

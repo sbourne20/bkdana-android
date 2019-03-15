@@ -67,7 +67,7 @@
                     android:id="@+id/tvNoTransaksi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="DD-12ou312u30"
+                    android:text="-"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     />
@@ -75,7 +75,7 @@
                     android:id="@+id/tvJenis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pinjaman"
+                    android:text="-"
                     android:textStyle="bold"
                     />
             </TableRow>
@@ -102,7 +102,7 @@
                     android:id="@+id/tvNamaTransaksi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pendanaan"
+                    android:text="-"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     />
@@ -110,7 +110,7 @@
                     android:id="@+id/tvNamaPeminjam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Andhika Desta Permana"
+                    android:text="-"
                     
                     />
             </TableRow>
@@ -137,7 +137,7 @@
                     android:id="@+id/tvTenor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12 Bulan"
+                    android:text="-"
                     android:textStyle="bold"
                     android:layout_weight="2"
                     />
@@ -145,7 +145,7 @@
                     android:id="@+id/tvJatuhTempo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="01/01/1970"
+                    android:text="-"
                     
                     />
             </TableRow>
@@ -171,7 +171,7 @@
                     android:id="@+id/tvJumDana"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10,000,000 IDR"
+                    android:text="-"
                     android:textStyle="bold"
                     android:layout_weight="1"
                     />
@@ -179,7 +179,7 @@
                     android:id="@+id/tvJumPijam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0 IDR"
+                    android:text="-"
                     
                     />
             </TableRow>

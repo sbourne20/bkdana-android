@@ -28,8 +28,9 @@ import rzgonz.bkd.modules.QRCodeActivity
 import android.widget.TextView
 import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.modules.Login.LoginActivity
-import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.widget.ProgressBar
+import android.content.Context
+
 
 class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelectedListener,DashboardContract.View {
     var username= ""
@@ -158,10 +159,9 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
                 startActivity(Intent(baseContext,QRCodeActivity::class.java))
             }
             R.id.itemLogout -> {
-                val sharedPrefs = getDefaultSharedPreferences(this)
-                val editor = sharedPrefs.edit()
-                editor.clear()
-                editor.commit()
+                val PREFERENCE_NAME = SharedPreferenceService::class.java.getPackage()!!.toString() + ".sharedprefs"
+                val settings = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+                settings.edit().clear().apply()
                 finish()
                 startActivity(Intent(baseContext,LoginActivity::class.java))
             }
@@ -175,10 +175,13 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         if(status){
             navUsername.setText(responde?.namaPengguna)
             username = responde?.namaPengguna!!
-            pb.setProgress(responde.peringkat_pengguna_persentase?.toInt()!!)
-            tvComplete.setText("${responde.peringkat_pengguna_persentase}% Profil Terselesaikan")
+            pb.setProgress(responde.peringkatPenggunaPersentase?.toInt()!!)
+            tvComplete.setText("${responde.peringkatPenggunaPersentase}% Profil Terselesaikan")
             EventBus.getDefault().post(responde)
-            SharedPreferenceService(applicationContext).saveString("MEMBER_ID",responde?.member_id!!)
+            SharedPreferenceService(applicationContext).saveString("MEMBER_ID",responde?.memberId!!)
+            if(responde?.peringkatPenggunaPersentase?.toInt()!! < 25){
+                startActivity(Intent(baseContext,EditProfileActivity::class.java))
+            }
         }
     }
 

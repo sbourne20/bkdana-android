@@ -21,7 +21,7 @@ class RedemPresenter @Inject constructor(val context: Context) : DIBasePresenter
     override fun getListRedem(limit: Int, page: Int) {
         apiService.getRedemList().enqueue(object :Callback<ListRedemResponse>{
             override fun onFailure(call: Call<ListRedemResponse>, t: Throwable) {
-                getView()?.retrunListRedem(false,null,"${t}")
+                getView()?.retrunListRedem(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<ListRedemResponse>, response: Response<ListRedemResponse>) {
@@ -40,7 +40,7 @@ class RedemPresenter @Inject constructor(val context: Context) : DIBasePresenter
     override fun getListBank() {
         apiService.getListBank().enqueue(object :Callback<ListBankResponse>{
             override fun onFailure(call: Call<ListBankResponse>, t: Throwable) {
-                getView()?.retrunListBank(false,null,"${t}")
+                getView()?.retrunListBank(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<ListBankResponse>, response: Response<ListBankResponse>) {
@@ -59,7 +59,7 @@ class RedemPresenter @Inject constructor(val context: Context) : DIBasePresenter
     override fun sendRedem(nama_bank: String, nomer_rek: String, amount: String) {
         apiService.postRedem(nomer_rek,nama_bank,amount).enqueue(object :Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
-                getView()?.returnRedem(false,null,"${t}")
+                getView()?.returnRedem(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {

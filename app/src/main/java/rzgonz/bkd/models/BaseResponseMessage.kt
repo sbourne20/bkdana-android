@@ -8,7 +8,7 @@ class BaseResponseMessage(
 	val response: String? = null,
 
 	@field:SerializedName("message")
-	val message: String? = null,
+	val message: String = "",
 
 	@field:SerializedName("status")
 	val status: Int? = null

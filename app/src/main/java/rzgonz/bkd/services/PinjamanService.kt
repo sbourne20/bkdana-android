@@ -25,7 +25,7 @@ interface PinjamanService {
 
     @FormUrlEncoded
     @POST("pinjaman/submit_kilat2/")
-    fun sendKilat2(@Field("pendidikan")pendidikan:String,@Field("nama_perusahaan")nama_perusahaan:String,@Field("telp_perusahaan")telp_perusahaan:String,@Field("status_karyawan")status_karyawan:String,@Field("lama_bekerja")lama_bekerja:String,@Field("nama_atasan")nama_atasan:String,@Field("referensi_1")referensi_1:String,@Field("referensi_2")referensi_2:String): Call<BaseResponse<String>>
+    fun sendKilat2(@Field("pendidikan") pendidikan: String, @Field("nama_perusahaan") nama_perusahaan: String, @Field("telp_perusahaan") telp_perusahaan: String, @Field("status_karyawan") status_karyawan: String, @Field("lama_bekerja") lama_bekerja: String, @Field("nama_atasan") nama_atasan: String, @Field("referensi_1") referensi_1: String, @Field("referensi_2") referensi_2: String, @Field("referensi_nama_1") namaReferensi: String,@Field("referensi_nama_2")  namaReferensi2: String): Call<BaseResponse<String>>
 
     @POST("pinjaman/submit_kilat3/")
     fun sendKilat3(@Body file : RequestBody): Call<BaseResponse<String?>>

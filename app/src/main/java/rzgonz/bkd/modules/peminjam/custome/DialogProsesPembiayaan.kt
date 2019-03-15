@@ -21,14 +21,20 @@ open  class DialogProsesPembiayaan(context: Context, val responde: ListPeminjamI
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.popup_proses_pembiayaan)
         tvSaldo.setText("Saldo : ${SharedPreferenceService(context).getString("SALDO","0")} IDR")
-        tagihan = responde.totalPinjam?.replace(",","")?.toInt()!!.minus(responde.totalApprove?.replace(",","")?.toInt()!!)
-        tvTagihan.setText("Tagihan : ${tagihan.toThousand()} IDR")
+        tagihan = responde.totalPinjam?.replace(",","")?.toInt()!!.minus(responde.jmlKredit?.replace(",","")?.toInt()!!)
+        tvTagihan.setText("Pinjaman : ${tagihan.toThousand()} IDR")
         btnSubmit.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.btnSubmit ->{
+                if(etPedanaan.text.isNullOrEmpty()){
+                    Toast.makeText(context,"Masukan Saldo",Toast.LENGTH_LONG).show()
+                    return
+                }
+
+
                 if(tagihan >= etPedanaan.text.toString().toInt()){
                 EventBus.getDefault().post(Message(etPedanaan.text.toString()))
                 dismiss()

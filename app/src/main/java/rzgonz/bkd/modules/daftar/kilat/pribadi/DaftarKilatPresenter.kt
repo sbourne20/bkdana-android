@@ -54,7 +54,7 @@ class DaftarKilatPresenter @Inject constructor(context: Context) : DIBasePresent
     override fun getProvinsi() {
         apiService.getListProvinsi().enqueue(object : Callback<ProvinsiResponse>{
             override fun onFailure(call: Call<ProvinsiResponse>, t: Throwable) {
-                getView()?.returnProvinsi(false,null,"${t}")
+                getView()?.returnProvinsi(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<ProvinsiResponse>, response: Response<ProvinsiResponse>) {

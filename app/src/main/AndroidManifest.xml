@@ -70,32 +70,45 @@
         <activity android:name=".modules.register.VerifyPhoneActivity" />
         <activity
             android:name=".modules.home.DashboardActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".modules.transaksi.TransaksiActivity" />
-        <activity android:name=".modules.peminjam.PeminjamActivity" />
+        <activity android:name=".modules.transaksi.TransaksiActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.peminjam.PeminjamActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".modules.profile.EditProfileActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".modules.koran.KoranActivity" />
-        <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity" />
-        <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity" />
+        <activity android:name=".modules.koran.KoranActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.transaksi.detail.DetailTransaksiActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.peminjam.detial.DetailPinjamanActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".modules.daftar.kilat.pribadi.DaftarKilatActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".modules.daftar.mikro.pribadi.DaftarMikroActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".modules.daftar.kilat.upload.DaftarKilatUploadActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".modules.daftar.mikro.upload.DaftarMikroUploadActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".modules.daftar.mikro.usaha.DaftarMirkoUsahaActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

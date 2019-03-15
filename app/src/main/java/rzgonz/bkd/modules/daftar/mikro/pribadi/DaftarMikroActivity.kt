@@ -43,10 +43,11 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
         supportActionBar?.setTitle("Daftar BKDana Mikro")
         btnSelanjutnya.setOnClickListener {
             if(inputOK()) {
-                showProgressDialog(this,"Upload Progress",true)
+
                 sendMyData()
             }
         }
+        showProgressDialog(this,"Mohon Tunggu",true)
         mPresenter.getMyData()
 
 //        val adapter = ArrayAdapter<String>(this,
@@ -62,7 +63,7 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
             myData?.tanggalLahir = myCalendar.time.toLocaleString()
             myData?.alamat      = etAlamat.text.toString()
             myData?.kota = etKota.text.toString()
-             myData?.provinsi = listProvinsi.get(spProvinsi.selectedItemPosition).toString()
+             myData?.provinsi = listProvinsi.get(spProvinsi.selectedItemPosition).provinceName
             myData?.kodepos = etKodePost.text.toString()
             mPresenter.sendMyData(myData!!)
         }
@@ -81,9 +82,10 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
     }
 
     override fun returnUser(status: Boolean, responde: UserContent?, message: String) {
+        progressDialog?.dismiss()
         if(status){
             etTempatLahir.setText("${responde?.tempatLahir}")
-            if(responde?.jenisKelamin.equals("pria")){
+            if(responde?.jenisKelamin.equals("pria",true)){
                 spGender.setSelection(0)
             }else{
                 spGender.setSelection(1)

@@ -11,6 +11,7 @@ import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.models.profile.UserProfileResponse
 import rzgonz.bkd.models.provinsi.ProvinsiResponse
+import rzgonz.bkd.models.user.UserResponse
 import rzgonz.bkd.services.APIService
 import rzgonz.bkd.services.EditProfileService
 import rzgonz.core.kotlin.helper.APIHelper
@@ -23,12 +24,12 @@ class EditProfilePresenter : DIBasePresenter<EditProfileContract.View>(),EditPro
     val apiService = APIHelper.getClient().create(EditProfileService::class.java)
 
     override fun getProfile() {
-        apiService.getEditProfile().enqueue(object :Callback<UserProfileResponse>{
-            override fun onFailure(call: Call<UserProfileResponse>, t: Throwable) {
-                getView()?.returnProfile(false,null,"${t}")
+        apiService.getEditProfile().enqueue(object :Callback<UserResponse>{
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                getView()?.returnProfile(false,null,"error connection")
             }
 
-            override fun onResponse(call: Call<UserProfileResponse>, response: Response<UserProfileResponse>) {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if(response.isSuccessful){
                     getView()?.returnProfile(true,response.body(),"success")
                 }else{
@@ -38,10 +39,10 @@ class EditProfilePresenter : DIBasePresenter<EditProfileContract.View>(),EditPro
         })
     }
 
-    override fun postEditAkun(fullname: String, email: String, tlp: String, nomer_rekening: String, nama_bank: String) {
-        apiService.postEditAkun(fullname,email,tlp,nomer_rekening,nama_bank).enqueue(object :Callback<BaseResponse<String>>{
+    override fun postEditAkun(fullname: String, email: String, tlp: String, nomer_rekening: String, nama_bank: String, nik: String, gender: String, tglLahir: String, pekerjaan: String, pendidikan: String) {
+        apiService.postEditAkun(fullname,email,tlp,nomer_rekening,nama_bank,nik,gender,tglLahir,pendidikan,pekerjaan).enqueue(object :Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
-                getView()?.returnEditAkun(false,null,"${t}")
+                getView()?.returnEditAkun(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
@@ -57,7 +58,7 @@ class EditProfilePresenter : DIBasePresenter<EditProfileContract.View>(),EditPro
     override fun postEditAlamat(member_id: String, alamat: String, kota: String, provinsi: String, kodepos: String) {
         apiService.postEditAlamat(member_id,alamat,kota,provinsi,kodepos).enqueue(object :Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
-                getView()?.returnEditAkun(false,null,"${t}")
+                getView()?.returnEditAkun(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
@@ -73,7 +74,7 @@ class EditProfilePresenter : DIBasePresenter<EditProfileContract.View>(),EditPro
     override fun postEditPassword(member_id: String, old_pass: String, pass: String, conf: String) {
         apiService.postEditPass(member_id,old_pass,pass,conf).enqueue(object :Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
-                getView()?.returnEditAkun(false,null,"${t}")
+                getView()?.returnEditAkun(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
@@ -89,7 +90,7 @@ class EditProfilePresenter : DIBasePresenter<EditProfileContract.View>(),EditPro
     override fun getProvinsi() {
         apiService.getListProvinsi().enqueue(object : Callback<ProvinsiResponse>{
             override fun onFailure(call: Call<ProvinsiResponse>, t: Throwable) {
-                getView()?.returnProvinsi(false,null,"${t}")
+                getView()?.returnProvinsi(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<ProvinsiResponse>, response: Response<ProvinsiResponse>) {

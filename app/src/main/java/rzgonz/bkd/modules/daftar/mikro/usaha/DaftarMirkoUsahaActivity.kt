@@ -1,11 +1,17 @@
 package rzgonz.bkd.modules.daftar.mikro.usaha
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_daftar_mikro_usaha.*
 import kotlinx.android.synthetic.main.header_daftar.*
 import okhttp3.MediaType
@@ -55,6 +61,8 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
       return R.layout.activity_daftar_mikro_usaha
     }
 
+    private var data: UserContent? =null
+
     override fun initUI(savedInstanceState: Bundle?) {
         collapsing_toolbar.isTitleEnabled = false
         collapsing_toolbar.title = "Daftat BKDana Mikro"
@@ -62,7 +70,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("Daftar BKDana Mikro")
         if(intent.hasExtra(DaftarKilatDataDiriActivity.extra_data)){
-            val data = intent.getParcelableExtra<UserContent>(DaftarKilatDataDiriActivity.extra_data)
+            data = intent.getParcelableExtra<UserContent>(DaftarKilatDataDiriActivity.extra_data)
             bindData(data)
         }
 
@@ -80,14 +88,47 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
 
     private fun bindData(data: UserContent?) {
         Log.d("BIND","${data}")
-        etDeskripsi.setText("${data?.deskripsi_usaha}")
-        etOmzet.setText("${data?.omzet_usaha}")
-        etMargin.setText("${data?.margin_usaha}")
-        etLaba.setText("${data?.laba_usaha}")
-        etBunga.setText("${data?.jml_bunga_usaha}")
-        etOperasional.setText("${data?.biaya_operasional_usaha}")
+        etDeskripsi.setText("${data?.deskripsiUsaha}")
+        etOmzet.setText("${data?.omzetUsaha}")
+        etMargin.setText("${data?.marginUsaha}")
+        etLaba.setText("${data?.labaUsaha}")
+     //   etModal.setText("${data?.biayaOperasionalUsaha}")
+       // etBunga.setText("${data?.jml_bunga_usaha}")
+        etOperasional.setText("${data?.biayaOperasionalUsaha}")
+        val bank = resources.getStringArray(R.array.array_bank)
+        bank.forEachIndexed { index, s ->
+            if(s.equals(data?.namaBank,true)){
+                spBank.setSelection(index)
+            }
+        }
+        Glide.with(this).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgInfoUsaha.setImageURI(Uri.fromFile(resource))
+                imgfoto = resource
+                imgInfoUsaha.visibility = View.VISIBLE
+                llUsaha.visibility = View.GONE
+                imgInfoUsaha.setOnClickListener {
+                    imgfoto = null
+                    llUsaha.visibility = View.VISIBLE
+                    imgInfoUsaha.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgfoto = null
+                llUsaha.visibility = View.VISIBLE
+                imgInfoUsaha.visibility = View.GONE
+            }
+        })
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        checkPermissionAndCreateCamera()
+    }
+
 
     fun easyImage(){
         EasyImage.openCamera(this,1)
@@ -97,8 +138,26 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         progressDialog?.dismiss()
         if(status){
            // showMessage("Pendaftaran berhasil")
-            startActivity(Intent(baseContext,DaftarMikroUploadActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+            startActivity(Intent(baseContext,DaftarMikroUploadActivity::class.java).putExtra(DaftarKilatDataDiriActivity.extra_data,data).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
         }
+    }
+    private fun checkPermissionAndCreateCamera() {
+        val rxPermissions = RxPermissions(this)
+        rxPermissions
+                .requestEach(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                .subscribe { // will emit 2 Permission objects
+                    permission ->
+                    if (permission.granted) {
+
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        checkPermissionAndCreateCamera()
+                    } else {
+                        goToPermissionSettings(baseContext)
+                    }
+                }
     }
 
     fun sendDataUsaha(){
@@ -145,15 +204,19 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
             etLaba.setError( "is required!" )
             return  false
         }
-        if(etBunga.text.isNullOrEmpty()){
-            etBunga.setError( "is required!" )
-            return  false
-        }
+//        if(etBunga.text.isNullOrEmpty()){
+//            etBunga.setError( "is required!" )
+//            return  false
+//        }
 
-        if(!cbTnC.isChecked){
-            showError("Ada Belum Checklist Syarat Dan Ketentua")
+        if(spBank.selectedItemPosition < 1){
+            showError("Bank Belum Dipilih")
             return false
         }
+//        if(!cbTnC.isChecked){
+//            showError("Ada Belum Checklist Syarat Dan Ketentua")
+//            return false
+//        }
 
         return true
     }

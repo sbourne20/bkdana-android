@@ -208,9 +208,9 @@ class RegisterActivity : DIBaseActivity(),RegisterContract.View {
         AccountKit.getCurrentAccount(object : AccountKitCallback<Account> {
             override fun onSuccess(account: Account) {
                 Log.d("Account","${account}")
-                val accountKitId = account.getId()
+              //  val accountKitId = account.getId()
                 val phoneNumber = account.getPhoneNumber()
-                val phoneNumberString = phoneNumber.toString()
+                //val phoneNumberString = phoneNumber.toString()
                 etPhone.setText("+62${account.phoneNumber.phoneNumber}")
                 sendRegister()
             }
@@ -251,12 +251,10 @@ class RegisterActivity : DIBaseActivity(),RegisterContract.View {
                 toastMessage = "Login Cancelled"
             } else {
                 if (loginResult.accessToken != null) {
-                    toastMessage = "Success:" + loginResult.accessToken!!.accountId
+                    toastMessage = "Success"
                     getCurrentPhone()
                 } else {
-                    toastMessage = String.format(
-                            "Success:%s...",
-                            loginResult.authorizationCode!!.substring(0, 10))
+                    toastMessage = "Success"
                 }
 
             }

@@ -20,7 +20,7 @@ class TopupPresenter @Inject constructor(val context: Context) : DIBasePresenter
     override fun getListTopup(limit: Int, page: Int) {
         apiService.getTopupList(limit,page).enqueue(object :Callback<ListTopupResponse>{
             override fun onFailure(call: Call<ListTopupResponse>, t: Throwable) {
-                getView()?.retrunListTopup(false,null,"${t}")
+                getView()?.retrunListTopup(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<ListTopupResponse>, response: Response<ListTopupResponse>) {
@@ -39,7 +39,7 @@ class TopupPresenter @Inject constructor(val context: Context) : DIBasePresenter
     override fun getListBank() {
         apiService.getListBank().enqueue(object :Callback<ListBankResponse>{
             override fun onFailure(call: Call<ListBankResponse>, t: Throwable) {
-                getView()?.retrunListBank(false,null,"${t}")
+                getView()?.retrunListBank(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<ListBankResponse>, response: Response<ListBankResponse>) {
@@ -58,7 +58,7 @@ class TopupPresenter @Inject constructor(val context: Context) : DIBasePresenter
     override fun postTopup(nama_rekening: String, nomor_rekening: String, nama_bank: String, jumlah_topup: String) {
         apiService.postTopup(nama_rekening,nomor_rekening,nama_bank,jumlah_topup).enqueue(object :Callback<BaseResponse<String>>{
             override fun onFailure(call: Call<BaseResponse<String>>, t: Throwable) {
-                getView()?.returnPostTopup(false,null,"${t}")
+                getView()?.returnPostTopup(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {

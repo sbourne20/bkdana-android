@@ -181,6 +181,7 @@
                     android:textColor="@color/aqua"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:id="@+id/tvBantuan"
                     android:layout_gravity="right"
                     />

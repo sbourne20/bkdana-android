@@ -22,7 +22,7 @@ class PeminjamPresenter : DIBasePresenter<PeminjamContract.View>(),PeminjamContr
     override fun getListPeminjam(limit: Int, page: Int) {
         apiService.getListPeminjam(page, limit).enqueue(object : Callback<PeminjamListResponse> {
             override fun onFailure(call: Call<PeminjamListResponse>, t: Throwable) {
-                getView()?.retrunListPeminjam(false, null, "${t}")
+                getView()?.retrunListPeminjam(false, null, "error connection")
             }
 
             override fun onResponse(call: Call<PeminjamListResponse>, response: Response<PeminjamListResponse>) {

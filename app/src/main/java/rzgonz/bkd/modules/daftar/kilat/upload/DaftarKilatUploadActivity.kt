@@ -2,10 +2,15 @@ package rzgonz.bkd.modules.daftar.kilat.upload
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_daftar_kilat_upload.*
 import kotlinx.android.synthetic.main.header_daftar.*
@@ -18,6 +23,8 @@ import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.pinjaman.Content
+import rzgonz.bkd.models.user.UserContent
+import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
 import rzgonz.bkd.modules.daftar.kilat.upload.adapter.PinjamanAdapter
 import rzgonz.bkd.modules.daftar.kilat.upload.adapter.TenorAdapter
 import rzgonz.bkd.modules.home.DashboardActivity
@@ -43,6 +50,8 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
     override fun initLayout(): Int {
         return R.layout.activity_daftar_kilat_upload
     }
+
+    private var data: UserContent?= null
 
     override fun initUI(savedInstanceState: Bundle?) {
         collapsing_toolbar.isTitleEnabled = false
@@ -79,8 +88,118 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
             isfoto = 4
             easyImage()
         }
+        if(intent.hasExtra(DaftarKilatDataDiriActivity.extra_data)){
+            data = intent.getParcelableExtra<UserContent>(DaftarKilatDataDiriActivity.extra_data)
+            bindData(data)
+        }
         mPresenter.getPinjaman()
     }
+
+    private fun bindData(data: UserContent?) {
+        etRekening.setText("${data?.nomorRekening}")
+        etGaji.setText("${data?.gaji}")
+        Glide.with(this).asFile().load(data?.fotoFile).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgFoto.setImageURI(Uri.fromFile(resource))
+                imgfoto = resource
+                imgFoto.visibility = View.VISIBLE
+                llFoto.visibility = View.GONE
+                imgFoto.setOnClickListener {
+                    imgfoto = null
+                    llFoto.visibility = View.VISIBLE
+                    imgFoto.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgfoto = null
+                llFoto.visibility = View.VISIBLE
+                imgFoto.visibility = View.GONE
+            }
+        })
+        Glide.with(this).asFile().load(data?.nikFile).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgKTP.setImageURI(Uri.fromFile(resource))
+                imgNIK = resource
+                imgKTP.visibility = View.VISIBLE
+                imgKTP.visibility = View.GONE
+                imgKTP.setOnClickListener {
+                    imgNIK = null
+                    llNIK.visibility = View.VISIBLE
+                    imgKTP.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgNIK = null
+                llNIK.visibility = View.VISIBLE
+                imgKTP.visibility = View.GONE
+            }
+        })
+        Glide.with(this).asFile().load(data?.fotoSuratKetKerja).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgSuratKerja.setImageURI(Uri.fromFile(resource))
+                imgkerja = resource
+                imgSuratKerja.visibility = View.VISIBLE
+                llKerja.visibility = View.GONE
+                imgSuratKerja.setOnClickListener {
+                    imgkerja = null
+                    llKerja.visibility = View.VISIBLE
+                    imgSuratKerja.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgkerja = null
+                llKerja.visibility = View.VISIBLE
+                imgSuratKerja.visibility = View.GONE
+            }
+        })
+        Glide.with(this).asFile().load(data?.fotoSlipGaji).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgSlipGaji.setImageURI(Uri.fromFile(resource))
+                imggaji = resource
+                imgSlipGaji.visibility = View.VISIBLE
+                llGaji.visibility = View.GONE
+                imgSlipGaji.setOnClickListener {
+                    imggaji = null
+                    llGaji.visibility = View.VISIBLE
+                    imgSlipGaji.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imggaji = null
+                llGaji.visibility = View.VISIBLE
+                imgSlipGaji.visibility = View.GONE
+            }
+        })
+        Glide.with(this).asFile().load(data?.fotoPegangIdcard).into(object : SimpleTarget<File>() {
+            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                imgSelfiKtp.setImageURI(Uri.fromFile(resource))
+                imgselfi = resource
+                imgSelfiKtp.visibility = View.VISIBLE
+                llSelfi.visibility = View.GONE
+                imgSelfiKtp.setOnClickListener {
+                    imgselfi = null
+                    llSelfi.visibility = View.VISIBLE
+                    imgSelfiKtp.visibility = View.GONE
+                }
+            }
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                imgselfi = null
+                llSelfi.visibility = View.VISIBLE
+                imgSelfiKtp.visibility = View.GONE
+            }
+        })
+    }
+
     fun easyImage(){
         EasyImage.openCamera(this,1)
     }

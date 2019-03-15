@@ -17,14 +17,14 @@ class KoranPresenter: DIBasePresenter<KoranContract.View>(),KoranContract.Presen
     override fun getKoranList() {
         apiService.getListkoran().enqueue(object : Callback<KoranListResponse> {
             override fun onFailure(call: Call<KoranListResponse>?, t: Throwable?) {
-                getView()?.returnKoranList(false,null,"${t}")
+                getView()?.returnKoranList(false,null,"error connection")
             }
 
             override fun onResponse(call: Call<KoranListResponse>, response: Response<KoranListResponse>) {
                 if(response.isSuccessful){
                     getView()?.returnKoranList(true,response.body(),"success")
                 }else{
-                    getView()?.returnKoranList(false,null,"${response.errorBody()}")
+                    getView()?.returnKoranList(false,null,"Tidak Ada Data")
                 }
             }
         })

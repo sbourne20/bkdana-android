@@ -66,7 +66,6 @@ class BannerFragement : DIBaseFragment() {
                 tvBannerTitle.setText("BKDana Kilat")
                 tvBannerDetial.setText("Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!")
                 cardBanner.setOnClickListener {
-
                     if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
                         val data = Event(1)
                         EventBus.getDefault().post(data)

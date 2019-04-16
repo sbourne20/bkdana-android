@@ -126,7 +126,7 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
             etKota.setText("${responde?.kota}")
             provinsi = "${responde?.provinsi}"
             etKodePos.setText("${responde?.kodepos}")
-            spPekerjaan.setSelection(responde?.pekerjaan!!.toInt())
+            spPekerjaan.setSelection(responde?.pekerjaan!!.toInt().minus(1))
             etNIK.setText("${responde?.nomorNik}")
             myData = responde
             mPresenter.getProvinsi()
@@ -139,6 +139,8 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
         if(status){
             Log.d("user1","${status}, ${myData}")
             DaftarKilatDataDiriActivity.startThisActivity(this,myData!!)
+        }else{
+            showError(message)
         }
 
     }

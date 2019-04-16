@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.tbruyelle.rxpermissions2.RxPermissions
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_daftar_mikro_upload.*
 import kotlinx.android.synthetic.main.header_daftar.*
 import okhttp3.MediaType
@@ -19,6 +21,7 @@ import okhttp3.RequestBody
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import rzgonz.bkd.Apps.APKModel
+import rzgonz.bkd.Apps.compressImage
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.pinjaman.Content
@@ -69,7 +72,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         }
         btnSelanjutnya.setOnClickListener {
             if(checkInput()) {
-                showProgressDialog(this,"Upload Progress",true)
+                showProgressDialog(this,"Upload Progress",false)
                 sendUpload()
             }
         }
@@ -92,14 +95,15 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
     private fun bindData(data: UserContent?) {
         etNomorNIK.setText("${data?.nomorNik}")
         etRekening.setText("${data?.nomorRekening}")
+        etUsaha.setText("${data?.usaha}")
         etLamaUsaha.setText("${data?.lamaUsaha}")
         val pekerjaan = resources.getStringArray(R.array.array_pekerjaan)
         pekerjaan.forEachIndexed { index, s ->
-            if(s.equals(data?.pekerjaan,true)){
+            if(index.plus(1).toString().equals(data?.pekerjaan,true)){
                 spPekerjaan.setSelection(index)
             }
         }
-        Glide.with(this).asFile().load(data?.fotoFile).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoFile).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgFoto.setImageURI(Uri.fromFile(resource))
                 imgfoto = resource
@@ -119,7 +123,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                 imgFoto.visibility = View.GONE
             }
         })
-        Glide.with(this).asFile().load(data?.nikFile).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.nikFile).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgKTP.setImageURI(Uri.fromFile(resource))
                 imgNIK = resource
@@ -139,7 +143,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                 imgKTP.visibility = View.GONE
             }
         })
-        Glide.with(this).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgUsaha.setImageURI(Uri.fromFile(resource))
                 imgFotoUsaha = resource
@@ -170,7 +174,10 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         builder.setType(MultipartBody.FORM)
         builder.addFormDataPart("nomor_rekening", etRekening.text.toString())
         builder.addFormDataPart("jumlah_pinjaman",etPinjaman.text.toString())
+        builder.addFormDataPart("nomor_nik",etNomorNIK.text.toString())
+        builder.addFormDataPart("lama_usaha",etLamaUsaha.text.toString())
         builder.addFormDataPart("product_id", spinnerAdapterTenor?.getItem(spTenor.selectedItemPosition)?.productId!!)
+        builder.addFormDataPart("pekerjaan",spPekerjaan.selectedItemPosition.plus(1).toString())
         builder.addFormDataPart("foto_usaha",fileUsaha.getName(), RequestBody.create(MediaType.parse("image/*"), fileUsaha))
         builder.addFormDataPart("foto_file", fileFoto.getName(), RequestBody.create(MediaType.parse("image/*"), fileFoto))
         builder.addFormDataPart("nik_file", fileNik.getName(), RequestBody.create(MediaType.parse("image/*"), fileNik))
@@ -238,7 +245,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                 for (i in 0..imagesFiles.size) {
                     when(isfoto){
                         0 ->{
-                            imgfoto = imagesFiles.get(i)
+                            imgfoto = imagesFiles.get(i).compressImage(applicationContext)
                             imgFoto.visibility = View.VISIBLE
                             Glide.with(imgFoto).load(imagesFiles[i]).into(imgFoto)
                             llFoto.visibility = View.GONE
@@ -249,7 +256,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                             }
                         }
                         1->{
-                            imgNIK = imagesFiles.get(i)
+                            imgNIK = imagesFiles.get(i).compressImage(applicationContext)
                             imgKTP.visibility = View.VISIBLE
                             Glide.with(imgKTP).load(imagesFiles[i]).into(imgKTP)
                             llNIK.visibility = View.GONE
@@ -260,7 +267,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                             }
                         }
                         2->{
-                            imgFotoUsaha = imagesFiles.get(i)
+                            imgFotoUsaha = imagesFiles.get(i).compressImage(applicationContext)
                             imgUsaha.visibility = View.VISIBLE
                             Glide.with(imgUsaha).load(imagesFiles[i]).into(imgUsaha)
                             llUsaha.visibility = View.GONE

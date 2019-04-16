@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_daftar_kilat_upload.*
@@ -20,6 +20,7 @@ import okhttp3.RequestBody
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import rzgonz.bkd.Apps.APKModel
+import rzgonz.bkd.Apps.compressImage
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.pinjaman.Content
@@ -61,7 +62,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
         supportActionBar?.setTitle("Daftar BKDana Kilat")
         btnSelanjutnya.setOnClickListener {
             if(checkInput()){
-                showProgressDialog(this,"Upload Progress",true)
+                showProgressDialog(this,"Upload Progress",false)
                 sendUpload()
             }
 
@@ -98,7 +99,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
     private fun bindData(data: UserContent?) {
         etRekening.setText("${data?.nomorRekening}")
         etGaji.setText("${data?.gaji}")
-        Glide.with(this).asFile().load(data?.fotoFile).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoFile).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgFoto.setImageURI(Uri.fromFile(resource))
                 imgfoto = resource
@@ -118,12 +119,13 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                 imgFoto.visibility = View.GONE
             }
         })
-        Glide.with(this).asFile().load(data?.nikFile).into(object : SimpleTarget<File>() {
+        Log.d("KAMPRET","${data?.nikFile}")
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.nikFile).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgKTP.setImageURI(Uri.fromFile(resource))
                 imgNIK = resource
                 imgKTP.visibility = View.VISIBLE
-                imgKTP.visibility = View.GONE
+                llNIK.visibility = View.GONE
                 imgKTP.setOnClickListener {
                     imgNIK = null
                     llNIK.visibility = View.VISIBLE
@@ -138,7 +140,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                 imgKTP.visibility = View.GONE
             }
         })
-        Glide.with(this).asFile().load(data?.fotoSuratKetKerja).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoSuratKetKerja).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgSuratKerja.setImageURI(Uri.fromFile(resource))
                 imgkerja = resource
@@ -158,7 +160,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                 imgSuratKerja.visibility = View.GONE
             }
         })
-        Glide.with(this).asFile().load(data?.fotoSlipGaji).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoSlipGaji).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgSlipGaji.setImageURI(Uri.fromFile(resource))
                 imggaji = resource
@@ -178,7 +180,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                 imgSlipGaji.visibility = View.GONE
             }
         })
-        Glide.with(this).asFile().load(data?.fotoPegangIdcard).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoPegangIdcard).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgSelfiKtp.setImageURI(Uri.fromFile(resource))
                 imgselfi = resource
@@ -304,7 +306,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                 for (i in 0..imagesFiles.size) {
                     when(isfoto){
                         0 ->{
-                            imgfoto = imagesFiles.get(i)
+                            imgfoto = imagesFiles.get(i).compressImage(applicationContext)
                             imgFoto.visibility = View.VISIBLE
                             llFoto.visibility = View.GONE
                             imgFoto.setOnClickListener {
@@ -315,7 +317,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                             Glide.with(imgFoto).load(imagesFiles[i]).into(imgFoto)
                         }
                         1->{
-                            imgNIK = imagesFiles.get(i)
+                            imgNIK = imagesFiles.get(i).compressImage(applicationContext)
                             imgKTP.visibility = View.VISIBLE
                             llNIK.visibility = View.GONE
                             imgKTP.setOnClickListener {
@@ -326,7 +328,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                             Glide.with(imgKTP).load(imagesFiles[i]).into(imgKTP)
                         }
                         2->{
-                            imgkerja = imagesFiles.get(i)
+                            imgkerja = imagesFiles.get(i).compressImage(applicationContext)
                             imgSuratKerja.visibility = View.VISIBLE
                             Glide.with(imgSuratKerja).load(imagesFiles[i]).into(imgSuratKerja)
                             llKerja.visibility = View.GONE
@@ -337,7 +339,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                             }
                         }
                         3->{
-                            imggaji = imagesFiles.get(i)
+                            imggaji = imagesFiles.get(i).compressImage(applicationContext)
                             imgSlipGaji.visibility = View.VISIBLE
                             Glide.with(imgSlipGaji).load(imagesFiles[i]).into(imgSlipGaji)
                             llGaji.visibility = View.GONE
@@ -348,7 +350,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                             }
                         }
                         4->{
-                            imgselfi = imagesFiles.get(i)
+                            imgselfi = imagesFiles.get(i).compressImage(applicationContext)
                             imgSelfiKtp.visibility = View.VISIBLE
                             Glide.with(imgSelfiKtp).load(imagesFiles[i]).into(imgSelfiKtp)
                             llSelfi.visibility = View.GONE
@@ -381,6 +383,8 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
        if(status){
            showMessage("Pendaftaran berhasil")
            startActivity(Intent(baseContext,DashboardActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+       }else{
+           showError(message)
        }
     }
 

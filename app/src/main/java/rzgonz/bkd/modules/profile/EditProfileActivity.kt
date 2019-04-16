@@ -121,7 +121,7 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
         btnUpdateAkun.setOnClickListener {
             if(checkAkun()){
                 showProgressDialog(this,"Mohon tunggu",false)
-                mPresenter.postEditAkun(etNama.text.toString(),etEmial.text.toString(),etPhone.text.toString(),etNoRek.text.toString(),spBank.selectedItem.toString(),etNik.text.toString(),spGender.selectedItem.toString(),etTanggalLahir.text.toString(),spPekerjaan.selectedItemPosition.toString(),spPendidikan.selectedItemPosition.toString())
+                mPresenter.postEditAkun(etNama.text.toString(),etEmial.text.toString(),etPhone.text.toString(),etNoRek.text.toString(),spBank.selectedItem.toString(),etNik.text.toString(),spGender.selectedItem.toString(),etTanggalLahir.text.toString(),spPekerjaan.selectedItemPosition.plus(1).toString(),spPendidikan.selectedItemPosition.plus(1).toString())
             }
 
         }
@@ -139,9 +139,9 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
 
         }
 
-        responde?.content?.pekerjaan?.toInt()?.let { spPekerjaan.setSelection(it) }
+        responde?.content?.pekerjaan?.toInt()?.let { spPekerjaan.setSelection(it.minus(1)) }
 
-        responde?.content?.pendidikan?.toInt()?.let { spPendidikan.setSelection(it) }
+        responde?.content?.pendidikan?.toInt()?.let { spPendidikan.setSelection(it.minus(1)) }
 
 
         btnAkun.setOnClickListener {

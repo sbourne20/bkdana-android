@@ -76,5 +76,6 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true;
     }
+    implementation 'id.zelory:compressor:2.1.0'
 }
 apply plugin: 'com.google.gms.google-services'

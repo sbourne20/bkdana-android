@@ -104,6 +104,8 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
         progressDialog?.dismiss()
         if(status){
             DaftarMirkoUsahaActivity.startThisActivity(this,myData!!)
+        }else{
+            showError(message)
         }
     }
 

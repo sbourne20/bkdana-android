@@ -39,7 +39,11 @@ class DaftarKilatUploadPresenter @Inject constructor(context: Context) : DIBaseP
 
                 override fun onResponse(call: Call<BaseResponse<String?>>, response: Response<BaseResponse<String?>>) {
                     if (response.isSuccessful) {
-                        getView()?.returnSendUpload(true, response.body()?.toString(), "success")
+                        if("fail".equals(response.body()?.response)){
+                            getView()?.returnSendUpload(false, null, response.body()?.message!!)
+                        }else{
+                            getView()?.returnSendUpload(true, response.body()?.toString(), "success")
+                        }
                     } else {
                         getView()?.returnSendUpload(false, null, "no data")
                     }

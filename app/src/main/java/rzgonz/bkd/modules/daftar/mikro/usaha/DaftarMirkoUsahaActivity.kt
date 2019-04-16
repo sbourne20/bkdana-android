@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -20,6 +21,7 @@ import okhttp3.RequestBody
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import rzgonz.bkd.Apps.APKModel
+import rzgonz.bkd.Apps.compressImage
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.user.UserContent
@@ -76,7 +78,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
 
         btnSelanjutnya.setOnClickListener {
             if(checkInput()){
-                showProgressDialog(this,"Upload Progress",true)
+                showProgressDialog(this,"Upload Progress",false)
                 sendDataUsaha()
             }
         }
@@ -101,7 +103,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
                 spBank.setSelection(index)
             }
         }
-        Glide.with(this).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
+        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgInfoUsaha.setImageURI(Uri.fromFile(resource))
                 imgfoto = resource
@@ -139,6 +141,8 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         if(status){
            // showMessage("Pendaftaran berhasil")
             startActivity(Intent(baseContext,DaftarMikroUploadActivity::class.java).putExtra(DaftarKilatDataDiriActivity.extra_data,data).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+        }else{
+            showError(message)
         }
     }
     private fun checkPermissionAndCreateCamera() {
@@ -232,7 +236,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
             override fun onImagesPicked(imagesFiles: List<File>, source: EasyImage.ImageSource, type: Int) {
                 //Handle the images
                 for (i in 0..imagesFiles.size) {
-                    imgfoto = imagesFiles.get(i)
+                    imgfoto = imagesFiles.get(i).compressImage(applicationContext)
                     imgInfoUsaha.visibility = View.VISIBLE
                     Glide.with(imgInfoUsaha).load(imagesFiles[i]).into(imgInfoUsaha)
                     llUsaha.visibility = View.GONE

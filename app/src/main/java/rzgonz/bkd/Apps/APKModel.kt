@@ -16,6 +16,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
 import android.support.v4.content.ContextCompat.getSystemService
 import android.widget.EditText
+import id.zelory.compressor.Compressor
+import java.io.File
 
 
 /**
@@ -26,7 +28,7 @@ class APKModel : RzApps {
     constructor() : super()
 
     init {
-        APIHelper.BASE_URL = "http://149.129.213.30/"
+        APIHelper.BASE_URL = "http://149.129.248.46/"
        // APIHelper.Authorization ="Basic dXNlcm5hbWU6aW5kb25lc2lhZ28="
 //        var header = HashMap<String,String>()
 //        header.set("Authorization","Basic cnpnb256OjFxe30hUVtd")
@@ -63,4 +65,10 @@ fun Int.toThousand(): String {
 fun EditText.dismissKeyboard() {
     val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(this.windowToken, 0)
+}
+
+fun File.compressImage(context: Context):File{
+    return Compressor(context).setMaxWidth(800)
+            .setMaxHeight(600)
+            .setQuality(90).compressToFile(this)
 }

@@ -66,7 +66,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
     private fun sendDataDiri() {
         if(inputOK()) {
             showProgressDialog(this,"Upload Progress",true)
-            mPresenter.sendDataDiri(spPendidikan.selectedItemPosition.toString(), etPerusahaan.text.toString(), etPhoneKantor.text.toString(), spKaryaan.selectedItem.toString(), etLamaBekerja.text.toString(), etNameAtasan.text.toString(), etReferensi.text.toString(), etReferensiSub.text.toString(), etReferensiNama.text.toString(), etReferensiSubNama.text.toString())
+            mPresenter.sendDataDiri(spPendidikan.selectedItemPosition.plus(1).toString(), etPerusahaan.text.toString(), etPhoneKantor.text.toString(), spKaryaan.selectedItem.toString(), etLamaBekerja.text.toString(), etNameAtasan.text.toString(), etReferensi.text.toString(), etReferensiSub.text.toString(), etReferensiNama.text.toString(), etReferensiSubNama.text.toString())
         }
     }
 
@@ -115,7 +115,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
     }
 
     private fun bindData(data: UserContent?) {
-        spPendidikan.setSelection(data?.pendidikan!!.toInt())
+        spPendidikan.setSelection(data?.pendidikan!!.toInt().minus(1))
         etPerusahaan.setText("${data?.namaPerusahaan}")
         etPhoneKantor.setText("${data?.noTelpPerusahaan}")
         etNameAtasan.setText("${data?.namaAtasan}")
@@ -135,6 +135,8 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
         progressDialog?.dismiss()
         if(status){
             startActivity(Intent(this, DaftarKilatUploadActivity::class.java).putExtra(DaftarKilatDataDiriActivity.extra_data,data))
+        }else{
+            showError(message)
         }
 
     }

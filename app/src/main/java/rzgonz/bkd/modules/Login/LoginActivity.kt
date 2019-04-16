@@ -54,8 +54,8 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
 //        et_email_login.setText("rzgonz@gmail.com")
 //        et_password_login.setText("123456abcD")
         if(BuildConfig.DEBUG) {
-            et_email_login.setText("iriawan.jakarta@yahoo.com")
-            et_password_login.setText("master199")
+            et_email_login.setText("andhika.desta88@gmail.com")
+            et_password_login.setText("MD123123aabb")
         }
 
 

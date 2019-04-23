@@ -26,8 +26,13 @@ class APKModel : RzApps {
     constructor() : super()
 
     init {
-        APIHelper.BASE_URL = "http://149.129.213.30/"
-       // APIHelper.Authorization ="Basic dXNlcm5hbWU6aW5kb25lc2lhZ28="
+        //Live
+//        APIHelper.BASE_URL = "http://149.129.213.30/"
+
+        //Localhost
+            APIHelper.BASE_URL = "http://192.168.1.86/bkd-api/"
+
+        // APIHelper.Authorization ="Basic dXNlcm5hbWU6aW5kb25lc2lhZ28="
 //        var header = HashMap<String,String>()
 //        header.set("Authorization","Basic cnpnb256OjFxe30hUVtd")
 //        APIHelper.Headers  = header
@@ -41,7 +46,7 @@ class APKModel : RzApps {
     override fun onCreate() {
         super.onCreate()
         appsComponent = DaggerAppsComponent.builder().appsModule(AppsModule(applicationContext)).build()
-        Fabric.with(this, Crashlytics())
+//        Fabric.with(this, Crashlytics())
         FirebaseAnalytics.getInstance(this);
     }
 

@@ -29,7 +29,7 @@ interface PeminjamService {
     fun getListPeminjam(@Query("page")page:Int,@Query("limit")limit:Int): Call<PeminjamListResponse>
     @GET("/daftar_peminjam/detail")
     fun getDetial(@Query("t")id:String): Call<PeminjamDetailResponse>
-    @GET("/member/cek_biayai")
+    @GET("member/cek_biayai")
     fun checkBiayai(): Call<BaseResponseMessage>
     @FormUrlEncoded
     @POST("pendanaan/submit")

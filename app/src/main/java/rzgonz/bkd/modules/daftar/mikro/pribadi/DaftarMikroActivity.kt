@@ -1,6 +1,9 @@
 package rzgonz.bkd.modules.daftar.mikro.pribadi
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_daftar_mikro.*
 import rzgonz.bkd.Apps.APKModel
@@ -14,8 +17,11 @@ import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.header_daftar.*
 import rzgonz.bkd.models.provinsi.ProvinsiItem
 import rzgonz.bkd.models.provinsi.ProvinsiResponse
+import rzgonz.bkd.modules.Login.LoginActivity
+import rzgonz.bkd.modules.Login.tokenz
 import rzgonz.bkd.modules.daftar.mikro.usaha.DaftarMirkoUsahaActivity
 import rzgonz.bkd.modules.profile.adapter.ProvinsiAdapter
+import rzgonz.core.kotlin.helper.SharedPreferenceService
 
 
 class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
@@ -48,6 +54,7 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
             }
         }
         showProgressDialog(this,"Mohon Tunggu",true)
+        mPresenter.getfcmToken(tokenz)
         mPresenter.getMyData()
 
 //        val adapter = ArrayAdapter<String>(this,
@@ -107,6 +114,23 @@ class DaftarMikroActivity : DIBaseActivity(),DaftarMikroContract.View {
         }
     }
 
+    override fun returnFcmtoken(status: Boolean, responde: UserContent?, message: String) {
+        if(message.equals("fail")){
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Peringatan")
+            builder.setMessage("Anda telah masuk ke perangkat baru, mohon untuk ulangi proses " +
+                    "login jika ingin menggunakan aplikasi di perangkat ini ")
+            builder.setPositiveButton("Masuk Kembali") { dialog, which ->
+                val PREFERENCE_NAME = SharedPreferenceService::class.java.getPackage()!!.toString() + ".sharedprefs"
+                val settings = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+                settings.edit().clear().apply()
+                finish()
+                startActivity(Intent(baseContext, LoginActivity::class.java))
+            }
+            builder.setCancelable(false);
+            builder.show()
+        }
+    }
 
     private fun inputOK(): Boolean {
 

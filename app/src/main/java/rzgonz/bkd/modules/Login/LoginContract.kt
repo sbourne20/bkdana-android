@@ -15,7 +15,7 @@ object LoginContract  {
 
     interface Presenter : DIBaseContract.Presenter<View> {
 
-        fun checkLogin(username:String,password:String)
+        fun checkLogin(username:String,password:String, fcmtoken:String)
         fun checkPassword(username:String,password:String)
     }
 }

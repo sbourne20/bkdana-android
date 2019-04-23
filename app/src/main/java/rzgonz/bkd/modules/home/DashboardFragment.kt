@@ -7,7 +7,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 import rzgonz.bkd.R
@@ -19,6 +21,8 @@ import rzgonz.bkd.constant.BKD
 import rzgonz.bkd.models.Event
 import rzgonz.bkd.models.dashboard.RepaymentResponse
 import rzgonz.bkd.models.user.UserContent
+import rzgonz.bkd.modules.Login.LoginActivity
+import rzgonz.bkd.modules.Login.tokenz
 import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
 import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
 import rzgonz.core.kotlin.fragment.DIBaseFragment
@@ -62,6 +66,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
     }
 
     override fun initUI(savedInstanceState: Bundle?) {
+
         cvpBanner.listener = this
         cvpBanner.setAdapter(activity)
         cvpBanner.clipToPadding = false
@@ -113,6 +118,13 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
                     0 ->{
                         llOne.visibility = View.VISIBLE
                         tvTitleOne.setText(listRepaymentItem?.titleTransaksi)
+                        if(SharedPreferenceService(context).getInt(BKD.LOGINTYPE,0)==1) {
+                            tvPeminjam.visibility = View.GONE
+                            tvPeminjam2.visibility = View.GONE
+                        }else{
+                            tvPeminjam.setText(listRepaymentItem?.namaPeminjam)
+                            tvPeminjam2.setText(listRepaymentItem?.namaPeminjam)
+                        }
                         tvTvTempoOne.setText("Jatuh Tempo : ${listRepaymentItem?.jatuhTempoTransaksi}")
                         tvJumlahOne.setText("${listRepaymentItem?.nominalTransaksi} IDR")
                     }
@@ -129,6 +141,8 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
         }
     }
 
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -136,7 +150,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment DashboardFragment.
+         * @return A new    instance of fragment DashboardFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
@@ -174,7 +188,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
                  moveBannerPage(0)
              }
          }}
-         ,5000)
+         ,3000)
 
     }
 
@@ -210,7 +224,15 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
         EventBus.getDefault().unregister(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        mPresenter.getMyRepayment()
+    }
 
+    override fun onPause() {
+        super.onPause()
+        mPresenter.getMyRepayment()
+    }
 
     fun showProgressDialog(context: Context?, message: String?, isCancelable: Boolean) {
         if (context == null) return

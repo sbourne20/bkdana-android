@@ -3,8 +3,10 @@ package rzgonz.bkd.modules.home
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.checking.CheckPinjamanResponse
 import rzgonz.bkd.models.dashboard.RepaymentResponse
+import rzgonz.bkd.services.APIService
 import rzgonz.bkd.services.DashboardService
 import rzgonz.core.kotlin.helper.APIHelper
 import rzgonz.core.kotlin.presenter.DIBasePresenter
@@ -12,6 +14,7 @@ import rzgonz.core.kotlin.presenter.DIBasePresenter
 class DashboardFragmentPresenter : DIBasePresenter<DashboardContract.DashboardView>(),DashboardContract.DashboardPresenter{
 
     val apiService = APIHelper.getClient().create(DashboardService::class.java)
+    val apiService2 = APIHelper.getClient().create(APIService::class.java)
 
     override fun getMyRepayment() {
         apiService.getRepayment().enqueue(object :Callback<RepaymentResponse>{
@@ -47,4 +50,6 @@ class DashboardFragmentPresenter : DIBasePresenter<DashboardContract.DashboardVi
             }
         })
     }
+
+
 }

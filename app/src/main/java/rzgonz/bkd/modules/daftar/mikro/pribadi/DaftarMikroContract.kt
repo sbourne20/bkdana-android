@@ -10,6 +10,7 @@ object DaftarMikroContract  {
         fun returnUser(status : Boolean, responde: UserContent?, message:String)
         fun returnSendUser(status : Boolean, responde: String?, message:String)
         fun returnProvinsi(status: Boolean, responde: ProvinsiResponse?, message: String)
+        fun returnFcmtoken(status : Boolean, responde: UserContent?, message:String)
     }
 
 
@@ -18,5 +19,6 @@ object DaftarMikroContract  {
         fun getMyData()
         fun sendMyData(user:UserContent)
         fun getProvinsi()
+        fun getfcmToken(fcmtoken: String)
     }
 }

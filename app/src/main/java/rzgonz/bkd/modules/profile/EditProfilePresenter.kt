@@ -33,7 +33,7 @@ class EditProfilePresenter : DIBasePresenter<EditProfileContract.View>(),EditPro
                 if(response.isSuccessful){
                     getView()?.returnProfile(true,response.body(),"success")
                 }else{
-                    getView()?.returnProfile(false,null,"Maaf Terjadi masalah pada sistem")
+                    getView()?.returnProfile(false,null,"Maaf Terjadi masalah pada sistem kami")
                 }
             }
         })

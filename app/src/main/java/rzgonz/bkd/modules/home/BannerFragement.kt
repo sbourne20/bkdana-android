@@ -1,22 +1,17 @@
 package rzgonz.bkd.modules.home
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_banner_dashboard.*
 import org.greenrobot.eventbus.EventBus
 
 import rzgonz.bkd.R
 import rzgonz.bkd.constant.BKD
 import rzgonz.bkd.models.Event
-import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
-import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
-import rzgonz.bkd.modules.peminjam.PeminjamActivity
+import rzgonz.bkd.modules.Login.tokenz
+import rzgonz.bkd.modules.home.gradeUser.gradeUsr
+import rzgonz.bkd.modules.profile.EditProfileActivity
 import rzgonz.core.kotlin.fragment.DIBaseFragment
 import rzgonz.core.kotlin.helper.SharedPreferenceService
 
@@ -34,7 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class BannerFragement : DIBaseFragment() {
+class BannerFragement : DIBaseFragment(){
     // TODO: Rename and change types of parameters
     private var param1: Int? = null
     private var param2: String? = null
@@ -67,12 +62,16 @@ class BannerFragement : DIBaseFragment() {
                 tvBannerDetial.setText("Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!")
                 cardBanner.setOnClickListener {
                     if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
-                        val data = Event(1)
-                        EventBus.getDefault().post(data)
+                        if (gradeUsr != "100% Profil Terselesaikan"){
+                            startActivity(Intent(context, EditProfileActivity::class.java))
+                            showMessage("Lengkapi profil anda untuk melakukan peminjaman")
+                        }else {
+                            val data = Event(1)
+                            EventBus.getDefault().post(data)
+                        }
                     }else{
                         showMessage("Anda Login Sebagai Pendana")
                     }
-
                 }
             }
             2 ->{cardBanner.background = resources.getDrawable(R.drawable.ic_card_aqua)
@@ -81,8 +80,13 @@ class BannerFragement : DIBaseFragment() {
                 tvBannerDetial.setText("Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!")
                 cardBanner.setOnClickListener {
                     if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
-                        val data  = Event(2)
-                        EventBus.getDefault().post(data)
+                        if (gradeUsr != "100% Profil Terselesaikan"){
+                            startActivity(Intent(context, EditProfileActivity::class.java))
+                            showMessage("Lengkapi profil anda untuk melakukan peminjaman")
+                        }else {
+                            val data = Event(2)
+                            EventBus.getDefault().post(data)
+                        }
                     }else{
                         showMessage("Anda Login Sebagai Pendana")
                     }
@@ -94,6 +98,10 @@ class BannerFragement : DIBaseFragment() {
             }
         }
     }
+
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this

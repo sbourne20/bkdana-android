@@ -1,7 +1,6 @@
 package rzgonz.bkd.modules.Login
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
@@ -11,28 +10,27 @@ import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.modules.home.DashboardActivity
 import rzgonz.bkd.modules.register.RegisterActivity
-import rzgonz.bkd.modules.splashscreen.HomeActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import javax.inject.Inject
 import android.content.pm.PackageManager
-import android.provider.SyncStateContract.Helpers.update
-import android.content.pm.PackageInfo
 import android.util.Base64
 import android.util.Log
-import android.view.View
-import okhttp3.Interceptor
-import rzgonz.bkd.BuildConfig
-import rzgonz.bkd.services.interceptors.AuthTokenInterceptor
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import rzgonz.bkd.services.APIService
 import rzgonz.bkd.services.interceptors.KosongInterceptor
 import rzgonz.core.kotlin.helper.APIHelper
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
+const val TAG = "MyToken"
+var tokenz = ""
 
-class LoginActivity : DIBaseActivity(),LoginContract.View {
+class LoginActivity : DIBaseActivity(), LoginContract.View {
 
     @Inject
     lateinit var loginPresenter : LoginPresenter
+
 
     override fun inject() {
         DaggerUserComponent.builder().appsComponent(APKModel.appsComponent).build().inject(this)
@@ -44,6 +42,7 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
 
     override fun onDetachView() {
         loginPresenter.detachView()
+
     }
 
     override fun initLayout(): Int {
@@ -51,29 +50,23 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
     }
 
     override fun initUI(savedInstanceState: Bundle?) {
-//        et_email_login.setText("rzgonz@gmail.com")
-//        et_password_login.setText("123456abcD")
-        if(BuildConfig.DEBUG) {
-            et_email_login.setText("iriawan.jakarta@yahoo.com")
-            et_password_login.setText("master199")
-        }
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w(TAG, "getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
 
-
+                    // Get new Instance ID token
+                    tokenz = task.result!!.token
+                })
         btnDaftar.setOnClickListener {
             startActivity(Intent(baseContext,RegisterActivity::class.java))
         }
 
         btnLogin.setOnClickListener {
             showProgressDialog(this,"Please waiting",false)
-            loginPresenter.checkLogin(et_email_login.text.toString(),et_password_login.text.toString())
-        }
-        if(BuildConfig.DEBUG) {
-            tvForget.setOnClickListener {
-                et_email_login.setText("iriawan.maarif@gmail.com")
-                et_password_login.setText("Ab123456")
-            }
-        }else{
-            tvForget.visibility= View.GONE
+            loginPresenter.checkLogin(et_email_login.text.toString(),et_password_login.text.toString(), tokenz)
         }
 
         btnBack.setOnClickListener {
@@ -86,9 +79,10 @@ class LoginActivity : DIBaseActivity(),LoginContract.View {
     }
 
     override fun returnLogin(status: Boolean, responde: LoginResponse?, message: String) {
-         progressDialog?.dismiss()
+        progressDialog?.dismiss()
         if(status){
             finish()
+
             startActivity(Intent(baseContext,DashboardActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
         }else{
             Toast.makeText(baseContext,message, Toast.LENGTH_LONG).show()

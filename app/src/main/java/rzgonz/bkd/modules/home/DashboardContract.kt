@@ -10,13 +10,15 @@ object DashboardContract  {
     interface View : DIBaseContract.View {
         fun returnUser(status : Boolean, responde: UserContent?, message:String)
         fun returnMySaldo(status : Boolean, responde: MySaldoResponse?, message:String)
+        fun returnFcmtoken(status : Boolean, responde: UserContent?, message:String)
     }
-
 
     interface Presenter : DIBaseContract.Presenter<View> {
 
         fun getMyData()
         fun getMySaldo()
+        fun postFCMLogout(byemail: String)
+        fun getfcmToken(fcmtoken: String)
     }
 
     interface DashboardView : DIBaseContract.View {
@@ -26,8 +28,8 @@ object DashboardContract  {
 
 
     interface DashboardPresenter : DIBaseContract.Presenter<DashboardView> {
-
         fun getMyRepayment()
         fun checkPinjaman(value: Int)
+
     }
 }

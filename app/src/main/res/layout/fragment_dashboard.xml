@@ -48,8 +48,7 @@
     </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/sr"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:id="@+id/sr">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -167,7 +166,18 @@
                 android:textColor="@color/Red500"
                 android:layout_marginTop="10dp"
                 />
-            <TableRow
+
+                <TextView
+                    android:id="@+id/tvPeminjam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="-"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TableRow
                  android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
@@ -208,11 +218,23 @@
                 android:textColor="@color/Red500"
                 android:layout_marginTop="10dp"
                 />
+
+            <TextView
+                android:id="@+id/tvPeminjam2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
+                android:text="-"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingRight="9dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -221,6 +243,7 @@
                     android:id="@+id/tvTempoTwo"
                     android:textSize="12sp"
                     />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

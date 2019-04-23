@@ -3,14 +3,15 @@ package rzgonz.bkd.modules.daftar.kilat.datadiri
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_daftar_kilat_data_diri.*
 import kotlinx.android.synthetic.main.header_daftar.*
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.R
 import rzgonz.bkd.injector.User.DaggerUserComponent
 import rzgonz.bkd.models.user.UserContent
+import rzgonz.bkd.modules.Login.tokenz
 import rzgonz.bkd.modules.daftar.kilat.upload.DaftarKilatUploadActivity
+import rzgonz.bkd.modules.home.DashboardPresenter
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import javax.inject.Inject
 
@@ -19,6 +20,7 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
     @Inject
     lateinit var mPresenter : DaftarKilatDataDiriPresenter
 
+    val mPresenter2 = DashboardPresenter()
     companion object {
         var extra_data ="extra_data"
         @JvmStatic

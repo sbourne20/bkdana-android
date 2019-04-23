@@ -97,6 +97,8 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         etRekening.setText("${data?.nomorRekening}")
         etUsaha.setText("${data?.usaha}")
         etLamaUsaha.setText("${data?.lamaUsaha}")
+        etUsaha.setText("${data?.usaha}")
+
         val pekerjaan = resources.getStringArray(R.array.array_pekerjaan)
         pekerjaan.forEachIndexed { index, s ->
             if(index.plus(1).toString().equals(data?.pekerjaan,true)){
@@ -174,8 +176,11 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         builder.setType(MultipartBody.FORM)
         builder.addFormDataPart("nomor_rekening", etRekening.text.toString())
         builder.addFormDataPart("jumlah_pinjaman",etPinjaman.text.toString())
-        builder.addFormDataPart("nomor_nik",etNomorNIK.text.toString())
+
+       // builder.addFormDataPart("nomor_nik",etNomorNIK.text.toString())
         builder.addFormDataPart("lama_usaha",etLamaUsaha.text.toString())
+        builder.addFormDataPart("usaha",etUsaha.text.toString())
+
         builder.addFormDataPart("product_id", spinnerAdapterTenor?.getItem(spTenor.selectedItemPosition)?.productId!!)
         builder.addFormDataPart("pekerjaan",spPekerjaan.selectedItemPosition.plus(1).toString())
         builder.addFormDataPart("foto_usaha",fileUsaha.getName(), RequestBody.create(MediaType.parse("image/*"), fileUsaha))
@@ -194,8 +199,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         val rxPermissions = RxPermissions(this)
         rxPermissions
                 .requestEach(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.CAMERA
                 )
                 .subscribe { // will emit 2 Permission objects
                     permission ->
@@ -245,7 +249,14 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                 for (i in 0..imagesFiles.size) {
                     when(isfoto){
                         0 ->{
-                            imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+                            //imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile5 = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imgfoto = compressedImageFile5
+
                             imgFoto.visibility = View.VISIBLE
                             Glide.with(imgFoto).load(imagesFiles[i]).into(imgFoto)
                             llFoto.visibility = View.GONE
@@ -256,7 +267,15 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                             }
                         }
                         1->{
-                            imgNIK = imagesFiles.get(i).compressImage(applicationContext)
+
+                            //imgNIK = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile6 = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imgNIK = compressedImageFile6
+
                             imgKTP.visibility = View.VISIBLE
                             Glide.with(imgKTP).load(imagesFiles[i]).into(imgKTP)
                             llNIK.visibility = View.GONE
@@ -267,7 +286,15 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                             }
                         }
                         2->{
-                            imgFotoUsaha = imagesFiles.get(i).compressImage(applicationContext)
+
+                           // imgFotoUsaha = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile7 = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imgFotoUsaha = compressedImageFile7
+
                             imgUsaha.visibility = View.VISIBLE
                             Glide.with(imgUsaha).load(imagesFiles[i]).into(imgUsaha)
                             llUsaha.visibility = View.GONE
@@ -328,7 +355,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
 
 
         if(!cbTnC.isChecked){
-            showError("Ada Belum Checklist Syarat Dan Ketetuan")
+            showError("Anda Belum Checklist Syarat Dan Ketetuan")
             return false
         }
 

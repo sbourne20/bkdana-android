@@ -2,8 +2,11 @@ package rzgonz.bkd.modules.transaksi
 
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.animation.OvershootInterpolator
+import android.widget.Toast
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
@@ -94,8 +97,17 @@ class TransaksiFragment : DIBaseFragment(),CustomeRV.RVListener,TransaksiContrac
             moveDuration = 1000
             changeDuration = 100
         }
-
+//        mHandler.postDelayed(m_Runnable, 2000)
     }
+//    val mHandler = Handler()
+//    private val m_Runnable = object : Runnable {
+//        override fun run() {
+//            showMessage("1234")
+//            mHandler.postDelayed(this, 2000)
+//
+//        }
+//
+//    }
 
     override fun initAdapter(): BaseRVAdapter {
         return TransaksiAdapter(activity!!.baseContext, ArrayList<Any>())
@@ -106,6 +118,7 @@ class TransaksiFragment : DIBaseFragment(),CustomeRV.RVListener,TransaksiContrac
 //        for (i in 0..10) {
 //            data.add("${rvView.getAdapter().colomCount + i}")
 //        }
+        Log.d("asdasdasd", limit.toString())
         if(offset==0){
             PAGE=1
         }

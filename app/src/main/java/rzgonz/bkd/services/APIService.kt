@@ -44,7 +44,7 @@ interface APIService {
 
     @FormUrlEncoded
     @POST("auth/login/")
-    fun postLogin(@Field("username")userName:String,@Field("password")passWord:String): Call<LoginResponse>
+    fun postLogin(@Field("username")userName:String,@Field("password")passWord:String,@Field("fcmtoken")fcmToken:String): Call<LoginResponse>
 
     @FormUrlEncoded
     @POST("member/cek_password/")
@@ -83,5 +83,12 @@ interface APIService {
     @POST("member/check_notelp")
     fun postPhone(@Field("no_telp")no_telp:String): Call<BaseResponse<String>>
 
+    @FormUrlEncoded
+    @POST("auth/logout")
+    fun postFCMLogout(@Field("emailUsr")emailusr:String): Call<BaseResponse<String>>
+
+    @FormUrlEncoded
+    @POST("auth/check_fcmtoken")
+    fun getfcmToken(@Field("fcmtoken")FCMtoken:String):  Call<BaseResponse<String>>
 
 }

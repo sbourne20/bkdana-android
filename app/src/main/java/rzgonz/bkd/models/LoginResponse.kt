@@ -15,6 +15,7 @@ data class LoginResponse(
 
 	@field:SerializedName("token")
 	var token: String = "",
+
 	@field:SerializedName("logtype")
 	var logtype: String = ""
 )

@@ -8,6 +8,7 @@ import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.provinsi.ProvinsiResponse
 import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.models.user.UserResponse
+import rzgonz.bkd.services.APIService
 import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
 import rzgonz.core.kotlin.presenter.DIBasePresenter
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class DaftarMirkoPresenter @Inject constructor(context: Context) : DIBasePresenter<DaftarMikroContract.View>(),DaftarMikroContract.Presenter{
 
     val apiService = APIHelper.getClient().create(PinjamanService::class.java)
+    val apiService2 = APIHelper.getClient().create(APIService::class.java)
 
     override fun getMyData() {
 
@@ -62,6 +64,23 @@ class DaftarMirkoPresenter @Inject constructor(context: Context) : DIBasePresent
                     getView()?.returnProvinsi(true,response.body(),"success")
                 }else{
                     getView()?.returnProvinsi(false,null,"Maaf Terjadi masalah pada sistem")
+                }
+            }
+        })
+    }
+
+    override fun getfcmToken(fcmtoken: String) {
+        apiService2.getfcmToken(fcmtoken).enqueue(object : Callback<BaseResponse<String>> {
+            override fun onFailure(call: Call<BaseResponse<String>>?, t: Throwable?) {
+            }
+            override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
+                if(response.isSuccessful){
+                    //do  nothing
+                }
+                else
+                {
+                    //showing error message & force logout
+                    getView()?.returnFcmtoken(false,null, "fail")
                 }
             }
         })

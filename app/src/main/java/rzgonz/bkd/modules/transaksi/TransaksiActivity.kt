@@ -1,5 +1,6 @@
 package rzgonz.bkd.modules.transaksi
 import android.os.Bundle
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_pinjaman.*
 import rzgonz.bkd.R
 import rzgonz.bkd.modules.peminjam.adapter.PeminjamAdapter

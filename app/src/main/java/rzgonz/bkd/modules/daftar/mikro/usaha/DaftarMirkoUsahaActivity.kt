@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.tbruyelle.rxpermissions2.RxPermissions
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_daftar_mikro_usaha.*
 import kotlinx.android.synthetic.main.header_daftar.*
 import okhttp3.MediaType
@@ -94,7 +95,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         etOmzet.setText("${data?.omzetUsaha}")
         etMargin.setText("${data?.marginUsaha}")
         etLaba.setText("${data?.labaUsaha}")
-     //   etModal.setText("${data?.biayaOperasionalUsaha}")
+        etModal.setText("${data?.biayaOperasionalUsaha}")
        // etBunga.setText("${data?.jml_bunga_usaha}")
         etOperasional.setText("${data?.biayaOperasionalUsaha}")
         val bank = resources.getStringArray(R.array.array_bank)
@@ -136,34 +137,6 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         EasyImage.openCamera(this,1)
     }
 
-    override fun returnDataUsaha(status: Boolean, responde: String?, message: String) {
-        progressDialog?.dismiss()
-        if(status){
-           // showMessage("Pendaftaran berhasil")
-            startActivity(Intent(baseContext,DaftarMikroUploadActivity::class.java).putExtra(DaftarKilatDataDiriActivity.extra_data,data).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
-        }else{
-            showError(message)
-        }
-    }
-    private fun checkPermissionAndCreateCamera() {
-        val rxPermissions = RxPermissions(this)
-        rxPermissions
-                .requestEach(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-                .subscribe { // will emit 2 Permission objects
-                    permission ->
-                    if (permission.granted) {
-
-                    } else if (permission.shouldShowRequestPermissionRationale) {
-                        checkPermissionAndCreateCamera()
-                    } else {
-                        goToPermissionSettings(baseContext)
-                    }
-                }
-    }
-
     fun sendDataUsaha(){
         val fileFoto = File(imgfoto?.path)
         val builder = MultipartBody.Builder()
@@ -178,6 +151,33 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         builder.addFormDataPart("nama_bank",spBank.selectedItem.toString())
         val requestBody:RequestBody = builder.build()
         mPresenter.sendDataUsaha(requestBody)
+    }
+    override fun returnDataUsaha(status: Boolean, responde: String?, message: String) {
+        progressDialog?.dismiss()
+        if(status){
+           // showMessage("Pendaftaran berhasil")
+            startActivity(Intent(baseContext,DaftarMikroUploadActivity::class.java).putExtra(DaftarKilatDataDiriActivity.extra_data,data).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP))
+        }else{
+            showError(message)
+        }
+    }
+
+    private fun checkPermissionAndCreateCamera() {
+        val rxPermissions = RxPermissions(this)
+        rxPermissions
+                .requestEach(
+                        Manifest.permission.CAMERA
+                )
+                .subscribe { // will emit 2 Permission objects
+                    permission ->
+                    if (permission.granted) {
+
+                    } else if (permission.shouldShowRequestPermissionRationale) {
+                        checkPermissionAndCreateCamera()
+                    } else {
+                        goToPermissionSettings(baseContext)
+                    }
+                }
     }
 
     private fun checkInput(): Boolean {
@@ -194,6 +194,10 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
 
         if(etOmzet.text.isNullOrEmpty()){
             etOmzet.setError( "is required!" )
+            return  false
+        }
+        if(etModal.text.isNullOrEmpty()){
+            etModal.setError( "is required!" )
             return  false
         }
         if(etMargin.text.isNullOrEmpty()){
@@ -236,7 +240,14 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
             override fun onImagesPicked(imagesFiles: List<File>, source: EasyImage.ImageSource, type: Int) {
                 //Handle the images
                 for (i in 0..imagesFiles.size) {
-                    imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+
+                    //imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+
+                    val compressedImageFile8 = Compressor(baseContext)
+                            .setQuality(100)
+                            .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+                    imgfoto = compressedImageFile8
+
                     imgInfoUsaha.visibility = View.VISIBLE
                     Glide.with(imgInfoUsaha).load(imagesFiles[i]).into(imgInfoUsaha)
                     llUsaha.visibility = View.GONE

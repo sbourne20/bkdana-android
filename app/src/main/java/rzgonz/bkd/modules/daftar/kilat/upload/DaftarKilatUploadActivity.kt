@@ -2,16 +2,23 @@ package rzgonz.bkd.modules.daftar.kilat.upload
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Bitmap.createBitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.tbruyelle.rxpermissions2.RxPermissions
+import id.zelory.compressor.Compressor
 import kotlinx.android.synthetic.main.activity_daftar_kilat_upload.*
 import kotlinx.android.synthetic.main.header_daftar.*
 import okhttp3.MediaType
@@ -30,7 +37,8 @@ import rzgonz.bkd.modules.daftar.kilat.upload.adapter.PinjamanAdapter
 import rzgonz.bkd.modules.daftar.kilat.upload.adapter.TenorAdapter
 import rzgonz.bkd.modules.home.DashboardActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
-import java.io.File
+import java.io.*
+import java.lang.System.out
 import javax.inject.Inject
 
 class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.View {
@@ -140,6 +148,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                 imgKTP.visibility = View.GONE
             }
         })
+
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoSuratKetKerja).into(object : SimpleTarget<File>() {
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgSuratKerja.setImageURI(Uri.fromFile(resource))
@@ -161,6 +170,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
             }
         })
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoSlipGaji).into(object : SimpleTarget<File>() {
+
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgSlipGaji.setImageURI(Uri.fromFile(resource))
                 imggaji = resource
@@ -180,7 +190,9 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                 imgSlipGaji.visibility = View.GONE
             }
         })
+
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoPegangIdcard).into(object : SimpleTarget<File>() {
+
             override fun onResourceReady(resource: File, transition: Transition<in File>?) {
                 imgSelfiKtp.setImageURI(Uri.fromFile(resource))
                 imgselfi = resource
@@ -260,8 +272,9 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
         val fileSelfi = File(imgselfi?.path)
 
         val builder = MultipartBody.Builder()
+
         builder.setType(MultipartBody.FORM)
-         builder.addFormDataPart("nomor_rekening", etRekening.text.toString())
+        builder.addFormDataPart("nomor_rekening", etRekening.text.toString())
         builder.addFormDataPart("jumlah_pinjaman",spinnerAdapter?.getItem(spPinjaman.selectedItemPosition)?.nominalPinjaman!!)
         builder.addFormDataPart("product_id", spinnerAdapterTenor?.getItem(spTenor.selectedItemPosition)?.productId!!)
         builder.addFormDataPart("gaji", etGaji.text.toString())
@@ -290,8 +303,6 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
         checkPermissionAndCreateCamera()
     }
 
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -303,10 +314,18 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
 
             override fun onImagesPicked(imagesFiles: List<File>, source: EasyImage.ImageSource, type: Int) {
                 //Handle the images
+
+//
                 for (i in 0..imagesFiles.size) {
                     when(isfoto){
                         0 ->{
-                            imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+                           // imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imgfoto = compressedImageFile
                             imgFoto.visibility = View.VISIBLE
                             llFoto.visibility = View.GONE
                             imgFoto.setOnClickListener {
@@ -314,10 +333,19 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                                 llFoto.visibility = View.VISIBLE
                                 imgFoto.visibility = View.GONE
                             }
-                            Glide.with(imgFoto).load(imagesFiles[i]).into(imgFoto)
+                            Glide.with(imgFoto).load(compressedImageFile)
+//                                    .apply(RequestOptions().override(248,248 ))
+                                    .into(imgFoto)
+
                         }
                         1->{
-                            imgNIK = imagesFiles.get(i).compressImage(applicationContext)
+                           // imgNIK = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile1 = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imgNIK = compressedImageFile1
                             imgKTP.visibility = View.VISIBLE
                             llNIK.visibility = View.GONE
                             imgKTP.setOnClickListener {
@@ -325,12 +353,23 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                                 llNIK.visibility = View.VISIBLE
                                 imgKTP.visibility = View.GONE
                             }
-                            Glide.with(imgKTP).load(imagesFiles[i]).into(imgKTP)
+                            Glide.with(imgKTP).load(imagesFiles[i])
+//                                    .apply(RequestOptions().override(248,248 ))
+                                    .into(imgKTP)
                         }
                         2->{
-                            imgkerja = imagesFiles.get(i).compressImage(applicationContext)
+
+                           // imgkerja = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile2 = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imgkerja = compressedImageFile2
                             imgSuratKerja.visibility = View.VISIBLE
-                            Glide.with(imgSuratKerja).load(imagesFiles[i]).into(imgSuratKerja)
+                            Glide.with(imgSuratKerja).load(imagesFiles[i])
+//                                    .apply(RequestOptions().override(248,248 ))
+                                    .into(imgSuratKerja)
                             llKerja.visibility = View.GONE
                             imgSuratKerja.setOnClickListener {
                                 imgkerja = null
@@ -339,9 +378,19 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                             }
                         }
                         3->{
-                            imggaji = imagesFiles.get(i).compressImage(applicationContext)
+
+                           // imggaji = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile3 = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imggaji = compressedImageFile3
+
                             imgSlipGaji.visibility = View.VISIBLE
-                            Glide.with(imgSlipGaji).load(imagesFiles[i]).into(imgSlipGaji)
+                            Glide.with(imgSlipGaji).load(imagesFiles[i])
+//                                    .apply(RequestOptions().override(248,248 ))
+                                    .into(imgSlipGaji)
                             llGaji.visibility = View.GONE
                             imgSlipGaji.setOnClickListener {
                                 imggaji = null
@@ -350,9 +399,19 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
                             }
                         }
                         4->{
-                            imgselfi = imagesFiles.get(i).compressImage(applicationContext)
+
+                           // imgselfi = imagesFiles.get(i).compressImage(applicationContext)
+
+                            val compressedImageFile4 = Compressor(baseContext)
+                                    .setQuality(100)
+                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+
+                            imgselfi = compressedImageFile4
+
                             imgSelfiKtp.visibility = View.VISIBLE
-                            Glide.with(imgSelfiKtp).load(imagesFiles[i]).into(imgSelfiKtp)
+                            Glide.with(imgSelfiKtp).load(imagesFiles[i])
+//                                    .apply(RequestOptions().override(248,248 ))
+                                    .into(imgSelfiKtp)
                             llSelfi.visibility = View.GONE
                             imgSelfiKtp.setOnClickListener {
                                 imgselfi = null
@@ -369,7 +428,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
 
     override fun retrunPijanam(status: Boolean, content: Content?, message: String) {
 
-        Log.d("berak","${content}")
+        Log.d("PinjamanReturn","${content}")
         if(status){
              spinnerAdapter = PinjamanAdapter(baseContext, content?.pinjaman!!)
             spPinjaman.adapter = spinnerAdapter
@@ -392,8 +451,7 @@ class DaftarKilatUploadActivity : DIBaseActivity(),DaftarKilatUploadContract.Vie
         val rxPermissions = RxPermissions(this)
         rxPermissions
                 .requestEach(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        Manifest.permission.CAMERA
                 )
                 .subscribe { // will emit 2 Permission objects
                     permission ->

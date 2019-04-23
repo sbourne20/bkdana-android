@@ -30,36 +30,48 @@ import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.modules.Login.LoginActivity
 import android.widget.ProgressBar
 import android.content.Context
+import android.support.v7.app.AlertDialog
+import rzgonz.bkd.modules.Login.tokenz
+import rzgonz.bkd.modules.home.gradeUser.gradeUsr
 
-
+var gocek= ""
 class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelectedListener,DashboardContract.View {
     var username= ""
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, DashboardFragment.newInstance(username,"")).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.frame, DashboardFragment.newInstance(username,"")).commit()
+                mPresenter.getfcmToken(tokenz)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_transaksi -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, TransaksiFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.frame, TransaksiFragment()).commit()
+                mPresenter.getfcmToken(tokenz)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_topup -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, TopupFragment.newInstance("Toup")).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.frame, TopupFragment.newInstance("Toup")).commit()
+                mPresenter.getfcmToken(tokenz)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_menu -> {
                 drawer_layout.openDrawer(GravityCompat.START)
+                mPresenter.getfcmToken(tokenz)
                 return@OnNavigationItemSelectedListener false
             }
             R.id.navigation_tarik -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, RedemFragment.newInstance("Redem")).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.frame, RedemFragment.newInstance("Redem")).commit()
+                mPresenter.getfcmToken(tokenz)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onloadnotif(gocek)
 
+    }
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -133,8 +145,23 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         pb = headerView.findViewById<ProgressBar>(R.id.progressBar)
     }
 
+    private fun onloadnotif(Notif :String){
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.navigation) as BottomNavigationView
+        if (Notif.equals("transaksi")){
+            supportFragmentManager.beginTransaction().replace(R.id.frame, TransaksiFragment()).commit()
+            bottomNavigationView.selectedItemId = R.id.navigation_transaksi
+        }
+    }
+
     override fun onResume() {
         super.onResume()
+        mPresenter.getMyData()
+        mPresenter.getMySaldo()
+        mPresenter.getfcmToken(tokenz)
+    }
+
+    override fun onPause() {
+        super.onPause()
         mPresenter.getMyData()
         mPresenter.getMySaldo()
     }
@@ -147,7 +174,12 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
             }
             R.id.itemPeminjam -> {
                 if(SharedPreferenceService(baseContext).getInt(BKD.LOGINTYPE,0)==2) {
-                    startActivity(Intent(baseContext, PeminjamActivity::class.java))
+                    if (gradeUsr != "100% Profil Terselesaikan"){
+                        startActivity(Intent(this, EditProfileActivity::class.java))
+                        showMessage("Lengkapi profil anda untuk melakukan peminjaman")
+                    }else {
+                        startActivity(Intent(baseContext, PeminjamActivity::class.java))
+                    }
                 }else{
                     showMessage("Anda Login Sebagai Peminjam")
                 }
@@ -159,8 +191,10 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
                 startActivity(Intent(baseContext,QRCodeActivity::class.java))
             }
             R.id.itemLogout -> {
+
                 val PREFERENCE_NAME = SharedPreferenceService::class.java.getPackage()!!.toString() + ".sharedprefs"
                 val settings = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+                mPresenter.postFCMLogout(SharedPreferenceService(baseContext).getString(BKD.EMAIL,username))
                 settings.edit().clear().apply()
                 finish()
                 startActivity(Intent(baseContext,LoginActivity::class.java))
@@ -172,16 +206,14 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
     }
 
     override fun returnUser(status: Boolean, responde: UserContent?, message: String) {
-        if(status){
+        if(status) {
             navUsername.setText(responde?.namaPengguna)
             username = responde?.namaPengguna!!
             pb.setProgress(responde.peringkatPenggunaPersentase?.toInt()!!)
             tvComplete.setText("${responde.peringkatPenggunaPersentase}% Profil Terselesaikan")
+            gradeUsr = tvComplete.text.toString()
             EventBus.getDefault().post(responde)
-            SharedPreferenceService(applicationContext).saveString("MEMBER_ID",responde?.memberId!!)
-            if(responde?.peringkatPenggunaPersentase?.toInt()!! < 25){
-                startActivity(Intent(baseContext,EditProfileActivity::class.java))
-            }
+            SharedPreferenceService(applicationContext).saveString("MEMBER_ID", responde?.memberId!!)
         }
     }
 
@@ -189,6 +221,24 @@ class DashboardActivity : DIBaseActivity(), NavigationView.OnNavigationItemSelec
         if(status){
             SharedPreferenceService(applicationContext).saveString("SALDO",responde?.content?.Amount)
             navSaldo.setText("${responde?.content?.Amount} IDR")
+        }
+    }
+
+    override fun returnFcmtoken(status: Boolean, responde: UserContent?, message: String) {
+        if(message.equals("fail")){
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Peringatan")
+            builder.setMessage("Anda telah masuk ke perangkat baru, mohon untuk ulangi proses " +
+                    "login jika ingin menggunakan aplikasi di perangkat ini ")
+            builder.setPositiveButton("Masuk Kembali") { dialog, which ->
+                val PREFERENCE_NAME = SharedPreferenceService::class.java.getPackage()!!.toString() + ".sharedprefs"
+                val settings = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+                settings.edit().clear().apply()
+                finish()
+                startActivity(Intent(baseContext,LoginActivity::class.java))
+            }
+            builder.setCancelable(false);
+            builder.show()
         }
     }
 

@@ -13,5 +13,8 @@ data class ListRepaymentItem(
 	val jatuhTempoTransaksi: String? = null,
 
 	@field:SerializedName("title_transaksi")
-	val titleTransaksi: String? = null
+	val titleTransaksi: String? = null,
+
+	@field:SerializedName("namaPeminjam")
+	val namaPeminjam: String? = null
 )

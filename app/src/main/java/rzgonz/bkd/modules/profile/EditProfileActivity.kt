@@ -106,12 +106,7 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
         if(!responde?.content?.jenisKelamin?.toLowerCase().equals("pria")){
             spGender.setSelection(1)
         }
-        val listBank = resources.getStringArray(R.array.array_bank)
-        listBank.forEachIndexed { index, s ->
-            if(s.equals(responde?.content?.namaBank)){
-                spBank.setSelection(index)
-            }
-        }
+
         etNoRek.setText(responde?.content?.nomorRekening)
         etAlamat.setText(responde?.content?.alamat)
         etKota.setText(responde?.content?.kota)
@@ -139,7 +134,17 @@ class EditProfileActivity : DIBaseActivity(),EditProfileContract.View {
 
         }
 
+
         responde?.content?.pekerjaan?.toInt()?.let { spPekerjaan.setSelection(it.minus(1)) }
+
+        val listBank = resources.getStringArray(R.array.array_bank)
+        listBank.forEachIndexed { index, s ->
+            if(s.equals(responde?.content?.namaBank)){
+                spBank.setSelection(index)
+            }
+        }
+
+       // responde?.content?.pekerjaan?.toInt()?.let { spPekerjaan.setSelection(it) }
 
         responde?.content?.pendidikan?.toInt()?.let { spPendidikan.setSelection(it.minus(1)) }
 

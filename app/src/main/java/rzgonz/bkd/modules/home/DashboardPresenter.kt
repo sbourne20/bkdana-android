@@ -6,6 +6,7 @@ import retrofit2.Response
 import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.dashboard.MySaldoResponse
 import rzgonz.bkd.models.user.UserResponse
+import rzgonz.bkd.services.APIService
 
 import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
@@ -14,7 +15,7 @@ import rzgonz.core.kotlin.presenter.DIBasePresenter
 class DashboardPresenter () : DIBasePresenter<DashboardContract.View>(),DashboardContract.Presenter{
 
     val apiService = APIHelper.getClient().create(PinjamanService::class.java)
-
+    val apiService2 = APIHelper.getClient().create(APIService::class.java)
     override fun getMyData() {
 
         apiService.getMyData().enqueue(object : Callback<UserResponse> {
@@ -48,4 +49,32 @@ class DashboardPresenter () : DIBasePresenter<DashboardContract.View>(),Dashboar
         })
     }
 
+
+    override fun postFCMLogout(byemail: String) {
+        apiService2.postFCMLogout(byemail).enqueue(object : Callback<BaseResponse<String>> {
+            override fun onFailure(call: Call<BaseResponse<String>>?, t: Throwable?) {
+            }
+            override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
+                if(response.isSuccessful){
+                }
+            }
+        })
+    }
+
+    override fun getfcmToken(fcmtoken: String) {
+        apiService2.getfcmToken(fcmtoken).enqueue(object : Callback<BaseResponse<String>> {
+            override fun onFailure(call: Call<BaseResponse<String>>?, t: Throwable?) {
+            }
+            override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {
+                if(response.isSuccessful){
+                    //do  nothing
+                }
+                else
+                {
+                    //showing error message & force logout
+                    getView()?.returnFcmtoken(false,null, "fail")
+                }
+            }
+        })
+    }
 }

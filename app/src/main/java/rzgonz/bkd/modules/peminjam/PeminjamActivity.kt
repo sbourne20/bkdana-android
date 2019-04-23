@@ -1,8 +1,10 @@
 package rzgonz.bkd.modules.peminjam
+import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_pinjaman.*
 import rzgonz.bkd.R
 import rzgonz.bkd.models.peminjam.ListPeminjamItem
+import rzgonz.bkd.modules.home.DashboardActivity
 import rzgonz.bkd.modules.peminjam.adapter.PeminjamAdapter
 import rzgonz.core.kotlin.activity.DIBaseActivity
 import rzgonz.core.kotlin.adapter.BaseRVAdapter
@@ -44,6 +46,7 @@ class PeminjamActivity : DIBaseActivity(),CustomeRV.RVListener,PeminjamContract.
         super.onRestart()
         rvView.onRefresh()
     }
+
 
     override fun onLoadItems(limit: Int, offset: Int) {
 //        var data= ArrayList<String>()

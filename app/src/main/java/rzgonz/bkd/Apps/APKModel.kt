@@ -33,7 +33,7 @@ class APKModel : RzApps {
        // APIHelper.Authorization ="Basic dXNlcm5hbWU6aW5kb25lc2lhZ28="
 
         //Localhost
-            APIHelper.BASE_URL = "http://192.168.1.86/bkd-api/"
+            APIHelper.BASE_URL = "http://192.168.1.86/bkdana/bkd-api/"
 
         // APIHelper.Authorization ="Basic dXNlcm5hbWU6aW5kb25lc2lhZ28="
 

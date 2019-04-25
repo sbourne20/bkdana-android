@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -23,13 +25,16 @@ import pl.aprilapps.easyphotopicker.EasyImage
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.Apps.compressImage
 import rzgonz.bkd.R
+import rzgonz.bkd.constant.BKD
 import rzgonz.bkd.injector.User.DaggerUserComponent
+import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.models.pinjaman.Content
 import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
 import rzgonz.bkd.modules.daftar.kilat.upload.adapter.TenorAdapter
 import rzgonz.bkd.modules.home.DashboardActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
+import rzgonz.core.kotlin.helper.SharedPreferenceService
 import java.io.File
 import javax.inject.Inject
 
@@ -92,79 +97,115 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         mPresenter.getPinjaman()
     }
 
+    private fun isNullOrEmpty(str: String?): Boolean {
+        if (str != null && !str.isEmpty())
+            return false
+        return true
+    }
+
     private fun bindData(data: UserContent?) {
         etNomorNIK.setText("${data?.nomorNik}")
         etRekening.setText("${data?.nomorRekening}")
         etUsaha.setText("${data?.usaha}")
         etLamaUsaha.setText("${data?.lamaUsaha}")
         etUsaha.setText("${data?.usaha}")
-
+        val response = LoginResponse()
         val pekerjaan = resources.getStringArray(R.array.array_pekerjaan)
         pekerjaan.forEachIndexed { index, s ->
             if(index.plus(1).toString().equals(data?.pekerjaan,true)){
                 spPekerjaan.setSelection(index)
             }
         }
-        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoFile).into(object : SimpleTarget<File>() {
-            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                imgFoto.setImageURI(Uri.fromFile(resource))
-                imgfoto = resource
-                imgFoto.visibility = View.VISIBLE
-                llFoto.visibility = View.GONE
-                imgFoto.setOnClickListener {
-                    imgfoto = null
-                    llFoto.visibility = View.VISIBLE
-                    imgFoto.visibility = View.GONE
-                }
-            }
 
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                super.onLoadFailed(errorDrawable)
-                imgfoto = null
-                llFoto.visibility = View.VISIBLE
-                imgFoto.visibility = View.GONE
-            }
-        })
-        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.nikFile).into(object : SimpleTarget<File>() {
-            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                imgKTP.setImageURI(Uri.fromFile(resource))
-                imgNIK = resource
-                imgKTP.visibility = View.VISIBLE
-                llNIK.visibility = View.GONE
-                imgKTP.setOnClickListener {
-                    imgNIK = null
-                    llNIK.visibility = View.VISIBLE
-                    imgKTP.visibility = View.GONE
-                }
-            }
+        if(isNullOrEmpty(data?.fotoFile) or isNullOrEmpty(data?.nikFile) or isNullOrEmpty(data?.fotoUsahaFile) ){
+            //do nothing
+        } else {
+            val glideUrlfotoFile = GlideUrl(data?.fotoFile, LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferenceService(baseContext).getString(BKD.TOKEN, response.token))
+                    .build())
 
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                super.onLoadFailed(errorDrawable)
-                imgNIK = null
-                llNIK.visibility = View.VISIBLE
-                imgKTP.visibility = View.GONE
-            }
-        })
-        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
-            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                imgUsaha.setImageURI(Uri.fromFile(resource))
-                imgFotoUsaha = resource
-                imgUsaha.visibility = View.VISIBLE
-                llUsaha.visibility = View.GONE
-                imgUsaha.setOnClickListener {
-                    imgfoto = null
-                    llUsaha.visibility = View.VISIBLE
-                    imgUsaha.visibility = View.GONE
-                }
-            }
+            Glide.with(this)
+                    .applyDefaultRequestOptions(RequestOptions()
+                            .placeholder(R.drawable.loading))
+                    .asFile()
+                    .load(glideUrlfotoFile)
+                    .apply(RequestOptions().override(248,248 ))
+                    .into(object : SimpleTarget<File>() {
+                        override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                            imgFoto.setImageURI(Uri.fromFile(resource))
+                            imgfoto = resource
+                            imgFoto.visibility = View.VISIBLE
+                            llFoto.visibility = View.GONE
+                            imgFoto.setOnClickListener {
+                                imgfoto = null
+                                llFoto.visibility = View.VISIBLE
+                                imgFoto.visibility = View.GONE
+                            }
+                        }
 
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                super.onLoadFailed(errorDrawable)
-                imgfoto = null
-                llUsaha.visibility = View.VISIBLE
-                imgUsaha.visibility = View.GONE
-            }
-        })
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            super.onLoadFailed(errorDrawable)
+                            imgfoto = null
+                            llFoto.visibility = View.VISIBLE
+                            imgFoto.visibility = View.GONE
+                        }
+                    })
+            val glideUrlnikFile = GlideUrl(data?.nikFile, LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferenceService(baseContext).getString(BKD.TOKEN, response.token))
+                    .build())
+            Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading))
+                    .asFile()
+                    .load(glideUrlnikFile)
+                    .apply(RequestOptions().override(248,248 ))
+                    .into(object : SimpleTarget<File>() {
+                        override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                            imgKTP.setImageURI(Uri.fromFile(resource))
+                            imgNIK = resource
+                            imgKTP.visibility = View.VISIBLE
+                            llNIK.visibility = View.GONE
+                            imgKTP.setOnClickListener {
+                                imgNIK = null
+                                llNIK.visibility = View.VISIBLE
+                                imgKTP.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            super.onLoadFailed(errorDrawable)
+                            imgNIK = null
+                            llNIK.visibility = View.VISIBLE
+                            imgKTP.visibility = View.GONE
+                        }
+                    })
+
+            val glideUrlfotoUsahaFile = GlideUrl(data?.fotoUsahaFile, LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferenceService(baseContext).getString(BKD.TOKEN, response.token))
+                    .build())
+            Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading))
+                    .asFile()
+                    .load(glideUrlfotoUsahaFile)
+                    .apply(RequestOptions().override(248,248 ))
+                    .into(object : SimpleTarget<File>() {
+                        override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                            imgUsaha.setImageURI(Uri.fromFile(resource))
+                            imgFotoUsaha = resource
+                            imgUsaha.visibility = View.VISIBLE
+                            llUsaha.visibility = View.GONE
+                            imgUsaha.setOnClickListener {
+                                imgFotoUsaha = null
+                                llUsaha.visibility = View.VISIBLE
+                                imgUsaha.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            super.onLoadFailed(errorDrawable)
+                            imgFotoUsaha = null
+                            llUsaha.visibility = View.VISIBLE
+                            imgUsaha.visibility = View.GONE
+                        }
+                    })
+        }
     }
 
     private fun sendUpload() {
@@ -177,7 +218,7 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
         builder.addFormDataPart("nomor_rekening", etRekening.text.toString())
         builder.addFormDataPart("jumlah_pinjaman",etPinjaman.text.toString())
 
-       // builder.addFormDataPart("nomor_nik",etNomorNIK.text.toString())
+        builder.addFormDataPart("nomor_nik",etNomorNIK.text.toString())
         builder.addFormDataPart("lama_usaha",etLamaUsaha.text.toString())
         builder.addFormDataPart("usaha",etUsaha.text.toString())
 
@@ -249,16 +290,16 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                 for (i in 0..imagesFiles.size) {
                     when(isfoto){
                         0 ->{
-                            //imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+                            imgfoto = imagesFiles.get(i).compressImage(applicationContext)
 
-                            val compressedImageFile5 = Compressor(baseContext)
-                                    .setQuality(100)
-                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
-
-                            imgfoto = compressedImageFile5
+//                            val compressedImageFile5 = Compressor(baseContext)
+//                                    .setQuality(100)
+//                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+//
+//                            imgfoto = compressedImageFile5
 
                             imgFoto.visibility = View.VISIBLE
-                            Glide.with(imgFoto).load(imagesFiles[i]).into(imgFoto)
+                            Glide.with(imgFoto).load(imgfoto).into(imgFoto)
                             llFoto.visibility = View.GONE
                             imgFoto.setOnClickListener {
                                 imgfoto = null
@@ -268,16 +309,16 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                         }
                         1->{
 
-                            //imgNIK = imagesFiles.get(i).compressImage(applicationContext)
+                            imgNIK = imagesFiles.get(i).compressImage(applicationContext)
 
-                            val compressedImageFile6 = Compressor(baseContext)
-                                    .setQuality(100)
-                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
-
-                            imgNIK = compressedImageFile6
+//                            val compressedImageFile6 = Compressor(baseContext)
+//                                    .setQuality(100)
+//                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+//
+//                            imgNIK = compressedImageFile6
 
                             imgKTP.visibility = View.VISIBLE
-                            Glide.with(imgKTP).load(imagesFiles[i]).into(imgKTP)
+                            Glide.with(imgKTP).load(imgNIK).into(imgKTP)
                             llNIK.visibility = View.GONE
                             imgKTP.setOnClickListener {
                                 imgNIK = null
@@ -287,19 +328,19 @@ class DaftarMikroUploadActivity : DIBaseActivity(),DaftarMikroUploadContract.Vie
                         }
                         2->{
 
-                           // imgFotoUsaha = imagesFiles.get(i).compressImage(applicationContext)
+                            imgFotoUsaha = imagesFiles.get(i).compressImage(applicationContext)
 
-                            val compressedImageFile7 = Compressor(baseContext)
-                                    .setQuality(100)
-                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
-
-                            imgFotoUsaha = compressedImageFile7
+//                            val compressedImageFile7 = Compressor(baseContext)
+//                                    .setQuality(100)
+//                                    .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+//
+//                            imgFotoUsaha = compressedImageFile7
 
                             imgUsaha.visibility = View.VISIBLE
-                            Glide.with(imgUsaha).load(imagesFiles[i]).into(imgUsaha)
+                            Glide.with(imgUsaha).load(imgFotoUsaha).into(imgUsaha)
                             llUsaha.visibility = View.GONE
                             imgUsaha.setOnClickListener {
-                                imgfoto = null
+                                imgFotoUsaha = null
                                 llUsaha.visibility = View.VISIBLE
                                 imgUsaha.visibility = View.GONE
                             }

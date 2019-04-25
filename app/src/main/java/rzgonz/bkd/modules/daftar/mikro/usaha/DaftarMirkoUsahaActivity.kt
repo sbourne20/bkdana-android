@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -24,18 +26,21 @@ import pl.aprilapps.easyphotopicker.EasyImage
 import rzgonz.bkd.Apps.APKModel
 import rzgonz.bkd.Apps.compressImage
 import rzgonz.bkd.R
+import rzgonz.bkd.constant.BKD
 import rzgonz.bkd.injector.User.DaggerUserComponent
+import rzgonz.bkd.models.LoginResponse
 import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
 import rzgonz.bkd.modules.daftar.kilat.upload.DaftarKilatUploadActivity
 import rzgonz.bkd.modules.daftar.mikro.upload.DaftarMikroUploadActivity
 import rzgonz.core.kotlin.activity.DIBaseActivity
+import rzgonz.core.kotlin.helper.SharedPreferenceService
 import java.io.File
 import javax.inject.Inject
 
 class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View {
     var imgfoto : File? = null
-
+    var response = LoginResponse()
     companion object {
         var extra_data ="extra_data"
         @JvmStatic
@@ -67,6 +72,7 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
     private var data: UserContent? =null
 
     override fun initUI(savedInstanceState: Bundle?) {
+
         collapsing_toolbar.isTitleEnabled = false
         collapsing_toolbar.title = "Daftat BKDana Mikro"
         setSupportActionBar(toolbar)
@@ -89,6 +95,12 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         }
     }
 
+    private fun isNullOrEmpty(str: String?): Boolean {
+        if (str != null && !str.isEmpty())
+            return false
+        return true
+    }
+
     private fun bindData(data: UserContent?) {
         Log.d("BIND","${data}")
         etDeskripsi.setText("${data?.deskripsiUsaha}")
@@ -104,27 +116,38 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
                 spBank.setSelection(index)
             }
         }
-        Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading)).asFile().load(data?.fotoUsahaFile).into(object : SimpleTarget<File>() {
-            override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                imgInfoUsaha.setImageURI(Uri.fromFile(resource))
-                imgfoto = resource
-                imgInfoUsaha.visibility = View.VISIBLE
-                llUsaha.visibility = View.GONE
-                imgInfoUsaha.setOnClickListener {
-                    imgfoto = null
-                    llUsaha.visibility = View.VISIBLE
-                    imgInfoUsaha.visibility = View.GONE
-                }
-            }
 
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                super.onLoadFailed(errorDrawable)
-                imgfoto = null
-                llUsaha.visibility = View.VISIBLE
-                imgInfoUsaha.visibility = View.GONE
-            }
-        })
+        if(isNullOrEmpty(data?.fotoUsahaFile)){
+            //do nothing
+        }else{
+            val glideUrlfotoUsahaFile = GlideUrl(data?.fotoUsahaFile, LazyHeaders.Builder()
+                    .addHeader("Authorization", SharedPreferenceService(baseContext).getString(BKD.TOKEN, response.token))
+                    .build())
+            Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading))
+                    .asFile()
+                    .load(glideUrlfotoUsahaFile)
+                    .apply(RequestOptions().override(248,248 ))
+                    .into(object : SimpleTarget<File>() {
+                        override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+                            imgInfoUsaha.setImageURI(Uri.fromFile(resource))
+                            imgfoto = resource
+                            imgInfoUsaha.visibility = View.VISIBLE
+                            llUsaha.visibility = View.GONE
+                            imgInfoUsaha.setOnClickListener {
+                                imgfoto = null
+                                llUsaha.visibility = View.VISIBLE
+                                imgInfoUsaha.visibility = View.GONE
+                            }
+                        }
 
+                        override fun onLoadFailed(errorDrawable: Drawable?) {
+                            super.onLoadFailed(errorDrawable)
+                            imgfoto = null
+                            llUsaha.visibility = View.VISIBLE
+                            imgInfoUsaha.visibility = View.GONE
+                        }
+                    })
+        }
     }
 
     override fun onResume() {
@@ -241,15 +264,15 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
                 //Handle the images
                 for (i in 0..imagesFiles.size) {
 
-                    //imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+                    imgfoto = imagesFiles.get(i).compressImage(applicationContext)
 
-                    val compressedImageFile8 = Compressor(baseContext)
-                            .setQuality(100)
-                            .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
-                    imgfoto = compressedImageFile8
+//                    val compressedImageFile8 = Compressor(baseContext)
+//                            .setQuality(100)
+//                            .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+//                    imgfoto = compressedImageFile8
 
                     imgInfoUsaha.visibility = View.VISIBLE
-                    Glide.with(imgInfoUsaha).load(imagesFiles[i]).into(imgInfoUsaha)
+                    Glide.with(imgInfoUsaha).load(imgfoto).into(imgInfoUsaha)
                     llUsaha.visibility = View.GONE
                     imgInfoUsaha.setOnClickListener {
                         imgfoto = null

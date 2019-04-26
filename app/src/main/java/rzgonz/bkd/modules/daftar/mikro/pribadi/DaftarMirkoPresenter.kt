@@ -13,7 +13,7 @@ import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
 import rzgonz.core.kotlin.presenter.DIBasePresenter
 import javax.inject.Inject
-
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 class DaftarMirkoPresenter @Inject constructor(context: Context) : DIBasePresenter<DaftarMikroContract.View>(),DaftarMikroContract.Presenter{
 
     val apiService = APIHelper.getClient().create(PinjamanService::class.java)

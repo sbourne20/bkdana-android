@@ -9,6 +9,7 @@ object DaftarKilatUploadContract  {
     interface View : DIBaseContract.View {
         fun retrunPijanam(status : Boolean, content:Content?, message:String)
         fun returnSendUpload(status: Boolean, responde: String?, message:String)
+        fun returnCheckPinjaman(status : Boolean, responde: String?, message:String?)
     }
 
 
@@ -16,5 +17,6 @@ object DaftarKilatUploadContract  {
 
         fun getPinjaman()
         fun sendUpload(content: RequestBody)
+        fun checkPinjaman()
     }
 }

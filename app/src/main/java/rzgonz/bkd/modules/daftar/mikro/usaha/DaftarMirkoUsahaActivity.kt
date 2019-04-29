@@ -39,7 +39,7 @@ import java.io.File
 import javax.inject.Inject
 
 class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View {
-    var imgfoto : File? = null
+//    var imgfoto : File? = null
     var response = LoginResponse()
     companion object {
         var extra_data ="extra_data"
@@ -90,16 +90,16 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
             }
         }
 
-        btnInfoUsaha.setOnClickListener {
-                easyImage()
-        }
+//        btnInfoUsaha.setOnClickListener {
+//                easyImage()
+//        }
     }
 
-    private fun isNullOrEmpty(str: String?): Boolean {
-        if (str != null && !str.isEmpty())
-            return false
-        return true
-    }
+//    private fun isNullOrEmpty(str: String?): Boolean {
+//        if (str != null && !str.isEmpty())
+//            return false
+//        return true
+//    }
 
     private fun bindData(data: UserContent?) {
         Log.d("BIND","${data}")
@@ -116,56 +116,57 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
                 spBank.setSelection(index)
             }
         }
-
-        if(isNullOrEmpty(data?.fotoUsahaFile)){
-            //do nothing
-        }else{
-            val glideUrlfotoUsahaFile = GlideUrl(data?.fotoUsahaFile, LazyHeaders.Builder()
-                    .addHeader("Authorization", SharedPreferenceService(baseContext).getString(BKD.TOKEN, response.token))
-                    .build())
-            Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading))
-                    .asFile()
-                    .load(glideUrlfotoUsahaFile)
-                    .apply(RequestOptions().override(248,248 ))
-                    .into(object : SimpleTarget<File>() {
-                        override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-                            imgInfoUsaha.setImageURI(Uri.fromFile(resource))
-                            imgfoto = resource
-                            imgInfoUsaha.visibility = View.VISIBLE
-                            llUsaha.visibility = View.GONE
-                            imgInfoUsaha.setOnClickListener {
-                                imgfoto = null
-                                llUsaha.visibility = View.VISIBLE
-                                imgInfoUsaha.visibility = View.GONE
-                            }
-                        }
-
-                        override fun onLoadFailed(errorDrawable: Drawable?) {
-                            super.onLoadFailed(errorDrawable)
-                            imgfoto = null
-                            llUsaha.visibility = View.VISIBLE
-                            imgInfoUsaha.visibility = View.GONE
-                        }
-                    })
-        }
+//
+//        if(isNullOrEmpty(data?.fotoUsahaFile)){
+//            //do nothing
+//        }else{
+//            val glideUrlfotoUsahaFile = GlideUrl(data?.fotoUsahaFile, LazyHeaders.Builder()
+//                    .addHeader("Authorization", SharedPreferenceService(baseContext).getString(BKD.TOKEN, response.token))
+//                    .build())
+//            Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.loading))
+//                    .asFile()
+//                    .load(glideUrlfotoUsahaFile)
+//                    .apply(RequestOptions().override(248,248 ))
+//                    .into(object : SimpleTarget<File>() {
+//                        override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+//                            imgInfoUsaha.setImageURI(Uri.fromFile(resource))
+////                            imgfoto = resource
+//                            imgInfoUsaha.visibility = View.VISIBLE
+//                            llUsaha.visibility = View.GONE
+//                            imgInfoUsaha.setOnClickListener {
+////                                imgfoto = null
+//                                llUsaha.visibility = View.VISIBLE
+//                                imgInfoUsaha.visibility = View.GONE
+//                            }
+//                        }
+//
+//                        override fun onLoadFailed(errorDrawable: Drawable?) {
+//                            super.onLoadFailed(errorDrawable)
+////                            imgfoto = null
+//                            llUsaha.visibility = View.VISIBLE
+//                            imgInfoUsaha.visibility = View.GONE
+//                        }
+//                    })
+//        }
     }
 
     override fun onResume() {
         super.onResume()
-        checkPermissionAndCreateCamera()
+//        checkPermissionAndCreateCamera()
     }
 
 
-    fun easyImage(){
-        EasyImage.openCamera(this,1)
-    }
+//    fun easyImage(){
+//        EasyImage.openCamera(this,1)
+//    }
 
     fun sendDataUsaha(){
-        val fileFoto = File(imgfoto?.path)
+//        val fileFoto = File(imgfoto?.path)
         val builder = MultipartBody.Builder()
         builder.setType(MultipartBody.FORM)
         builder.addFormDataPart("deskripsi_usaha", etDeskripsi.text.toString())
-        builder.addFormDataPart("info_usaha_file",fileFoto.getName(), RequestBody.create(MediaType.parse("image/*"), fileFoto))
+
+//        builder.addFormDataPart("info_usaha_file",fileFoto.getName(), RequestBody.create(MediaType.parse("image/*"), fileFoto))
         builder.addFormDataPart("omzet", etOmzet.text.toString())
         builder.addFormDataPart("margin", etMargin.text.toString())
         builder.addFormDataPart("biaya_operasional",etOperasional.text.toString())
@@ -185,30 +186,30 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
         }
     }
 
-    private fun checkPermissionAndCreateCamera() {
-        val rxPermissions = RxPermissions(this)
-        rxPermissions
-                .requestEach(
-                        Manifest.permission.CAMERA
-                )
-                .subscribe { // will emit 2 Permission objects
-                    permission ->
-                    if (permission.granted) {
-
-                    } else if (permission.shouldShowRequestPermissionRationale) {
-                        checkPermissionAndCreateCamera()
-                    } else {
-                        goToPermissionSettings(baseContext)
-                    }
-                }
-    }
+//    private fun checkPermissionAndCreateCamera() {
+//        val rxPermissions = RxPermissions(this)
+//        rxPermissions
+//                .requestEach(
+//                        Manifest.permission.CAMERA
+//                )
+//                .subscribe { // will emit 2 Permission objects
+//                    permission ->
+//                    if (permission.granted) {
+//
+//                    } else if (permission.shouldShowRequestPermissionRationale) {
+//                        checkPermissionAndCreateCamera()
+//                    } else {
+//                        goToPermissionSettings(baseContext)
+//                    }
+//                }
+//    }
 
     private fun checkInput(): Boolean {
 
-        if(imgfoto == null){
-            showError("Foto Belum ada")
-            return false
-        }
+//        if(imgfoto == null){
+//            showError("Foto Belum ada")
+//            return false
+//        }
 
         if(etDeskripsi.text.isNullOrEmpty()){
             etDeskripsi.setError( "is required!" )
@@ -251,36 +252,36 @@ class DaftarMirkoUsahaActivity : DIBaseActivity(),DaftarMikroUsahaContract.View 
 
         return true
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        EasyImage.handleActivityResult(requestCode, resultCode, data, this, object : DefaultCallback() {
-
-            override fun onImagePickerError(e: Exception?, source: EasyImage.ImageSource?, type: Int) {
-                //Some error handling
-            }
-
-            override fun onImagesPicked(imagesFiles: List<File>, source: EasyImage.ImageSource, type: Int) {
-                //Handle the images
-                for (i in 0..imagesFiles.size) {
-
-                    imgfoto = imagesFiles.get(i).compressImage(applicationContext)
-
-//                    val compressedImageFile8 = Compressor(baseContext)
-//                            .setQuality(100)
-//                            .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
-//                    imgfoto = compressedImageFile8
-
-                    imgInfoUsaha.visibility = View.VISIBLE
-                    Glide.with(imgInfoUsaha).load(imgfoto).into(imgInfoUsaha)
-                    llUsaha.visibility = View.GONE
-                    imgInfoUsaha.setOnClickListener {
-                        imgfoto = null
-                        llUsaha.visibility = View.VISIBLE
-                        imgInfoUsaha.visibility = View.GONE
-                    }
-                    }
-            }
-        })
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        EasyImage.handleActivityResult(requestCode, resultCode, data, this, object : DefaultCallback() {
+//
+//            override fun onImagePickerError(e: Exception?, source: EasyImage.ImageSource?, type: Int) {
+//                //Some error handling
+//            }
+//
+//            override fun onImagesPicked(imagesFiles: List<File>, source: EasyImage.ImageSource, type: Int) {
+//                //Handle the images
+//                for (i in 0..imagesFiles.size) {
+//
+//                    imgfoto = imagesFiles.get(i).compressImage(applicationContext)
+//
+////                    val compressedImageFile8 = Compressor(baseContext)
+////                            .setQuality(100)
+////                            .compressToFile(imagesFiles.get(i), imagesFiles.get(i).name)
+////                    imgfoto = compressedImageFile8
+//
+//                    imgInfoUsaha.visibility = View.VISIBLE
+//                    Glide.with(imgInfoUsaha).load(imgfoto).into(imgInfoUsaha)
+//                    llUsaha.visibility = View.GONE
+//                    imgInfoUsaha.setOnClickListener {
+//                        imgfoto = null
+//                        llUsaha.visibility = View.VISIBLE
+//                        imgInfoUsaha.visibility = View.GONE
+//                    }
+//                    }
+//            }
+//        })
+//    }
 }

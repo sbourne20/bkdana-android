@@ -19,7 +19,7 @@ class DaftarMikroUsahaPresenter @Inject constructor(context: Context) : DIBasePr
     override fun sendDataUsaha(dataUsaha: RequestBody) {
             apiService.sendMikro2(dataUsaha).enqueue(object : Callback<BaseResponse<String?>> {
                 override fun onFailure(call: Call<BaseResponse<String?>>, t: Throwable) {
-                    getView()?.returnDataUsaha(false, null, "Username or Password Salah")
+                    getView()?.returnDataUsaha(false, null, "Maaf Terjadi Kesalahan Pada Sistem Kami")
                 }
 
                 override fun onResponse(call: Call<BaseResponse<String?>>, response: Response<BaseResponse<String?>>) {

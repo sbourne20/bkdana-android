@@ -16,6 +16,7 @@ import android.R.attr.name
 
 
 class TenorAdapter(context: Context, users: List<ProductsItem?>,val isBulan:Boolean = false) : ArrayAdapter<ProductsItem?>(context, R.layout.row_spinner, users) {
+
     // View lookup cache
     private class ViewHolder {
         internal var name: TextView? = null

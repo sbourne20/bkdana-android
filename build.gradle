@@ -23,7 +23,7 @@ buildscript {
         rxAndroid = "2.0.2"
         rxAdater = ""
         //image
-        glide = '4.6.1'
+        glide = '4.9.0'
         glideTransform = '3.1.1'
         gpuImage = "1.4.1"
         //text
@@ -40,7 +40,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.4.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // Check for v3.1.2 or higher

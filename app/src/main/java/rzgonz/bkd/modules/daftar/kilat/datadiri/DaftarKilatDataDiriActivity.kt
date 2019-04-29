@@ -19,8 +19,6 @@ class DaftarKilatDataDiriActivity : DIBaseActivity(),DaftarKilatDataDiriContract
 
     @Inject
     lateinit var mPresenter : DaftarKilatDataDiriPresenter
-
-    val mPresenter2 = DashboardPresenter()
     companion object {
         var extra_data ="extra_data"
         @JvmStatic

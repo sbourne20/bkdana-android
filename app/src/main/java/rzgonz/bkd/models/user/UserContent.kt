@@ -29,6 +29,18 @@ data class UserContent(
 		@field:SerializedName("foto_usaha_file")
 		var fotoUsahaFile: String? = null,
 
+		@field:SerializedName("foto_usaha_file2")
+		var fotoUsahaFile2: String? = null,
+
+		@field:SerializedName("foto_usaha_file3")
+		var fotoUsahaFile3: String? = null,
+
+		@field:SerializedName("foto_usaha_file4")
+		var fotoUsahaFile4: String? = null,
+
+		@field:SerializedName("foto_usaha_file5")
+		var fotoUsahaFile5: String? = null,
+
 		@field:SerializedName("Nomor_rekening")
 		var nomorRekening: String? = null,
 
@@ -177,6 +189,10 @@ data class UserContent(
 			parcel.readString(),
 			parcel.readString(),
 			parcel.readString(),
+			parcel.readString(),
+			parcel.readString(),
+			parcel.readString(),
+			parcel.readString(),
 			parcel.readString()) {
 	}
 
@@ -189,6 +205,10 @@ data class UserContent(
 		parcel.writeString(biayaOperasionalUsaha)
 		parcel.writeString(peringkatPenggunaPersentase)
 		parcel.writeString(fotoUsahaFile)
+		parcel.writeString(fotoUsahaFile2)
+		parcel.writeString(fotoUsahaFile3)
+		parcel.writeString(fotoUsahaFile4)
+		parcel.writeString(fotoUsahaFile5)
 		parcel.writeString(nomorRekening)
 		parcel.writeString(lamaUsaha)
 		parcel.writeString(kota)

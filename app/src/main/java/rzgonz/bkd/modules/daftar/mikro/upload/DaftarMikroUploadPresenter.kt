@@ -8,7 +8,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import rzgonz.bkd.models.BaseResponse
 import rzgonz.bkd.models.BaseResponseMessage
+import rzgonz.bkd.models.checking.CheckPinjamanResponse
 import rzgonz.bkd.models.pinjaman.PengajuanResponse
+import rzgonz.bkd.services.DashboardService
 import rzgonz.bkd.services.PinjamanService
 import rzgonz.core.kotlin.helper.APIHelper
 import rzgonz.core.kotlin.presenter.DIBasePresenter
@@ -17,10 +19,31 @@ import javax.inject.Inject
 class DaftarMikroUploadPresenter @Inject constructor(context: Context) : DIBasePresenter<DaftarMikroUploadContract.View>(),DaftarMikroUploadContract.Presenter{
 
     val apiService = APIHelper.getClient().create(PinjamanService::class.java)
+    val api2Service = APIHelper.getClient().create(DashboardService::class.java)
+
+    override fun checkPinjaman() {
+        api2Service.checkPinjaman().enqueue(object : Callback<CheckPinjamanResponse> {
+            override fun onFailure(call: Call<CheckPinjamanResponse>?, t: Throwable?) {
+                getView()?.returnCheckPinjaman(false,null,"error connection")
+            }
+
+            override fun onResponse(call: Call<CheckPinjamanResponse>, response: Response<CheckPinjamanResponse>) {
+                if(response.isSuccessful){
+                    if(response.body()?.response.equals("fail")){
+                        getView()?.returnCheckPinjaman(false,"1",response.body()?.message)
+                    }else{
+                        getView()?.returnCheckPinjaman(true,"2",response.body()?.message)
+                    }
+                }else{
+                    getView()?.returnCheckPinjaman(false,null,"${response.errorBody()}")
+                }
+            }
+        })
+    }
     override fun getPinjaman() {
         apiService.getPengajuanMikro().enqueue(object : Callback<PengajuanResponse> {
             override fun onFailure(call: Call<PengajuanResponse>?, t: Throwable?) {
-                getView()?.retrunPijanam(false,null,"Username or Password Salah")
+                getView()?.retrunPijanam(false,null,"Maaf Terjadi Kesalahan Pada Sistem Kami")
             }
 
             override fun onResponse(call: Call<PengajuanResponse>, response: Response<PengajuanResponse>) {
@@ -39,7 +62,7 @@ class DaftarMikroUploadPresenter @Inject constructor(context: Context) : DIBaseP
     override fun sendUpload(resquest: RequestBody) {
             apiService.sendMikro3(resquest).enqueue(object : Callback<BaseResponse<String?>> {
                 override fun onFailure(call: Call<BaseResponse<String?>>, t: Throwable) {
-                    getView()?.returnUpload(false, null, "Username or Password Salah")
+                    getView()?.returnUpload(false, null, "Maaf Terjadi Kesalahan Pada Sistem Kami")
                 }
 
                 override fun onResponse(call: Call<BaseResponse<String?>>, response: Response<BaseResponse<String?>>) {

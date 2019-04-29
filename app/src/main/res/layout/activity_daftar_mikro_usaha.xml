@@ -51,47 +51,53 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="* Info Usaha"
                     android:textColor="@color/grey"
-                    android:text="* Info Usaha"/>
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@drawable/bg_dash">
+                    android:background="@drawable/bg_dash"
+                    android:visibility="gone">
+
                     <ImageView
+                        android:id="@+id/imgInfoUsaha"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitCenter"
-                        android:id="@+id/imgInfoUsaha"
                         android:layout_margin="9dp"
-                        android:visibility="invisible"
-                        android:src="@drawable/ic_default_profile"/>
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_default_profile"
+                        android:visibility="invisible" />
+
                     <LinearLayout
+                        android:id="@+id/llUsaha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_centerInParent="true"
-                        android:id="@+id/llUsaha">
+                        android:orientation="vertical">
+
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/upload"
                             android:layout_gravity="center"
-                            android:layout_margin="9dp"/>
+                            android:layout_margin="9dp"
+                            android:src="@drawable/upload" />
+
                         <Button
+                            android:id="@+id/btnInfoUsaha"
                             android:layout_width="wrap_content"
                             android:layout_height="32dp"
+                            android:layout_gravity="center"
                             android:background="@drawable/btn_purpel_rounded"
-                            android:textColor="@android:color/white"
-                            android:text="Browse file"
                             android:paddingLeft="9dp"
                             android:paddingRight="9dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/btnInfoUsaha"
-                            />
+                            android:text="Browse file"
+                            android:textColor="@android:color/white" />
                     </LinearLayout>
 
                 </RelativeLayout>

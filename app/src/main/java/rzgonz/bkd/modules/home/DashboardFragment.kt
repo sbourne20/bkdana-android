@@ -70,7 +70,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
         cvpBanner.listener = this
         cvpBanner.setAdapter(activity)
         cvpBanner.clipToPadding = false
-        cvpBanner.setPadding(0, 0, 40, 0)
+        cvpBanner.setPadding(0, 0, 0, 0)
         indicator.setViewPager(cvpBanner)
         runBanner()
         mPresenter.getMyRepayment()

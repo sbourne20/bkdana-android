@@ -64,6 +64,12 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             updateLabel()
         }
+        val pekerjaan = resources.getStringArray(R.array.array_pekerjaan)
+        pekerjaan.forEachIndexed { index, s ->
+            if(index.plus(1).toString().equals(myData?.pekerjaan,true)){
+                spPekerjaan.setSelection(index)
+            }
+        }
 
         etTanggalLahir.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
@@ -84,13 +90,16 @@ class DaftarKilatActivity : DIBaseActivity(),DaftarKilatContract.View {
 
     private fun sendMyData() {
        if(inputOK()){
+
            showProgressDialog(this,"Upload Progress",true)
+
            myData?.tempatLahir = etTempatLahir.text.toString()
            myData?.jenisKelamin = spGender.selectedItem.toString()
            myData?.tanggalLahir = myCalendar.time.toLocaleString()
            myData?.alamat      = etAlamat.text.toString()
            myData?.kota = etKota.text.toString()
            myData?.provinsi = listProvinsi.get(spProvinsi.selectedItemPosition).provinceName
+           myData?.pekerjaan = spPekerjaan.selectedItemPosition.plus(1).toString()
            myData?.kodepos = etKodePos.text.toString()
            myData?.nomorNik = etNIK.text.toString()
            mPresenter.sendMyData(myData!!)

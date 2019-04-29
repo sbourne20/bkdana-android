@@ -18,7 +18,7 @@ class DaftarKilatDataDiriPresenter @Inject constructor(context: Context) : DIBas
         apiService.sendKilat2(pendidikan,nama_perusahaan,telp_perusahaan,status_karyawan,lama_bekerja,nama_atasan,referensi_1,referensi_2,namaReferensi,namaReferensi2)
                 .enqueue(object : Callback<BaseResponse<String>> {
                     override fun onFailure(call: Call<BaseResponse<String>>?, t: Throwable?) {
-                        getView()?.returnSendDataDiri(false,null,"Username or Password Salah")
+                        getView()?.returnSendDataDiri(false,null,"Maaf Terjadi Kesalahan Pada Sistem Kami")
                     }
 
                     override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {

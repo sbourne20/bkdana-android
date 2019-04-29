@@ -23,7 +23,7 @@ class DaftarMirkoPresenter @Inject constructor(context: Context) : DIBasePresent
 
         apiService.getMyData().enqueue(object : Callback<UserResponse> {
             override fun onFailure(call: Call<UserResponse>?, t: Throwable?) {
-                getView()?.returnUser(false,null,"Username or Password Salah")
+                getView()?.returnUser(false,null,"Maaf Terjadi Kesalahan Pada Sistem Kami")
             }
 
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
@@ -41,7 +41,7 @@ class DaftarMirkoPresenter @Inject constructor(context: Context) : DIBasePresent
         apiService.sendMirko1(user.tempatLahir!!,user.jenisKelamin!!,user.alamat!!,user.kota!!,user.provinsi!!, user.kodepos!!)
                 .enqueue(object : Callback<BaseResponse<String>> {
             override fun onFailure(call: Call<BaseResponse<String>>?, t: Throwable?) {
-                getView()?.returnSendUser(false,null,"Username or Password Salah")
+                getView()?.returnSendUser(false,null,"Maaf Terjadi Kesalahan Pada Sistem Kami")
             }
 
             override fun onResponse(call: Call<BaseResponse<String>>, response: Response<BaseResponse<String>>) {

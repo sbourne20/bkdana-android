@@ -23,6 +23,7 @@ import rzgonz.bkd.models.dashboard.RepaymentResponse
 import rzgonz.bkd.models.user.UserContent
 import rzgonz.bkd.modules.Login.LoginActivity
 import rzgonz.bkd.modules.Login.tokenz
+import rzgonz.bkd.modules.daftar.agri.agri1.DaftarAgriActivity
 import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
 import rzgonz.bkd.modules.daftar.mikro.pribadi.DaftarMikroActivity
 import rzgonz.core.kotlin.fragment.DIBaseFragment
@@ -76,6 +77,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
         mPresenter.getMyRepayment()
         llOne.visibility =View.GONE
         llTwo.visibility =View.GONE
+
         btnRefresh.visibility =View.GONE
 //        btnRefresh.setOnClickListener {
 //            mPresenter.getMyRepayment()
@@ -173,13 +175,19 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
 
     override fun addFragment(): ArrayList<Fragment> {
         val items: ArrayList<Fragment> = ArrayList()
-        items.add(BannerFragement.newInstance(1,"3"))
-        items.add(BannerFragement.newInstance(2,"4"))
+        if(SharedPreferenceService(context).getInt(BKD.TYPEPEMINJAM, 0) == 3){
+            items.add(BannerFragement.newInstance(3,"6"))
+        }else{
+//            items.add(BannerFragement.newInstance(1,"4"))
+            items.add(BannerFragement.newInstance(2,"5"))
+        }
+
+
         return items
     }
 
      fun runBanner() {
-        handler= Handler()
+        handler = Handler()
          handler.postDelayed({
              if (cvpBanner.adapter?.count!! > 0) {
              if (cvpBanner.currentItem < cvpBanner!!.adapter!!.count - 1) {
@@ -188,7 +196,7 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
                  moveBannerPage(0)
              }
          }}
-         ,3000)
+         ,2500)
 
     }
 
@@ -255,6 +263,8 @@ class DashboardFragment : DIBaseFragment(),CustomeViewPager.PagerListener,Dashbo
                 startActivity(Intent(this.context, DaftarKilatActivity::class.java))
             }else if(responde.equals("2")){
                 startActivity(Intent(this.context, DaftarMikroActivity::class.java))
+            }else if(responde.equals("3")){
+                startActivity(Intent(this.context, DaftarAgriActivity::class.java))
             }
 
         }else{

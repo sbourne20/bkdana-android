@@ -82,6 +82,7 @@ class RegisterActivity : DIBaseActivity(),RegisterContract.View {
                     0-> till_sumberDana.visibility =View.VISIBLE
                     1-> till_sumberDana.visibility =View.GONE
                     2-> till_sumberDana.visibility =View.GONE
+//                    3-> till_sumberDana.visibility =View.GONE
                 }
             }
 
@@ -141,8 +142,11 @@ class RegisterActivity : DIBaseActivity(),RegisterContract.View {
         if (spRegisterType.selectedItemPosition == 0) {
             mPresenter.sendRegister(etName.text.toString(), etPhone.text.toString(), et_email_login.text.toString(), et_password_login.text.toString(), et_password_login.text.toString(), etSuberDana.text.toString())
 
-        } else {
-            mPresenter.sendRegisterPinjam(etName.text.toString(), etPhone.text.toString(), et_email_login.text.toString(), et_password_login.text.toString(), et_password_login.text.toString(), spRegisterType.selectedItemPosition)
+        } else if ( spRegisterType.selectedItemPosition == 1 ){
+            mPresenter.sendRegisterPinjam(etName.text.toString(), etPhone.text.toString(), et_email_login.text.toString(), et_password_login.text.toString(), et_password_login.text.toString(), 2)
+
+        } else if ( spRegisterType.selectedItemPosition == 2 ){
+            mPresenter.sendRegisterPinjam(etName.text.toString(), etPhone.text.toString(), et_email_login.text.toString(), et_password_login.text.toString(), et_password_login.text.toString(), 3)
         }
 
     }

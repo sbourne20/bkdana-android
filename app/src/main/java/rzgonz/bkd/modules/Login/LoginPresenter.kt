@@ -40,6 +40,7 @@ class LoginPresenter @Inject constructor(val context: Context) : DIBasePresenter
                     SharedPreferenceService(context).saveString(BKD.EMAIL,username)
                     SharedPreferenceService(context).saveString(BKD.TOKEN,response.body()?.token)
                     SharedPreferenceService(context).saveInt(BKD.LOGINTYPE,response.body()?.logtype!!.toInt())
+                    SharedPreferenceService(context).saveInt(BKD.TYPEPEMINJAM,response.body()?.typePeminjam!!.toInt())
                     getView()?.returnLogin(true,response.body(),"success")
                 }else{
                     getView()?.returnLogin(false,null,"Username or Password salah")

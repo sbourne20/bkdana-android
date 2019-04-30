@@ -17,5 +17,8 @@ data class LoginResponse(
 	var token: String = "",
 
 	@field:SerializedName("logtype")
-	var logtype: String = ""
+	var logtype: String = "",
+
+	@field:SerializedName("tpeminjam")
+	var typePeminjam: String = ""
 )

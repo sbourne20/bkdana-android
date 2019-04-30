@@ -74,6 +74,7 @@ class BannerFragement : DIBaseFragment(){
                     }
                 }
             }
+
             2 ->{cardBanner.background = resources.getDrawable(R.drawable.ic_card_aqua)
                 imgBanner.setImageDrawable(resources.getDrawable(R.drawable.icon_register_2))
                 tvBannerTitle.setText("BKDana Mikro")
@@ -85,6 +86,26 @@ class BannerFragement : DIBaseFragment(){
                             showMessage("Lengkapi profil anda untuk melakukan peminjaman")
                         }else {
                             val data = Event(2)
+                            EventBus.getDefault().post(data)
+                        }
+                    }else{
+                        showMessage("Anda Login Sebagai Pendana")
+                    }
+
+                }
+            }
+
+            3 ->{cardBanner.background = resources.getDrawable(R.drawable.ic_card_green)
+                imgBanner.setImageDrawable(resources.getDrawable(R.drawable.ic_regis_3))
+                tvBannerTitle.setText("BKDana Agri")
+                tvBannerDetial.setText("Daftar BKDana Agri. Pinjaman Agri merupakan solusi bagi Petani. Pinjaman sampai dengan 100 juta!")
+                cardBanner.setOnClickListener {
+                    if(SharedPreferenceService(it.context).getInt(BKD.LOGINTYPE,0)==1) {
+                        if (gradeUsr != "100% Profil Terselesaikan"){
+                            startActivity(Intent(context, EditProfileActivity::class.java))
+                            showMessage("Lengkapi profil anda untuk melakukan peminjaman")
+                        }else {
+                            val data = Event(3)
                             EventBus.getDefault().post(data)
                         }
                     }else{

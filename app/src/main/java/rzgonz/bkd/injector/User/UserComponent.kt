@@ -4,6 +4,7 @@ import dagger.Component
 import rzgonz.bkd.injector.AppsComponent
 import rzgonz.bkd.modules.Login.LoginActivity
 import rzgonz.bkd.modules.MainActivity
+import rzgonz.bkd.modules.daftar.agri.agri1.DaftarAgriActivity
 import rzgonz.bkd.modules.daftar.kilat.datadiri.DaftarKilatDataDiriActivity
 import rzgonz.bkd.modules.daftar.kilat.pribadi.DaftarKilatActivity
 import rzgonz.bkd.modules.daftar.kilat.upload.DaftarKilatUploadActivity
@@ -26,6 +27,8 @@ interface UserComponent {
     fun inject(activity: DaftarMirkoUsahaActivity)
     fun inject(activity: DaftarMikroUploadActivity)
     fun inject(activity: ConfimPasswordActivity)
+
+    fun inject(activity: DaftarAgriActivity)
 
 
 

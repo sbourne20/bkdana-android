@@ -19,7 +19,9 @@
     <string name="beberapa_langkah_lagi_untuk_menjadi_peminjam_di_bkdana_silahkan_lengkapi_informasi_dan_data_data_anda_terlebih_dahulu">Beberapa langkah lagi untuk menjadi peminjam di BKDana. Silahkan lengkapi informasi dan data-data Anda terlebih dahulu.</string>
     <string-array name="register_type">
         <item>Pendana</item>
-        <item>Peminjam</item>
+        <!--<item>Peminjam Kilat</item>-->
+        <item>Peminjam Mikro</item>
+        <item>Peminjam Agri</item>
     </string-array>
 
     <string name="pilih">-- PILIH --</string>

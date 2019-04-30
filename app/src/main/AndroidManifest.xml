@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Splash"
         tools:replace="android:theme">
-
-<!--Firebase Service for Notification-->
+        <activity android:name=".modules.daftar.agri.agri1.DaftarAgriActivity"></activity>
+        <!-- Firebase Service for Notification -->
         <service
             android:name=".services.Firebase.Notification.NotificationService"
             android:enabled="true"
@@ -33,10 +33,7 @@
             android:value="false" />
         <meta-data
             android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
-
-<!-- END OF FIREBASE SERVICE-->
-
+            android:value="false" /> <!-- END OF FIREBASE SERVICE -->
         <activity android:name=".modules.password.ConfimPasswordActivity" />
         <activity android:name=".modules.transaksi.dana.TransaksiDanaDetailActivity" />
         <activity android:name=".modules.QRCodeActivity" />
@@ -70,11 +67,13 @@
             android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="SOMEACTIVITY"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="SOMEACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -94,10 +93,10 @@
         <activity
             android:name=".modules.home.DashboardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".modules.transaksi.TransaksiActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".modules.peminjam.PeminjamActivity"
             android:screenOrientation="portrait" />
